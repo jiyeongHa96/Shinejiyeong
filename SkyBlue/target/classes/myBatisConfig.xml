@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting value="true" name="callSettersOnNulls"/>
+        <setting value="false" name="cacheEnabled"/>
+        <setting value="true" name="useGeneratedKeys"/>
+        <setting value="REUSE" name="defaultExecutorType"/>
+        <setting value="VARCHAR" name="jdbcTypeForNull"/>
+        <setting value="true" name="mapUnderscoreToCamelCase"/>
+    </settings>
+
+<!-- iBatis와 다르게 MyBatis는 1:N 셀렉트를 <collection>태그를 사용한다.
+	 iBatis에서는 procedure,function 호출은 <procedure>을 사용한 반면 
+	 MyBatis에서는 <select> 태그에서 statementType="CALLABLE"로 바뀌었다. 
+	 
+	 prefixOverrides where절 뒤에 and/or 오면 삭제한다.
+	 
+	 <insert id="insertOverNightReport" parameterType="overNightReportBean">
+    	<selectKey keyProperty="overNightSeq" resultType="String" order="BEFORE">
+	 		 SELECT OVER_NIGHT_SEQ.NEXTVAL FROM DUAL
+	    </selectKey>
+	 >> 위와같은소스에서는 selectKey의 order="BEFORE"로 인해 <selectKey>구문이 먼저 실행되서 keyProperty에 셋팅된후 <insert> 들어간다.
+ -->
+    <typeAliases>
+        <package name="com.SkyBlue.base.to"/>
+        <package name="com.SkyBlue.hr.attendance.to"/>
+        <package name="com.SkyBlue.hr.circumstance.to"/>
+        <package name="com.SkyBlue.hr.pay.to"/>
+        <package name="com.SkyBlue.hr.pm.to"/>
+    </typeAliases>
+</configuration>

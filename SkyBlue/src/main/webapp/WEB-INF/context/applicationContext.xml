@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+     <!-- 공통메세지 관리 -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>message.base</value>
+                <value>message.hr</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--AOP annotation scan-->
+    <!-- 이것은 AspectJ를 위한 태그이며, 먼저 Spring AOP 때 이용한 ProxyFactoryBean에 해당하는 것을 자동으로 생성하는 태그이다. 
+                    이를 기술하게 되면 ProxyFactoryBean으로 준비된 기능이 자동으로 포함된다.-->
+    <aop:aspectj-autoproxy/>
+
+</beans>
