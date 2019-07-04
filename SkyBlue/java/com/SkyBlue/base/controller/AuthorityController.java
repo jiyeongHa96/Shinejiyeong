@@ -1,4 +1,4 @@
-package com.SkyBlue.base.controller;
+﻿package com.SkyBlue.base.controller;
 
 import java.util.List;
 
@@ -59,6 +59,9 @@ public class AuthorityController{
         baseServiceFacade.batchAuthority(authorityInfoBean);
         //findAuthorityList(inData,outData);
         findMenuAuthorityListAll(inData,outData);
+
+
+
     }
 
 }
