@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="mainLeftForm" classname="mainLeftForm" inheritanceid="" position="absolute 0 0 225 742" titletext="mainLeftForm" scrollbars="none" onload="mainLeftForm_onload" style="border:1 solid #b1b5b9b3 ;color:white;">
+    <Layouts>
+      <Layout>
+        <Grid id="menuTree" taborder="0" useinputpanel="false" position2="absolute l:0 w:225 t:280 h:325" positiontype="position2" binddataset="ds_menu" autofittype="col" scrollbars="autovert" treeusecheckbox="false" style="treelinetype:1px dotted black ;focusborder:0px dotted black ;linetype:nocross;background:black;border:1px solid black ;color:white;" treeinitstatus="expand,all" oncelldblclick="menuTree_oncelldblclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="190"/>
+              </Columns>
+              <Rows>
+                <Row size="24"/>
+              </Rows>
+              <Band id="body">
+                <Cell displaytype="tree" edittype="tree" text="bind:MENU_NAME" treelevel="bind:LEVEL" treestate="expr:1" autosizecol="limitmax"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00" text="Static00" position2="absolute l:5 w:216 t:5 h:270" positiontype="position2" style="border:1px solid #b1b5b9b3 ;"/>
+        <GroupBox id="GroupBox00" text="직원정보" position2="absolute l:13 w:200 t:15 h:254" positiontype="position2"/>
+        <Static id="Static04" text="사원번호" position2="absolute l:19 w:85 t:146 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="empCode" taborder="4" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:102 w:106 t:146 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static05" text="사원명" position2="absolute l:19 w:85 t:181 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="empName" taborder="5" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:102 w:106 t:181 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Button id="logoutBtn" taborder="6" text="로그아웃" onclick="logoutBtn_onclick" position2="absolute l:30 w:70 t:225 h:28" positiontype="position2"/>
+        <Button id="exitBtn" taborder="7" text="종료" onclick="exitBtn_onclick" position2="absolute l:122 w:71 t:225 h:28" positiontype="position2"/>
+        <Static id="Static03" text="부서명" position2="absolute l:19 w:85 t:111 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static02" text="사업장" position2="absolute l:19 w:85 t:76 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static01" text="권한" position2="absolute l:19 w:85 t:41 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="authorityCode" taborder="8" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:102 w:106 t:41 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Edit id="businessCode" taborder="9" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:102 w:106 t:76 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Edit id="deptCode" taborder="10" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:102 w:106 t:111 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="deptCode" propid="value" datasetid="ds_dept" columnid="DEPT_NAME"/>
+    </Bind>
+    <Script type="xscript4.0"><![CDATA[function mainLeftForm_onload(obj:Form, e:LoadEventInfo)
+{
+	transaction("findMenuList",
+	"svcBase::/findMenuList.do?",
+	"",
+	"ds_menu=dsMenu",
+	"",
+	"callback",
+	false);
+   
+  
+}
+
+
+
+function menuTree_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{    
+    
+	var sID=ds_menu.getColumn(e.row,"MENU_CODE");
+	var sURL=ds_menu.getColumn(e.row,"MENU_URL");
+    var sTitle =ds_menu.getColumn(e.row,"MENU_NAME"); 
+
+    transaction("findMenuAuthorityList","svcBase::/findMenuAuthorityList.do?","","ds_menuAuthority=dsMenuAuthority","authorityCode="+g_authorityCode,"callback",false);
+    if(sURL.length<-1){
+	 return;
+    }
+    
+    
+    var result = ds_menuAuthority.findRow("MENU_CODE", sID); 
+
+    
+   
+    
+    if(result==-1){
+         gfn_Open(sID,sURL,sTitle);
+       var formPath=application.mainframe.VFrameSet0.HFrameSet0.ChildFrame1;
+         formPath.alert("접근권한이 없습니다.");
+      
+    }
+    else{
+    
+    gfn_Open(sID,sURL,sTitle);
+    }
+}
+
+function logoutBtn_onclick(obj:Button,  e:ClickEventInfo)
+{     application.mainframe.visible = false;
+	openLoginFormDialog("loginform","LoginForm","Base::loginForm.xfdl");
+}
+
+
+function exitBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	application.mainframe.visible = false;
+}
+]]></Script>
+  </Form>
+</FDL>

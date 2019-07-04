@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="overNightApplicationForm" classname="overNightApplicationForm" inheritanceid="" position="absolute 0 0 1024 750" titletext="overNightApplicationForm" onload="overNightApplicationForm_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="연장/심야 근무신청" position2="absolute l:8 w:278 t:11 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <Static id="Static01" text="연장/심야 근무 현황 조회" position2="absolute l:372 w:604 t:12 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <Static id="Static05" text="사원번호" position2="absolute l:16 w:85 t:90 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_empCode" taborder="13" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:99 w:131 t:90 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static06" text="사원명" position2="absolute l:16 w:85 t:125 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_empName" taborder="14" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:99 w:132 t:125 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static04" text="부서명" position2="absolute l:16 w:85 t:160 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_deptName" taborder="15" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:99 w:132 t:160 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static13" text="신청기간/신청근무시간" position2="absolute l:17 w:85 t:237 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static09" text="시작일" position2="absolute l:17 w:85 t:274 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="requestFromDate" taborder="19" canchange="requestFromDate_canchange" position2="absolute l:100 w:148 t:273 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Calendar id="requestToDate" taborder="20" position2="absolute l:101 w:146 t:313 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static10" text="종료일" position2="absolute l:18 w:85 t:314 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="cause" taborder="22" position2="absolute l:18 w:234 t:461 h:116" positiontype="position2"/>
+        <Button id="applyBtn" taborder="23" text="신청" onclick="applyBtn_onclick" position2="absolute l:17 w:89 t:590 h:34" positiontype="position2"/>
+        <Button id="applyBtn00" taborder="24" text="신청" onclick="applyBtn_onclick" position2="absolute l:114 w:89 t:590 h:34" positiontype="position2"/>
+        <Static id="Static08" text="신청사유" position2="absolute l:19 w:85 t:424 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="requestDate" taborder="25" position2="absolute l:100 w:133 t:198 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static11" text="신청날짜" position2="absolute l:17 w:85 t:199 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static02" text="시작시간" position2="absolute l:18 w:85 t:352 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <MaskEdit id="fromTime" taborder="26" type="string" mask="##:##" canchange="requestTime_canchange" position2="absolute l:101 w:131 t:352 h:32" positiontype="position2" style="border:1 solid black ;align:center; :disabled {align:center;}" enable="false"/>
+        <Static id="Static03" text="종료시간" position2="absolute l:19 w:85 t:388 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <MaskEdit id="toTime" taborder="27" type="string" mask="##:##" canchange="requestTime_canchange" position2="absolute l:102 w:131 t:388 h:32" positiontype="position2" style="border:1 solid black ;align:center; :disabled {align:center;}"/>
+        <Grid id="Grid00" taborder="28" binddataset="ds_overNight" useinputpanel="false" oncellclick="attdApprovalTab_outing_Grid00_oncellclick" position2="absolute l:253 w:768 t:108 h:338" positiontype="position2">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="79"/>
+                <Column size="93"/>
+                <Column size="87"/>
+                <Column size="111"/>
+                <Column size="111"/>
+                <Column size="111"/>
+                <Column size="89"/>
+                <Column size="89"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사원번호"/>
+                <Cell col="1" text="사원명"/>
+                <Cell col="2" text="신청유형"/>
+                <Cell col="3" text="신청일"/>
+                <Cell col="4" text="근무시작시각"/>
+                <Cell col="5" text="근무종료시각"/>
+                <Cell col="6" text="승인여부"/>
+                <Cell col="7" text="신청여부"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:EMP_CODE"/>
+                <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                <Cell col="2" displaytype="normal" edittype="none" style="align:center;" text="bind:TYPE"/>
+                <Cell col="3" style="align:center;" text="bind:REQUEST_DATE" mask="####/##/##"/>
+                <Cell col="4" style="align:center;" text="bind:FROM_TIME" mask="##:##"/>
+                <Cell col="5" style="align:center;" text="bind:TO_TIME" mask="##:##"/>
+                <Cell col="6" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                <Cell col="7" style="align:center;" text="bind:REQUEST_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static07" text="시작일" position2="absolute l:368 w:85 t:67 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="fromDate" taborder="29" position2="absolute l:451 w:133 t:66 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Edit id="Edit01" taborder="30" value="~" enable="false" position2="absolute l:595 w:69 t:70 h:28" positiontype="position2" style="align:center;"/>
+        <Static id="Static12" text="종료일" position2="absolute l:672 w:85 t:67 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="toDate" taborder="31" position2="absolute l:755 w:146 t:66 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Button id="searchBtn" taborder="32" text="조회" onclick="searchBtn_onclick" position2="absolute l:909 w:70 t:66 h:32" positiontype="position2"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="v_deptName" propid="value" datasetid="ds_dept" columnid="DEPT_NAME"/>
+    </Bind>
+    <Script type="xscript4.0"><![CDATA[var today=new Date().toFormatString("%Y%m%d");	
+
+function overNightApplicationForm_onload(obj:Form, e:LoadEventInfo)
+{
+		v_deptName.value=g_deptName;
+		v_empCode.value=g_empCode;
+		v_empName.value=g_empName;
+		ds_overNight.clearData();
+		requestDate.value=today;
+		fromTime.value="1900";  //원래는 db에서 가져온 값으로 해라 연장 시작시간
+		
+		
+}
+
+//검색버튼
+function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var v_fromDate=fromDate.value;
+	var v_toDate=toDate.value;
+	
+	if(v_fromDate==null || v_toDate==null){
+      alert(" 조회기간을 지정하시기 바랍니다. ");
+   }else{
+      if(v_fromDate>v_toDate){
+         alert(" 조회기간이 잘못 지정되었습니다. ");
+         toDate.value="";
+      }else{
+
+         transaction(
+      "findOverNightAttdReport",
+      "svcHrAttendance::/findOverNightAttdReport.do",
+      "",
+      "ds_overNight=dsOverNight",
+      "empCode='"+g_empCode+"' fromDate='"+v_fromDate+"' toDate='"+v_toDate+"'",
+      "callback",
+      false
+	);
+         if(ds_overNight.rowcount==0){
+            alert("조회할 목록이 없습니다. ");
+         }
+      }
+   }
+}
+
+
+//=====================================완료================================
+
+//신청버튼
+function applyBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	alert("신청버튼");
+	
+	var v_empCode=g_empCode;
+	var v_empName=g_empName;
+	var v_requestDate=requestDate.value;
+	var v_attdtype="연장근무";
+	var v_requestFromDate=requestFromDate.value;
+	var v_requestToDate=requestToDate.value;
+	var v_fromTime=fromTime.value;
+	var v_toTime=toTime.value;
+	var presentYear=today.substring(0,4);//연차조회시 사용변수  12월 31일 ~1월 1일 신청시는 조회 힘듬...
+    
+    transaction(
+      "findOverNightAttdReport",
+      "svcHrAttendance::/findOverNightAttdReport.do",
+      "",
+      "ds_overNight=dsOverNight",
+      "empCode='"+g_empCode+"' fromDate='"+v_requestFromDate+"' toDate='"+v_requestToDate+"'",
+      "callback",
+      false
+	);
+	
+	transaction(
+      "findAttdRestList",
+      "svcHrAttendance::/findAttdRestList.do",
+      "",
+      "ds_dailyAttdRest=dsDailyAttdRest",
+      "empCode='"+g_empCode+"'",
+      "callback",
+      false
+   );
+	
+	transaction(
+      "findAnnualMgt",
+      "svcHrAttendance::/findAnnualMgt.do",
+      "",
+      "ds_dayAnnual=dsDayAnnual",
+      "empCode='" + g_empCode + "' standardYear='" + presentYear + "'",
+      "callback",
+      false
+   );
+   
+   
+   ds_dailyAttdRest.filter("START_DATE<="+v_requestFromDate+" &&"+v_requestToDate+"<=END_DATE");  //근태외 있는지 조사
+   ds_dayAnnual.filter("START_DATE<="+v_requestFromDate+" &&"+v_requestToDate+"<=END_DATE");
+	
+  if(ds_dailyAttdRest.rowcount!=0){
+     alert("근태 외 신청(출장,교육)기간에는 연장,야근근무 신청이 불가합니다.");
+     return;
+  }
+  
+  if(ds_dayAnnual.rowcount!=0){
+     alert("연차,휴가기간에는 연장,야근근무 신청이 불가합니다.");
+     return;
+  }
+	
+   if(ds_overNight.rowcount!=0)
+     {
+         ds_overNight.clearData();
+         ds_overNight.filter("EMP_CODE=='"+0+"'");
+       alert("이미 신청한 날이 존재합니다");
+       return;
+     }
+  
+	
+    if(v_toTime>=0 && ( v_toTime<0900 || v_toTime>=2200 ) ){
+	    attdtype="심야근무";
+	}
+	
+   if(v_requestFromDate==null || v_requestToDate==null || v_fromTime==null || v_toTime=null){
+		alert(" 연장심야근무 신청 시 누락된 부분이 있습니다. 확인해 주세요 .");
+	}else if(v_requestFromDate > v_requestToDate){
+		alert("신청날짜 설정이 잘못되었습니다");
+	}
+	else if(v_toTime.length != 4 || v_toTime.substring(2,2) >= 60 ){
+		alert("시간을 제대로 입력해주세요.");
+   }
+	else if(v_toTime<=1900 && v_toTime > 0600){
+	    alert("신청가능시간은 19:00~06:00전까지 입니다");
+	}
+	else if(v_toTime>=2400){
+	    alert("자정시간 입력은 00:00 시 입니다 24:00 이상 입력불가능합니다 ex) 1시 입력을 원하시면 01:00으로 입력 바랍니다");
+	}else{
+      if(confirm("신청하시겠습니까?")){
+          if(v_requestFromDate!=v_requestToDate){
+			
+          for(var i=0; i<=v_requestToDate-v_requestFromDate; i++){
+          
+		 v_applyDate=parseInt(v_requestFromDate)+i;
+
+         ds_overNight.addRow();  
+	
+         ds_overNight.setColumn(ds_overNight.rowposition,"EMP_CODE",v_empCode);
+         ds_overNight.setColumn(ds_overNight.rowposition,"EMP_NAME",g_empName);
+         ds_overNight.setColumn(ds_overNight.rowposition,"REQUEST_DATE",v_requestDate);
+         ds_overNight.setColumn(ds_overNight.rowposition,"BASIC_DAY",v_applyDate);
+         ds_overNight.setColumn(ds_overNight.rowposition,"APPROVAL_STATUS","N");
+         ds_overNight.setColumn(ds_overNight.rowposition,"REQUEST_STATUS","Y");
+         ds_overNight.setColumn(ds_overNight.rowposition,"FROM_TIME",v_fromTime);
+         ds_overNight.setColumn(ds_overNight.rowposition,"TO_TIME",v_toTime);
+         ds_overNight.setColumn(ds_overNight.rowposition,"OVER_NIGHT_SEQ","nnn");//아무거나 입력
+         ds_overNight.setColumn(ds_overNight.rowposition,"TYPE",v_attdtype);
+         }
+
+         transaction(
+            "batchOverNight",
+            "svcHrAttendance::/batchOverNight.do",
+            "dsOverNight=ds_overNight:u",
+            "ds_overNight=dsOverNight",
+            "",
+            "callback",
+            false
+         );
+          ds_overNight.filter("REQUEST_DATE=='"+today+"'");
+         }
+         
+         else {
+          
+         ds_overNight.addRow();  
+         
+         ds_overNight.setColumn(ds_overNight.rowposition,"EMP_CODE",v_empCode);
+         ds_overNight.setColumn(ds_overNight.rowposition,"EMP_NAME",g_empName);
+         ds_overNight.setColumn(ds_overNight.rowposition,"REQUEST_DATE",v_requestDate);
+         ds_overNight.setColumn(ds_overNight.rowposition,"BASIC_DAY",v_requestDate);
+         ds_overNight.setColumn(ds_overNight.rowposition,"APPROVAL_STATUS","N");
+         ds_overNight.setColumn(ds_overNight.rowposition,"REQUEST_STATUS","Y");
+         ds_overNight.setColumn(ds_overNight.rowposition,"FROM_TIME",v_fromTime);
+         ds_overNight.setColumn(ds_overNight.rowposition,"TO_TIME",v_toTime);
+         ds_overNight.setColumn(ds_overNight.rowposition,"OVER_NIGHT_SEQ","nnn");//아무거나 입력
+         ds_overNight.setColumn(ds_overNight.rowposition,"TYPE",v_attdtype);
+      
+          transaction(
+            "batchOverNight",
+            "svcHrAttendance::/batchOverNight.do",
+            "dsOverNight=ds_overNight:u",
+            "ds_overNight=dsOverNight",
+            "",
+            "callback",
+            false
+         );
+         ds_overNight.filter("REQUEST_DATE=='"+today+"'");
+         }
+      }
+	}
+}
+
+function callback(trid, ErrorCode, ErrorMsg){
+   if(trid=="batchOverNight"){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0? :( ");
+      }else{
+         alert(ErrorMsg+"!");
+      }
+   }
+}
+
+
+
+
+
+
+]]></Script>
+  </Form>
+</FDL>

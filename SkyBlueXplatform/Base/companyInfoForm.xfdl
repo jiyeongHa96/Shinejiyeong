@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="companyInfoForm" classname="companyInfoForm" inheritanceid="" position="absolute 0 0 1024 768" titletext="companyInfoForm" onload="companyInfoForm_onload" style="background:@gradation;">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="회사등록정보" position2="absolute l:-1 w:1025 t:0 h:59" positiontype="position2" style="align:middle;"/>
+        <Static id="Static10" text="대표자명" position2="absolute l:100 w:81 t:252 h:29" positiontype="position2"/>
+        <Static id="Static11" text="업태" position2="absolute l:100 w:81 t:284 h:37" positiontype="position2"/>
+        <Static id="Static12" text="종목" position2="absolute l:100 w:81 t:324 h:29" positiontype="position2"/>
+        <Static id="Static13" text="회사우편번호" position2="absolute l:100 w:97 t:358 h:37" positiontype="position2"/>
+        <Static id="Static14" text="회사기본주소" position2="absolute l:100 w:95 t:395 h:37" positiontype="position2"/>
+        <Static id="Static15" text="회사세부주소" position2="absolute l:100 w:89 t:436 h:29" positiontype="position2"/>
+        <Static id="Static01" text="회사코드" position2="absolute l:100 w:73 t:76 h:29" positiontype="position2"/>
+        <Static id="Static02" text="개업년월일" position2="absolute l:100 w:81 t:596 h:29" positiontype="position2"/>
+        <Static id="Static03" text="설립년월일" position2="absolute l:100 w:81 t:556 h:29" positiontype="position2"/>
+        <Static id="Static04" text="팩스번호" position2="absolute l:100 w:81 t:516 h:29" positiontype="position2"/>
+        <Static id="Static05" text="회사전화번호" position2="absolute l:100 w:89 t:476 h:29" positiontype="position2"/>
+        <Static id="Static06" text="회사명" position2="absolute l:100 w:81 t:116 h:29" positiontype="position2"/>
+        <Static id="Static07" text="회사구분" position2="absolute l:100 w:81 t:148 h:29" positiontype="position2"/>
+        <Static id="Static08" text="사업자등록번호" position2="absolute l:100 w:105 t:188 h:21" positiontype="position2"/>
+        <Static id="Static09" text="법인등록번호" position2="absolute l:100 w:97 t:220 h:29" positiontype="position2"/>
+        <Edit id="Edit00" taborder="1" position2="absolute l:212 w:169 t:185 h:25" positiontype="position2"/>
+        <Edit id="Edit01" taborder="2" position2="absolute l:212 w:169 t:220 h:25" positiontype="position2"/>
+        <Edit id="Edit02" taborder="3" position2="absolute l:212 w:169 t:253 h:25" positiontype="position2"/>
+        <Edit id="Edit03" taborder="4" position2="absolute l:212 w:169 t:287 h:25" positiontype="position2"/>
+        <Edit id="Edit04" taborder="5" position2="absolute l:212 w:169 t:146 h:25" positiontype="position2"/>
+        <Edit id="companyName" taborder="6" position2="absolute l:212 w:169 t:113 h:25" positiontype="position2"/>
+        <Edit id="companyCode" taborder="7" position2="absolute l:212 w:169 t:80 h:25" positiontype="position2" oneditclick="companyCode_oneditclick"/>
+        <Edit id="Edit07" taborder="8" position2="absolute l:212 w:169 t:327 h:25" positiontype="position2"/>
+        <Edit id="baseAddress" taborder="9" position2="absolute l:212 w:169 t:406 h:25" positiontype="position2"/>
+        <Edit id="Edit09" taborder="10" position2="absolute l:212 w:169 t:439 h:25" positiontype="position2"/>
+        <Edit id="Edit10" taborder="11" position2="absolute l:212 w:169 t:480 h:25" positiontype="position2"/>
+        <Edit id="Edit11" taborder="12" position2="absolute l:212 w:169 t:520 h:25" positiontype="position2"/>
+        <Edit id="Edit12" taborder="13" position2="absolute l:212 w:169 t:559 h:25" positiontype="position2"/>
+        <Edit id="Edit13" taborder="14" position2="absolute l:212 w:169 t:599 h:25" positiontype="position2"/>
+        <Edit id="zipCode" taborder="15" position2="absolute l:212 w:169 t:367 h:25" positiontype="position2"/>
+        <Button id="Search" taborder="16" text="검색" position2="absolute l:392 w:65 t:367 h:26" positiontype="position2" onclick="search_onclick"/>
+        <Button id="Button01" taborder="17" text="등록" position2="absolute l:503 w:81 t:572 h:44" positiontype="position2" onclick="companyRegistrationBtn_onclick"/>
+        <Button id="updateBtn" taborder="18" text="수정" position2="absolute l:623 w:81 t:572 h:44" positiontype="position2" onclick="updateBtn_onclick"/>
+        <Button id="Button03" taborder="19" text="취소" position2="absolute l:743 w:81 t:572 h:44" positiontype="position2"/>
+        <Button id="Button04" taborder="20" text="저장" position2="absolute l:863 w:81 t:572 h:44" positiontype="position2" onclick="Button04_onclick"/>
+      </Layout>
+    </Layouts>
+    <Bind/>
+    <Script type="xscript4.0"><![CDATA[
+function companyInfoForm_onload(obj:Form, e:LoadEventInfo)
+{
+   transaction("findCompany","svcBase::findCompany.do","","ds_company=dsCompany","","callback",false);
+}
+
+function companyRegistrationBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   alert(ds_company.getRowCount());
+   ds_company.filter("COMPANY_CODE=='"+companyCode.text+"'");
+   alert(companyCode.text);
+   alert(ds_company.getRowCount());
+   if(ds_company.getRowCount()>0){
+   alert("회사정보가 이미 등록되어 있습니다.");
+   }
+   else
+   {
+      if(confirm("회사정보를 등록하시겠습니까?"))
+      {     
+         //dialog("companyRegistrationDialog", "Base::companyRegistrationDialog.xfdl", MainFrame, null, "", 565, 260);
+      }
+      
+   }
+}
+
+function updateBtn_onclick(obj:Button,  e:ClickEventInfo)
+{   
+
+      if(ds_company.getRowCount()==0)
+        {
+           alert("수정할 회사정보가 없습니다.");
+         }
+       else{
+      companyDivision.enable=true;
+      businessLicenseNumber.enable=true;
+      corporationLicenseNumber.enable=true;
+      companyCeoName.enable=true;
+      companyBusinessConditions.enable=true;
+      companyBusinessItems.enable=true;
+      zipCode.enable=true;
+      companyBasicAddress.enable=true;
+      companyDetailAddress.enable=true;
+      companyTelNumber.enable=true;
+      companyFaxNumber.enable=true;
+      companyOpenDate.enable=true;
+      companyEstablishmentDate.enable=true;
+      }
+   
+}
+
+function cancleBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   reload();
+}
+
+
+
+function batchSaveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+     if(confirm("변경사항을 저장하시겠습니까?"))
+   transaction("batchCompany","svcBase::batchCompany.do","dsCompany=ds_company","ds_company=dsCompany","","callback",false);
+}
+
+
+
+function callback(trid, ErrorCode, ErrorMsg){
+if(trid=='batchCompany'){
+      if(ErrorCode<0){
+         alert("회사정보 일괄저장 중 오류 발생");
+      }else{
+         alert("회사정보 저장완료");
+         reload();
+      }   
+   }
+
+}
+//우편검색
+var v_baseAddress;
+var v_zipCode;
+function search_onclick(obj:Button,  e:ClickEventInfo)
+{
+   dialog("zipCodeDialog", "Base::zipCodeDialog.xfdl", MainFrame, null, "", 565, 260);
+      baseAddress.value = v_baseAddress;
+	  zipCode.value = v_zipCode;
+}
+
+function Button04_onclick(obj:Button,  e:ClickEventInfo)
+{
+   
+}
+
+function companyCode_oneditclick(obj:Edit,  e:EditClickEventInfo)
+{
+   
+}]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="hobongManagementForm" classname="hobongManagementForm" inheritanceid="" position="absolute 0 0 962 650" titletext="hobongManagementForm" onload="hobongManagementForm_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="Edit00" taborder="0" value="직급별 호봉 관리" oneditclick="Edit00_oneditclick" enable="false" position2="absolute l:16 w:931 t:14 h:28" positiontype="position2" style="align:center;"/>
+        <GroupBox id="GroupBox00" position2="absolute l:22 w:401 t:104 h:490" positiontype="position2" text="직급 목록" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox01" text="직급별 호봉 목록" position2="absolute l:440 w:503 t:104 h:490" positiontype="position2" style="titlealign:topleft;"/>
+        <Grid id="positionGrid" taborder="1" useinputpanel="false" position2="absolute l:37 w:372 t:140 h:440" positiontype="position2" binddataset="ds_position" oncellclick="positionGrid_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="66"/>
+                <Column size="141"/>
+                <Column size="141"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="NO"/>
+                <Cell col="1" text="코드"/>
+                <Cell col="2" text="직급"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" text="bind:POSITION_CODE"/>
+                <Cell col="2" text="bind:POSITION_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid01" taborder="2" useinputpanel="false" position2="absolute l:456 w:470 t:140 h:440" positiontype="position2" binddataset="ds_hobong">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="83"/>
+                <Column size="94"/>
+                <Column size="96"/>
+                <Column size="93"/>
+                <Column size="100"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="호봉"/>
+                <Cell col="1" text="기본급"/>
+                <Cell col="2" text="상여금"/>
+                <Cell col="3" text="시급"/>
+                <Cell col="4" text="합계"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:HOBONG" expr="currow+1+&quot;호봉&quot;"/>
+                <Cell col="1" edittype="normal" editfilter="number" text="bind:BASE_SAL" maskchar="0"/>
+                <Cell col="2" edittype="normal" editfilter="number" text="bind:BONUS"/>
+                <Cell col="3" edittype="normal" editfilter="number" text="bind:SIGUB"/>
+                <Cell col="4" editfilter="none" text="0" expr="expr:toNumber(BASE_SAL)+toNumber(BONUS)" editdisplay="edit" calendardisplaynulltype="default"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="removeHobongBtn" taborder="3" text="삭제" position2="absolute l:633 w:93 t:57 h:31" positiontype="position2" onclick="removeHobongBtn_onclick"/>
+        <Button id="addHobongBtn" taborder="4" text="추가" position2="absolute l:526 w:93 t:57 h:31" positiontype="position2" firedblclicktype="none" onclick="addHobongBtn_onclick"/>
+        <Button id="resetHobongBtn" taborder="5" text="취소" position2="absolute l:738 w:93 t:57 h:31" positiontype="position2" onclick="resetHobongBtn_onclick"/>
+        <Button id="saveBtn" taborder="6" text="일괄저장" position2="absolute l:842 w:93 t:57 h:31" positiontype="position2" onclick="saveBtn_onclick"/>
+      </Layout>
+    </Layouts>
+    <InitValue>
+      <Grid id="Grid01" binddataset="ds_hobong"/>
+      <Grid id="positionGrid" binddataset="ds_position"/>
+    </InitValue>
+    <Script type="xscript4.0"><![CDATA[function hobongManagementForm_onload(obj:Form, e:LoadEventInfo)
+{
+   ds_hobong.clearData();
+   transaction("findPositionList","svcBase::/findPositionList.do","","ds_position=dsPosition","","callback");
+}
+
+function positionGrid_oncellclick(obj:Grid, e:GridClickEventInfo)
+{
+   transaction("findHobongList","svcBase::findHobongList.do","","ds_hobong=dsHobong","positionCode='"+ds_position.getColumn(e.row,"POSITION_CODE")+"'","callback");
+}
+
+
+function addHobongBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   var rowNum=ds_hobong.getRowCount();
+   var positionCode=ds_position.getColumn(ds_position.row,"POSITION_CODE");
+   if(rowNum==0) alert("호봉을 추가할 직급을 선택하세요");
+   else{
+      ds_hobong.addRow();
+      ds_hobong.setColumn(rowNum,"BASE_SAL",0);
+      ds_hobong.setColumn(rowNum,"BONUS",0);
+      ds_hobong.setColumn(rowNum,"SIGUB",0);
+   }
+}
+
+function removeHobongBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_hobong.deleteRow(ds_hobong.getRowCount()-1);
+}
+
+function resetHobongBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   reload();
+}
+
+
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(confirm("저장 하시겠습니까 ?")){
+      transaction(
+         "batchHobong",
+         "svcHrCircumstance::batchHobong.do",
+         "dsHobong=ds_hobong:u",
+         "ds_hobong=dsHobong",
+         "",
+         "callback"
+      );
+   }
+}
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   
+   if(trid=='batchHobong'){
+      if(ErrorCode!=0){
+         alert("저장중 ERROR발생! ");
+      }
+      else{
+         reload();
+         alert("저장에 성공하였습니다!");//ErrorCode==0 :) 
+      }   
+   }
+}]]></Script>
+  </Form>
+</FDL>

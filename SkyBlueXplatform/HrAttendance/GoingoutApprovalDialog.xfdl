@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="GoingoutApprovalDialog" classname="GoingoutApprovalDialog" inheritanceid="" position="absolute 0 0 1024 768" titletext="checkOuting" onload="GoingoutApprovalDialog_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static05" text="기준년원일" position2="absolute l:23 w:99 t:40 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Grid id="Grid00" taborder="2" useinputpanel="false" position2="absolute l:20 w:580 t:138 h:238" positiontype="position2" binddataset="ds_outing">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="80"/>
+                <Column size="101"/>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="외출유형"/>
+                <Cell col="1" text="사원코드"/>
+                <Cell col="2" text="사원명"/>
+                <Cell col="3" text="부서명"/>
+                <Cell col="4" text="기준일"/>
+                <Cell col="5" text="신청시간"/>
+                <Cell col="6" text="승인여부"/>
+              </Band>
+              <Band id="body">
+                <Cell displaytype="combo" style="align:center;" text="bind:ATTD_TYPE" combodataset="ds_detailCode" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME"/>
+                <Cell col="1" style="align:center;" text="bind:EMP_CODE"/>
+                <Cell col="2" style="align:center;" text="bind:EMP_NAME"/>
+                <Cell col="3" displaytype="combo" style="align:center;" text="bind:DEPT_CODE" combodataset="ds_dept" combocodecol="DEPT_CODE" combodatacol="DEPT_NAME"/>
+                <Cell col="4" style="align:center;" text="bind:BASIC_DAY" mask="####/##/##"/>
+                <Cell col="5" style="align:center;" text="bind:REQUEST_TIME" mask="@@:@@"/>
+                <Cell col="6" style="align:center;" text="bind:APPROVAL_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00" text="              ★★ 필수 참고사항 ★★&#13;&#10;       외출시간은 승인완료된요청시간에서 &#13;&#10;       10분전~10분후까지 승인허용합니다.&#13;&#10;★★ EX) 외출요청이11:00로 승인 되었을때 **&#13;&#10;     10:50부터 11:10 내에서 신청하셔야만&#13;&#10;        승인으로 처리 이외시간은 무단외출&#13;&#10;" position2="absolute l:290 w:302 t:30 h:101" positiontype="position2" onclick="Static00_onclick" style="color:tomato;"/>
+        <MaskEdit id="baseYearMonthMask" taborder="3" type="string" mask="####/##/##" enable="false" position2="absolute l:120 w:131 t:40 h:32" positiontype="position2" style="border:1 solid black ; :disabled {align:center;}"/>
+        <Button id="closeBtn" taborder="5" text="취소" position2="absolute l:516 w:85 t:421 h:33" positiontype="position2" onclick="closeBtn_OnClick"/>
+        <Button id="goinOutBtn" taborder="6" text="외출" position2="absolute l:416 w:85 t:421 h:33" positiontype="position2" onclick="goinOutBtn_onclick"/>
+      </Layout>
+    </Layouts>
+    <InitValue/>
+    <Script type="xscript4.0"><![CDATA[var baseYearMonth;
+var sendTime;
+var requestTime; 
+var request_date_time;
+var requestBeforeTime; 
+var requestAfterTime;    
+
+function GoingoutApprovalDialog_onload(obj:Form, e:LoadEventInfo)
+{
+	baseYearMonth=opener.today;
+	baseYearMonthMask.value=baseYearMonth
+	sendTime=opener.sendTime;   
+	
+}
+
+
+function lf_getTimeM(dt)
+{
+    var yy = parseInt(dt,0,4);
+    var mm = parseInt(dt,4,2);
+    var dd = parseInt(dt,6,2);
+    var hh = parseInt(dt,8,2)-1;
+    var mi = parseInt(dt,10,2);
+    var ss = parseInt(dt,12,2);
+    return (toNumber(datetime (yy,mm,dd,hh,mi,ss)) - toNumber(datetime (1970,01,01,00,00,00))) * 24 * 3600 * 1000;
+}
+
+function beforeMinutes(tval,ival)
+{
+    var time_stamp = tval - ival;
+    time_stamp += toNumber(60*60*1000); 
+    time_stamp = truncate(time_stamp/1000,0);  //
+    var s_day = time_stamp/(3600*24);
+    var cur_time = time_stamp%(3600*24);
+    var dayVal = adddate("19700101",s_day);
+    var tot_min = cur_time/60;
+    var s_sec = cur_time%60;
+    var s_min = tot_min/60;
+    var c_min = tot_min%60;
+    return dayVal + lpad(Truncate(s_min,0),0,2) + lpad(c_min,0,2) + lpad(s_sec,0,2); 
+}
+
+function afterMinutes(tval,ival)
+{
+    var time_stamp = tval + ival;
+    time_stamp += toNumber(60*60*1000); 
+    time_stamp = truncate(time_stamp/1000,0);  //
+    var s_day = time_stamp/(3600*24);
+    var cur_time = time_stamp%(3600*24);
+    var dayVal = adddate("19700101",s_day);
+    var tot_min = cur_time/60;
+    var s_sec = cur_time%60;
+    var s_min = tot_min/60;
+    var c_min = tot_min%60;
+    return dayVal +  lpad(Truncate(s_min,0),0,2) + lpad(c_min,0,2) + lpad(s_sec,0,2); 
+}
+
+function goinOutBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var outApprovalFlag;
+		
+    for(var index =0; index<ds_outing.getRowCount(); index++){
+		outApprovalFlag=false;
+		
+		requestTime=ds_outing.getColumn(index,"REQUEST_TIME");
+
+		var yy=baseYearMonth.substring(0,4);
+		var mm=baseYearMonth.substring(4,2);
+		var dd=baseYearMonth.substring(6,2);
+		var hh=requestTime.substring(0,2);
+		var mi=requestTime.substring(2,2);
+		
+		request_date_time = new Date(yy,mm,dd,hh,mi);	
+		
+		afterRequest_date_time = request_date_time.addMinutes(10);
+		beforeRequest_date_time = request_date_time.addMinutes(1420);
+		
+		beforeRequest_date_time = new Date(beforeRequest_date_time); 
+		afterRequest_date_time = new Date(afterRequest_date_time);
+		
+		beforeTime = beforeRequest_date_time.toFormatString("%H-%M")+"";
+		afterTime = afterRequest_date_time.toFormatString("%H-%M")+"";
+		
+		beforeTime = beforeTime.replace("-","");
+		afterTime = afterTime.replace("-","");
+		
+		if(sendTime >= beforeTime && sendTime <= afterTime){
+				alert("신청하신외출시간이 외출승인내역에있습니다.\n외출하셔도됩니다.");
+				outApprovalFlag=true;
+				break;
+		}
+    }
+    
+	if(outApprovalFlag){
+		if(confirm("외출하시겠습니까?")){
+			close();
+		}
+	}else if(!outApprovalFlag){
+		if(confirm("신청시간이 승인완료된 외출시간이 아닙니다. \n외출하시면 무단외출입니다. \n정말로 외출하시겠습니까?")){
+		alert("무단외출 나갑니다.");
+			close();
+		}
+	}
+}
+		
+
+function closeBtn_OnClick(obj)
+{	
+	  opener.registerAttdFlag='N';
+      close();
+}
+
+
+
+
+]]></Script>
+  </Form>
+</FDL>

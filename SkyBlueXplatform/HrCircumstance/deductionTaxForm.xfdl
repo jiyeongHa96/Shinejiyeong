@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="deductionTaxForm" classname="deductionTaxForm" inheritanceid="" position="absolute 0 0 962 650" titletext="deductionTaxForm" onload="deductionTaxForm_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="Edit00" taborder="0" value="급여 공제항목 등록/조회" oneditclick="Edit00_oneditclick" enable="false" position2="absolute l:18 w:931 t:6 h:28" positiontype="position2" style="align:center;"/>
+        <GroupBox id="GroupBox00" text="급여 공제 항목 조회" position2="absolute l:21 w:455 t:41 h:555" positiontype="position2" style="titlealign:topleft;"/>
+        <Edit id="Edit01" taborder="1" value="기준년도" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:35 w:80 t:64 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit02" taborder="2" value="년" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:202 w:32 t:65 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Button id="findPayDeductionBtn" taborder="3" text="조회" position2="absolute l:291 w:76 t:65 h:28" positiontype="position2" onclick="findPayDeductionBtn_onclick"/>
+        <Button id="removeBtn" taborder="4" text="삭제" position2="absolute l:377 w:76 t:65 h:28" positiontype="position2" onclick="removeBtn_onclick"/>
+        <GroupBox id="GroupBox01" text="소득세" position2="absolute l:37 w:422 t:100 h:171" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox02" text="건강보험" position2="absolute l:36 w:422 t:279 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox03" text="고용보험" position2="absolute l:35 w:422 t:345 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox04" text="국민연금" position2="absolute l:36 w:422 t:415 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox05" text="장기요양보험" position2="absolute l:35 w:422 t:482 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <Combo id="selYear" taborder="5" text="Combo00" position2="absolute l:116 w:84 t:65 h:26" positiontype="position2" innerdataset="@ds_baseYear" codecolumn="YEAR" datacolumn="YEAR"/>
+        <Grid id="Grid00" taborder="6" useinputpanel="false" position2="absolute l:46 w:406 t:125 h:134" positiontype="position2" binddataset="ds_incomeTaxCopy" style="align:center middle;">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="38"/>
+                <Column size="60"/>
+                <Column size="97"/>
+                <Column size="99"/>
+                <Column size="89"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="NO"/>
+                <Cell col="1" text="소득세율"/>
+                <Cell col="2" text="최저급여"/>
+                <Cell col="3" text="최고급여"/>
+                <Cell col="4" text="누진공제"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" text="bind:INCOME_TAX_RATE"/>
+                <Cell col="2" text="bind:LOW_SAL"/>
+                <Cell col="3" text="bind:HIGH_SAL"/>
+                <Cell col="4" text="bind:PROGRESSIVE_DEDUCTION"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="Edit03" taborder="7" value="건강보험 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:106 w:139 t:299 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="healthCopy" taborder="8" enable="false" position2="absolute l:250 w:87 t:299 h:28" positiontype="position2" style="align:center middle;"/>
+        <Edit id="Edit04" taborder="9" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:341 w:34 t:299 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit05" taborder="10" value="고용보험 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:107 w:139 t:366 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="empCopy" taborder="11" enable="false" position2="absolute l:251 w:87 t:366 h:28" positiontype="position2" style="align:center middle;"/>
+        <Edit id="Edit07" taborder="12" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:342 w:34 t:366 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit08" taborder="13" value="국민연금 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:106 w:139 t:436 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="nationalCopy" taborder="14" enable="false" position2="absolute l:250 w:87 t:436 h:28" positiontype="position2" style="align:center middle;"/>
+        <Edit id="Edit10" taborder="15" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:341 w:34 t:436 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit12" taborder="16" value="장기요양보험 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:104 w:139 t:502 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="longTermCopy" taborder="17" enable="false" position2="absolute l:248 w:87 t:502 h:28" positiontype="position2" style="align:center middle;"/>
+        <Edit id="Edit14" taborder="18" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:339 w:34 t:502 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Static id="Static00" text="※ 장기요양보험 계산&#13;&#10;※ 건강보험 * 6.55% *50%(근로자부담)" position2="absolute l:38 w:421 t:543 h:53" positiontype="position2"/>
+        <GroupBox id="GroupBox06" text="급여 공제 항목 등록" position2="absolute l:490 w:455 t:42 h:555" positiontype="position2" style="titlealign:topleft;"/>
+        <Edit id="Edit15" taborder="19" value="기준년도" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:504 w:80 t:65 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit16" taborder="20" value="년" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:671 w:32 t:66 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Button id="addBtn" taborder="21" text="추가" position2="absolute l:760 w:76 t:66 h:28" positiontype="position2" onclick="addBtn_onclick"/>
+        <Button id="saveBtn" taborder="22" text="저장" position2="absolute l:846 w:76 t:66 h:28" positiontype="position2" onclick="saveBtn_onclick"/>
+        <GroupBox id="GroupBox07" text="소득세" position2="absolute l:506 w:422 t:101 h:171" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox08" text="건강보험" position2="absolute l:505 w:422 t:280 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox09" text="고용보험" position2="absolute l:504 w:422 t:346 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox10" text="국민연금" position2="absolute l:505 w:422 t:416 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox11" text="장기요양보험" position2="absolute l:504 w:422 t:483 h:61" positiontype="position2" style="titlealign:topleft;"/>
+        <Grid id="Grid01" taborder="24" binddataset="ds_incomeTax" useinputpanel="false" position2="absolute l:515 w:406 t:126 h:134" positiontype="position2" style="align:center middle;">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="40"/>
+                <Column size="73"/>
+                <Column size="102"/>
+                <Column size="105"/>
+                <Column size="82"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="NO"/>
+                <Cell col="1" text="소득세율"/>
+                <Cell col="2" text="최저급여"/>
+                <Cell col="3" text="최고급여"/>
+                <Cell col="4" text="누진공제"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" edittype="normal" text="bind:INCOME_TAX_RATE" mask="@@%"/>
+                <Cell col="2" edittype="normal" text="bind:LOW_SAL"/>
+                <Cell col="3" edittype="normal" text="bind:HIGH_SAL"/>
+                <Cell col="4" edittype="normal" text="bind:PROGRESSIVE_DEDUCTION"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="Edit17" taborder="25" value="건강보험 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:577 w:137 t:300 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="health" taborder="26" enable="false" position2="absolute l:719 w:87 t:300 h:28" positiontype="position2"/>
+        <Edit id="Edit19" taborder="27" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:810 w:34 t:300 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit20" taborder="28" value="고용보험 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:578 w:137 t:367 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="emp" taborder="29" enable="false" position2="absolute l:720 w:87 t:367 h:28" positiontype="position2"/>
+        <Edit id="Edit22" taborder="30" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:811 w:34 t:367 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit23" taborder="31" value="국민연금 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:577 w:137 t:437 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="national" taborder="32" enable="false" position2="absolute l:719 w:87 t:437 h:28" positiontype="position2"/>
+        <Edit id="Edit25" taborder="33" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:810 w:34 t:437 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit26" taborder="34" value="장기요양보험 부담률" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:575 w:137 t:503 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="longTerm" taborder="35" enable="false" position2="absolute l:717 w:87 t:503 h:28" positiontype="position2"/>
+        <Edit id="Edit28" taborder="36" value="%" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:808 w:34 t:503 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Static id="Static01" text="※ 주민세율 = 소득세 * 10%&#13;&#10;※ 주민세는 급여정산때 계산됩니다. " position2="absolute l:507 w:421 t:544 h:53" positiontype="position2"/>
+        <Combo id="addSelYear" taborder="37" innerdataset="@ds_baseYear" codecolumn="YEAR" datacolumn="YEAR" position2="absolute l:586 w:84 t:67 h:26" positiontype="position2" onitemchanged="addSelYear_onitemchanged" index="-1"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_incomeTaxCopy">
+        <ColumnInfo>
+          <Column id="INCOME_TAX_RATE" type="STRING" size="256"/>
+          <Column id="INPUTED_YEAR" type="STRING" size="256"/>
+          <Column id="LOW_SAL" type="STRING" size="256"/>
+          <Column id="HIGH_SAL" type="STRING" size="256"/>
+          <Column id="PROGRESSIVE_DEDUCTION" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_deductionTaxCopy">
+        <ColumnInfo>
+          <Column id="INPUTED_YEAR" type="STRING" size="256"/>
+          <Column id="HEALTH_INSUR_RATE" type="STRING" size="256"/>
+          <Column id="NATIONAL_PEN_RATE" type="STRING" size="256"/>
+          <Column id="LONG_TERM_CARE_RATE" type="STRING" size="256"/>
+          <Column id="EMPLOYEEMENT_INSUR_RATE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item6" compid="healthCopy" propid="value" datasetid="ds_deductionTaxCopy" columnid="HEALTH_INSUR_RATE"/>
+      <BindItem id="item0" compid="empCopy" propid="value" datasetid="ds_deductionTaxCopy" columnid="EMPLOYEEMENT_INSUR_RATE"/>
+      <BindItem id="item1" compid="nationalCopy" propid="value" datasetid="ds_deductionTaxCopy" columnid="NATIONAL_PEN_RATE"/>
+      <BindItem id="item2" compid="longTermCopy" propid="value" datasetid="ds_deductionTaxCopy" columnid="LONG_TERM_CARE_RATE"/>
+    </Bind>
+    <Script type="xscript4.0"><![CDATA[function deductionTaxForm_onload(obj:Form, e:LoadEventInfo)
+{
+   ds_deductionTax.filter("");
+   ds_incomeTax.filter("");
+   transaction("findDeductionsInsuranceList",
+            "svcHrCircumstance::findDeductionInsuranceList.do",
+            "",
+            "ds_deductionTax=dsDeductionTax ds_incomeTax=dsIncomeTax",
+            "",
+            "callback",
+            false);
+   ds_incomeTaxCopy.copyData(ds_incomeTax,true);
+   ds_deductionTaxCopy.copyData(ds_deductionTax,true);
+   
+   ds_incomeTax.filter("INPUTED_YEAR==0");
+   ds_deductionTax.filter("INPUTED_YEAR==0");   
+   ds_incomeTaxCopy.filter("INPUTED_YEAR==0");
+   ds_deductionTaxCopy.filter("INPUTED_YEAR==0");
+}
+
+
+//조회 시
+function findPayDeductionBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_incomeTaxCopy.filter("");
+   ds_deductionTaxCopy.filter("");
+   ds_incomeTaxCopy.filter("INPUTED_YEAR=='"+selYear.value+"'");   
+   ds_deductionTaxCopy.filter("INPUTED_YEAR == '"+selYear.value+"'");
+   ds_deductionTaxCopy.rowposition=0;
+   
+   //alert(dsIncomeTaxCopy.getRowCount()+"@@@@@"+selYear.value);
+   //alert(selYear.value);
+   if(selYear.value == undefined){
+      alert("기준년도를 선택해 주세요.");
+   }else if(ds_incomeTaxCopy.getRowCount()==0){
+      if(ds_deductionTaxCopy.getRowCount()==0){
+         alert("조회정보가 없습니다.");
+         selYear.value="";
+      }
+   }      
+   
+}
+
+// 삭제
+function removeBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(selYear.value==undefined){
+      alert("기준년도를 선택해주세요");
+   }
+   else{
+      var objDate = new Date();
+      var presentYear  = toNumber(objDate.getFullYear());
+      var choiceYear = toNumber(selYear.text);      
+      if(presentYear < choiceYear){
+         if(confirm(selYear.value+"년도 급여 공제 항목을 삭제하시겠습니까?")){
+            var incomeRemovelen = ds_incomeTaxCopy.getRowCount() -1;
+            for( i=incomeRemovelen; i>=0 ; i--){
+               ds_incomeTaxCopy.deleteRow(i);
+            }
+            ds_deductionTaxCopy.deleteRow(ds_deductionTaxCopy.rowposition);
+            transaction(
+            "removeDeductionTax"
+            ,"svcHrCircumstance::removeDeductionTax.do"
+            ,"dsDeductionTax=ds_deductionTaxCopy:u dsIncomeTax=ds_incomeTaxCopy:u"
+            ,"ds_deductionTax=dsDeductionTax ds_incomeTax=dsIncomeTax"
+            ,""
+            ,"callback");
+         }
+      }
+      else{
+         alert("시행 중인 공제 항목은 삭제 할 수 없습니다.");
+      }
+   
+   }
+   
+}
+
+function addSelYear_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+   
+   ds_incomeTax.filter("INPUTED_YEAR=='"+addSelYear.value+"'");
+   ds_deductionTax.filter("INPUTED_YEAR=='"+addSelYear.value+"'");
+   
+   if(ds_incomeTax.getRowCount()!=0){
+         
+      ds_deductionTax.filter("");
+      ds_incomeTax.filter("");
+      ds_incomeTax.filter("INPUTED_YEAR==0");
+      ds_deductionTax.filter("INPUTED_YEAR==0");   
+         
+      health.enable=false;
+      emp.enable=false;
+      longTerm.enable=false;
+      national.enable=false;
+      addSelYear.value=null;
+      addBtn.enable=false;
+         
+      alert("해당년도에는 급여 공제 항목이 존재합니다.");      
+         
+   }
+   else{
+      if(ds_deductionTax.getRowCount()!=0){
+         
+         addSelYear.value=null;
+         health.enable=false;
+         emp.enable=false;
+         longTerm.enable=false;
+         national.enable=false;
+         addBtn.enable=false;
+         ds_deductionTax.filter("");
+         ds_incomeTax.filter("");
+         ds_incomeTax.filter("INPUTED_YEAR==0");
+         ds_deductionTax.filter("INPUTED_YEAR==0");
+         alert("해당년도에는 급여 공제 항목이 존재합니다.");
+      }
+      else{
+         
+         ds_deductionTax.addRow();
+         health.enable=true;
+         emp.enable=true;
+         longTerm.enable=true;
+         national.enable=true;
+         addBtn.enable=true; //입력할 수 있을 때 버튼 활성화
+      }
+   }   
+   
+}
+
+// 소득세 추가 
+function addBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   addBtn.enable=false;
+   ds_incomeTax.addRow(); // grid에 row 추가 
+   ds_incomeTax.setColumn(ds_incomeTax.rowposition,"INPUTED_YEAR",addSelYear.value);   //추가 기준년도 입력
+}
+
+//작성 후 저장 시
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(addSelYear.value==null) alert("기준년도를 입력해주세요.");
+   else if(ds_incomeTax.getRowCount()==0) alert("작성된 급여 공제 항목이 없습니다.");
+   else if(health.value==null) alert("건강보험 부담률을 입력해주세요.");
+   else if(emp.value==null) alert("고용보험 부담률을 입력해주세요.");
+   else if(national.value==null)   alert("국민연금 부담률을 입력해주세요.");
+   else if(longTerm.value==null)   alert("장기요양보험 부담률을 입력해주세요.");
+   else if(addSelYear.value !=null && ds_incomeTax.getRowCount() !=0 && health.value !=null && emp.value != null && national.value!=null && longTerm.value !=null){   
+      ds_deductionTax.setColumn(ds_deductionTax.rowposition,"INPUTED_YEAR",addSelYear.value);
+      ds_deductionTax.setColumn(ds_deductionTax.rowposition,"HEALTH_INSUR_RATE",health.value);
+      ds_deductionTax.setColumn(ds_deductionTax.rowposition,"NATIONAL_PEN_RATE",national.value);
+      ds_deductionTax.setColumn(ds_deductionTax.rowposition,"LONG_TERM_CARE_RATE",longTerm.value);
+      ds_deductionTax.setColumn(ds_deductionTax.rowposition,"EMPLOYEEMENT_INSUR_RATE",emp.value);
+   
+      transaction(
+      "batchDeductionTax"
+      ,"svcHrCircumstance::batchDeductionTax.do"
+      ,"dsDeductionTax=ds_deductionTax:u dsIncomeTax=ds_incomeTax:u"
+      ,"ds_deductionTax=dsDeductionTax ds_incomeTax=dsIncomeTax"
+      ,""
+      ,"callback"
+      );
+   }
+   addBtn.enable=true;
+}
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   if(trid=='batchDeductionTax'){
+      if(ErrorCode!=0){
+         alert(ErrorMsg);
+      }else{
+         alert("성공적으로 저장하였습니다.");
+         reload();
+      }
+   }
+   
+   if(trid=='removeDeductionTax'){
+      if(ErrorCode!=0){
+         alert("저장하는 도중 오류가 발생하였습니다.");
+      }else{   
+         alert("성공적으로 삭제하였습니다.");
+         reload();
+      }   
+   }
+}]]></Script>
+  </Form>
+</FDL>

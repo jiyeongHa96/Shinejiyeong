@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="basicWorktimeManagementForm" classname="basicWorktimeManagementForm" inheritanceid="" position="absolute 0 0 962 650" titletext="basicWorktimeManagementForm" onload="basicWorktimeManagementForm_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="Edit00" taborder="0" value="기본 근무시간 관리" oneditclick="Edit00_oneditclick" enable="false" position2="absolute l:15 w:931 t:17 h:28" positiontype="position2" style="align:center;"/>
+        <GroupBox id="GroupBox00" text="검색" position2="absolute l:160 w:654 t:51 h:101" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox01" text="근무시간" position2="absolute l:160 w:654 t:160 h:431" positiontype="position2" style="titlealign:topleft;"/>
+        <Edit id="Edit01" taborder="2" value="적용년도 검색" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:274 w:126 t:92 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit02" taborder="3" value="년" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:527 w:30 t:92 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Combo id="applyYear" taborder="1" position2="absolute l:403 w:122 t:92 h:28" positiontype="position2" innerdataset="@ds_baseYear" codecolumn="YEAR" datacolumn="YEAR"/>
+        <Button id="searchBtn" taborder="4" text="찾기" position2="absolute l:616 w:88 t:92 h:28" positiontype="position2" onclick="searchBtn_onclick"/>
+        <Edit id="Edit03" taborder="5" value="적용년도 검색" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:274 w:126 t:221 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit04" taborder="6" value="출근시각" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:273 w:126 t:262 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit05" taborder="7" value="퇴근시각" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:272 w:126 t:305 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit06" taborder="8" value="점심시작시각" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:272 w:126 t:349 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit07" taborder="9" value="점심종료시각" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:272 w:126 t:390 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit08" taborder="10" value="연장시각" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:272 w:126 t:432 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit09" taborder="11" value="심야시각" oneditclick="Edit01_oneditclick" enable="false" position2="absolute l:272 w:126 t:475 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit11" taborder="12" position2="absolute l:404 w:185 t:221 h:28" positiontype="position2" enable="false"/>
+        <Edit id="quitTime" taborder="13" position2="absolute l:404 w:185 t:305 h:28" positiontype="position2" enable="false"/>
+        <Edit id="lunchStartTime" taborder="14" position2="absolute l:404 w:185 t:349 h:28" positiontype="position2" enable="false"/>
+        <Edit id="lunchEndTime" taborder="15" position2="absolute l:404 w:185 t:390 h:28" positiontype="position2" enable="false"/>
+        <Edit id="overTime" taborder="16" position2="absolute l:404 w:185 t:432 h:28" positiontype="position2" enable="false"/>
+        <Edit id="nightTime" taborder="17" position2="absolute l:404 w:185 t:475 h:28" positiontype="position2" enable="false"/>
+        <Edit id="attendTime" taborder="18" position2="absolute l:404 w:185 t:262 h:28" positiontype="position2" enable="false" useinputpanel="false"/>
+        <Button id="addBtn" taborder="19" text="등록" position2="absolute l:375 w:93 t:536 h:32" positiontype="position2" onclick="addBtn_onclick"/>
+        <Button id="saveBtn" taborder="20" text="저장" position2="absolute l:504 w:93 t:536 h:32" positiontype="position2" onclick="saveBtn_onclick"/>
+        <MaskEdit id="attendTime1" taborder="21" position2="absolute l:592 w:78 t:262 h:28" positiontype="position2" mask="##:##" enable="false" type="string" trimtype="none" style=":disabled {align:center middle;}"/>
+        <MaskEdit id="quitTime1" taborder="22" type="string" mask="##:##" enable="false" position2="absolute l:592 w:78 t:304 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <MaskEdit id="lunchStartTime1" taborder="23" type="string" mask="##:##" enable="false" position2="absolute l:592 w:78 t:349 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <MaskEdit id="lunchEndTime1" taborder="24" type="string" mask="##:##" enable="false" position2="absolute l:592 w:78 t:390 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <MaskEdit id="overTime1" taborder="25" type="string" mask="##:##" enable="false" position2="absolute l:592 w:78 t:432 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <MaskEdit id="nightTime1" taborder="26" type="string" mask="##:##" enable="false" position2="absolute l:592 w:78 t:474 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+      </Layout>
+    </Layouts>
+    <Bind>
+      <BindItem id="item0" compid="attendTime" propid="value" datasetid="ds_baseWorkTime" columnid="ATTEND_TIME"/>
+      <BindItem id="item1" compid="quitTime" propid="value" datasetid="ds_baseWorkTime" columnid="QUIT_TIME"/>
+      <BindItem id="item2" compid="lunchStartTime" propid="value" datasetid="ds_baseWorkTime" columnid="LUNCH_START_TIME"/>
+      <BindItem id="item3" compid="lunchEndTime" propid="value" datasetid="ds_baseWorkTime" columnid="LUNCH_END_TIME"/>
+      <BindItem id="item4" compid="overTime" propid="value" datasetid="ds_baseWorkTime" columnid="OVER_TIME"/>
+      <BindItem id="item5" compid="nightTime" propid="value" datasetid="ds_baseWorkTime" columnid="NIGHT_TIME"/>
+      <BindItem id="item6" compid="Edit11" propid="value" datasetid="ds_baseWorkTime" columnid="APPLY_YEAR"/>
+      <BindItem id="item7" compid="attendTime1" propid="value" datasetid="ds_baseWorkTime" columnid="ATTEND_TIME"/>
+      <BindItem id="item8" compid="quitTime1" propid="value" datasetid="ds_baseWorkTime" columnid="QUIT_TIME"/>
+      <BindItem id="item9" compid="lunchStartTime1" propid="value" datasetid="ds_baseWorkTime" columnid="LUNCH_START_TIME"/>
+      <BindItem id="item10" compid="lunchEndTime1" propid="value" datasetid="ds_baseWorkTime" columnid="LUNCH_END_TIME"/>
+      <BindItem id="item11" compid="overTime1" propid="value" datasetid="ds_baseWorkTime" columnid="OVER_TIME"/>
+      <BindItem id="item12" compid="nightTime1" propid="value" datasetid="ds_baseWorkTime" columnid="NIGHT_TIME"/>
+    </Bind>
+    <Script type="xscript4.0"><![CDATA[
+var targetYear;
+var countDataRow;
+var presentYear = new Date().getFullYear() + "";
+
+function basicWorktimeManagementForm_onload(obj:Form, e:LoadEventInfo)
+{
+   transaction(
+   "findBasicWorkTimeList",
+   "svcHrCircumstance::findBaseWorkTimeList.do",
+   "",
+   "ds_baseWorkTime=dsBaseWorkTime",
+   "",
+   "callback"
+   );
+   //applyYear.value = String(g_today).substr(0,4);
+   ds_baseWorkTime.filter("APPLY_YEAR=='"+2019+"'");
+}
+
+function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_baseWorkTime.filter("APPLY_YEAR==0");   
+   ds_baseWorkTime.filter("APPLY_YEAR=='"+applyYear.value+"'");
+   
+   targetYear = applyYear.value;
+   countDataRow=ds_baseWorkTime.getRowCount();
+   
+   if(countDataRow==0){
+      addBtn.enable="true";
+      alert(" 해당년도에 조회정보가 없습니다 \n(등록버튼을 눌러서 해당연도의 기본 근무시간을 등록해 주세요) ");
+   
+   }else{
+      addBtn.enable="false";
+   }
+         
+   if((presentYear>=targetYear)==0){
+      
+      attendTime.enable="true";
+      overTime.enable="true";
+      lunchStartTime.enable="true";
+      lunchEndTime.enable="true";
+      quitTime.enable="true";
+      nightTime.enable="true";   
+   }else{
+      attendTime.enable="false";
+      overTime.enable="false";
+      lunchStartTime.enable="false";
+      lunchEndTime.enable="false";
+      quitTime.enable="false";
+      nightTime.enable="false";   
+   
+   }      
+}
+
+function addBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   targetYear = applyYear.value;
+   
+   if((presentYear>=targetYear)==0){
+      if(applyYear.value == ""){
+         alert(" 근무시간을 적용할 년도를 선택해주세요 :) ");
+      }
+      else{
+         ds_baseWorkTime.filter("");
+         ds_baseWorkTime.addRow();
+         ds_baseWorkTime.setColumn(ds_baseWorkTime.rowposition,"APPLY_YEAR",applyYear.value);
+      }   
+   }
+   else{
+      alert(" 현재년도의 다음년도부터 등록 가능 합니다. ");
+   }
+}
+
+//저장 시 
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(confirm(" 변경된 내용을 저장 하시겠습니까?")){
+      if(countDataRow == 0){
+         var rownum = ds_baseWorkTime.rowposition;
+         ds_baseWorkTime.setColumn(rownum,"ATTEND_TIME",attendTime.value);
+         ds_baseWorkTime.setColumn(rownum,"QUIT_TIME",quitTime.value);
+         ds_baseWorkTime.setColumn(rownum,"OVER_TIME",overTime.value);
+         ds_baseWorkTime.setColumn(rownum,"NIGHT_TIME",nightTime.value);
+         ds_baseWorkTime.setColumn(rownum,"LUNCH_START_TIME",lunchStartTime.value);
+         ds_baseWorkTime.setColumn(rownum,"LUNCH_END_TIME",lunchEndTime.value);
+         ds_baseWorkTime.setColumn(rownum,"DINNER_START_TIME",quitTime.value);
+         ds_baseWorkTime.setColumn(rownum,"DINNER_END_TIME",overTime.value);
+   
+         transaction(
+            "addBasicWorkTime",
+            "svcHrCircumstance::addBaseWorkTime.do",
+            "dsBaseWorkTime=ds_baseWorkTime:u",
+            "ds_baseWorkTime=dsBaseWorkTime",
+            "",
+            "callback"
+         );
+      }
+      else{
+         ds_baseWorkTime.setColumn(rownum,"DINNER_START_TIME",quitTime.value);
+         ds_baseWorkTime.setColumn(rownum,"DINNER_END_TIME",overTime.value);
+   
+         transaction(
+            "editBasicWorkTime",
+            "svcHrCircumstance::editBaseWorkTime.do",
+            "dsBaseWorkTime=ds_baseWorkTime:u",
+            "ds_baseWorkTime=dsBaseWorkTime",
+            "",
+            "callback"
+         );
+      }
+   }
+}
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+
+   if(trid=='addBasicWorkTime'){
+      if(ErrorCode!=0){
+         alert(ErrorMsg);
+      }else{
+         alert(" 해당년도에 기본근무시간이 추가되었습니다 :) ");
+         reload();
+      }   
+   }
+   
+   if(trid=='editBasicWorkTime'){
+      if(ErrorCode!=0){
+         alert(ErrorMsg);
+      }else{
+         alert(" 해당년도의 근무시간이 변경되었습니다 :) ");   
+         reload();
+      }   
+   }
+   
+   
+}]]></Script>
+  </Form>
+</FDL>

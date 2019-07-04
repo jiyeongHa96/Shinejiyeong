@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="mainTopForm" position="absolute 0 0 711 125">
+    <!--<Form id="mainTopForm" classname="mainTopForm" inheritanceid="" position="absolute 0 0 1300 83" titletext="mainTopForm" onload="mainTopForm_onload" style="background:#ededed00;border:2 double #ededed00 ;color:white;gradation:linear 0,0 #f3f3f3db 0,100 #ededed00;" ontimer="setText">-->
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="DKmanagement" position2="absolute l:413 w:486 t:37 h:70" positiontype="position2" style="color:#3f3f3fb3;align:center;font:Verdana,22,bold;" onclick="Static00_onclick"/>
+      </Layout>
+    </Layouts>
+    <Bind/>
+    <Script type="xscript4.0"><![CDATA[
+function mainTopForm_onload(obj:Form, e:LoadEventInfo)
+{   
+	today=new Date().toFormatString("%Y%m%d");	
+	g_today=today;
+	
+
+	
+		transaction("getDustValue",
+		            "svcBase::getDustValue.do",
+		            "",
+		            "gds_dust=gds_dust",
+		            "",
+		            "callback",
+		            false);
+   
+	setTimer(setText(),2000);  
+	 
+
+}
+
+var num=null;
+function setText(){
+     num++;
+     
+     if(num==null){
+          num=0;
+     }else if(num<gds_dust.getRowCount()){
+        stationName.text=gds_dust.getColumn(num-1,"STATION_NAME");
+      
+        pmValue.text=gds_dust.getColumn(num-1,"PM_VALUE");
+      
+        if(gds_dust.getColumn(num-1,"PM_GRADE")==1){pmGrade.text="좋음"; pmGrade.color="greenyellow";}
+        else if(gds_dust.getColumn(num-1,"PM_GRADE")==2){pmGrade.text="보통"; pmGrade.color="white";}
+        else if(gds_dust.getColumn(num-1,"PM_GRADE")==3){pmGrade.text="나쁨"; pmGrade.color="orangered";}
+        else if(gds_dust.getColumn(num-1,"PM_GRADE")==4){pmGrade.text="매우나쁨"; pmGrade.color="red";}
+        
+      }
+      else{
+        num=0;
+      }
+
+}
+
+
+
+function logoutBtn_onclick(obj:Button,  e:ClickEventInfo)
+{     application.mainframe.visible = false;
+	openLoginFormDialog("loginform","LoginForm","Base::loginForm.xfdl");
+}
+
+
+function Static00_onclick(obj:Static,  e:ClickEventInfo)
+{
+	gfn_Open("mainView", "Base::mainView.xml", "MainForm");
+}
+]]></Script>
+  </Form>
+  <!--</Form>-->
+</FDL>

@@ -1,0 +1,984 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="attendanceApprovalManagement" classname="attendanceApprovalManagement" inheritanceid="" position="absolute 0 0 962 650" titletext="attendanceApprovalManagement" onload="attendanceApprovalManagement_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="근태 승인 관리" position2="absolute l:7 w:1004 t:11 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <Tab id="attdApprovalTab" taborder="1" position2="absolute l:13 w:942 t:70 h:566" positiontype="position2" tabindex="0" scrollbars="autoboth">
+          <Tabpages>
+            <Tabpage id="outing" text="외출 승인관리">
+              <Layouts>
+                <Layout>
+                  <Edit id="approvalEmpName" taborder="0" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:112 w:106 t:23 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+                  <Static id="Static05" position2="absolute l:15 w:99 t:23 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;" text="승인관리접속자"/>
+                  <Static id="Static11" text="신청일" position2="absolute l:16 w:85 t:77 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="fromDate" taborder="1" position2="absolute l:99 w:133 t:76 h:34" positiontype="position2" style="border:1 solid black ;"/>
+                  <Edit id="Edit01" taborder="2" value="~" enable="false" position2="absolute l:243 w:69 t:80 h:28" positiontype="position2" style="align:center;"/>
+                  <Static id="Static12" text="기준일" position2="absolute l:320 w:85 t:77 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="toDate" taborder="3" position2="absolute l:403 w:146 t:76 h:34" positiontype="position2" style="border:1 solid black ;" value="null" dateformat="yyyy-MM-dd ddd"/>
+                  <Combo id="selDeptCode" taborder="4" innerdataset="@ds_dept" codecolumn="DEPT_CODE" datacolumn="DEPT_NAME" position2="absolute l:100 w:132 t:131 h:33" positiontype="position2" onitemchanged="attdApprovalTab_outing_selDeptCode_onitemchanged"/>
+                  <Static id="Static04" text="부서" position2="absolute l:15 w:85 t:131 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Static id="Static00" position2="absolute l:243 w:85 t:132 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;" text="사원"/>
+                  <Combo id="searchEmpCode" taborder="5" innerdataset="@ds_employeeList" codecolumn="EMP_CODE" datacolumn="EMP_NAME" position2="absolute l:328 w:132 t:132 h:33" positiontype="position2"/>
+                  <Button id="selectBtn" taborder="6" text="조회" position2="absolute l:474 w:83 t:132 h:30" positiontype="position2" onclick="attdApprovalTab_outing_selectBtn_onclick"/>
+                  <Button id="cancelBtn" taborder="7" text="취소" position2="absolute l:834 w:83 t:132 h:30" positiontype="position2"/>
+                  <Button id="approveBtn" taborder="8" text="선택행승인" position2="absolute l:563 w:83 t:132 h:30" positiontype="position2" onclick="attdApprovalTab_outing_approveBtn_onclick"/>
+                  <Button id="selDeleteBtn" taborder="9" position2="absolute l:651 w:83 t:132 h:30" positiontype="position2" text="선택행삭제" onclick="attdApprovalTab_outing_selDeleteBtn_onclick"/>
+                  <Button id="batchSaveBtn" taborder="10" text="일괄저장" position2="absolute l:742 w:83 t:132 h:30" positiontype="position2" onclick="attdApprovalTab_outing_batchSaveBtn_onclick"/>
+                  <Grid id="Grid00" taborder="11" useinputpanel="false" position2="absolute l:15 w:897 t:180 h:338" positiontype="position2" binddataset="ds_outing" oncellclick="attdApprovalTab_outing_Grid00_oncellclick">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="79"/>
+                          <Column size="93"/>
+                          <Column size="87"/>
+                          <Column size="111"/>
+                          <Column size="98"/>
+                          <Column size="89"/>
+                          <Column size="89"/>
+                          <Column size="141"/>
+                          <Column size="89"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell text="사원번호"/>
+                          <Cell col="1" text="사원명"/>
+                          <Cell col="2" text="부서명"/>
+                          <Cell col="3" text="신청일"/>
+                          <Cell col="4" text="외출신청시간"/>
+                          <Cell col="5" text="금액"/>
+                          <Cell col="6" text="추가금액"/>
+                          <Cell col="7" text="외출사유"/>
+                          <Cell col="8" text="승인여부"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell style="align:center;" text="bind:EMP_CODE"/>
+                          <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                          <Cell col="2" displaytype="combo" edittype="none" style="align:center;" text="bind:DEPT_CODE" combodataset="ds_dept" combocodecol="DEPT_CODE" combodatacol="DEPT_NAME"/>
+                          <Cell col="3" style="align:center;" text="bind:BASIC_DAY" mask="####/##/##"/>
+                          <Cell col="4" style="align:center;" text="bind:REQUEST_TIME" mask="##:##"/>
+                          <Cell col="5" style="align:center;" text="bind:ETC_SAL"/>
+                          <Cell col="6" style="align:center;" text="bind:PLUS_COST"/>
+                          <Cell col="7" text="bind:CAUSE"/>
+                          <Cell col="8" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+            </Tabpage>
+            <Tabpage id="attdRest" text="근태 외 승인관리">
+              <Layouts>
+                <Layout>
+                  <Static id="Static05" text="승인관리접속자" position2="absolute l:15 w:99 t:23 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Edit id="approvalEmpName" taborder="1" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:112 w:106 t:23 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+                  <Static id="Static11" text="신청일" position2="absolute l:16 w:85 t:77 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="requestFromDate" taborder="2" position2="absolute l:99 w:133 t:76 h:34" positiontype="position2" style="border:1 solid black ;"/>
+                  <Static id="Static12" position2="absolute l:543 w:85 t:74 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;" text="승인구분"/>
+                  <Static id="Static04" text="부서" position2="absolute l:15 w:85 t:131 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="selDeptCode" taborder="5" innerdataset="@ds_dept" codecolumn="DEPT_CODE" datacolumn="DEPT_NAME" onitemchanged="attdApprovalTab_outing_selDeptCode_onitemchanged" position2="absolute l:100 w:132 t:131 h:33" positiontype="position2"/>
+                  <Static id="Static00" text="사원" position2="absolute l:243 w:85 t:132 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="searchEmpCode" taborder="6" innerdataset="@ds_employeeList" codecolumn="EMP_CODE" datacolumn="EMP_NAME" position2="absolute l:328 w:132 t:132 h:33" positiontype="position2"/>
+                  <Button id="approveBtn" taborder="7" text="선택행승인및취소" onclick="attdApprovalTab_attdRest_approveBtn_OnClick" position2="absolute l:565 w:115 t:132 h:30" positiontype="position2"/>
+                  <Button id="searchBtn" taborder="8" text="조회" onclick="attdApprovalTab_attdRest_searchBtn_OnClick" position2="absolute l:474 w:83 t:132 h:30" positiontype="position2"/>
+                  <Button id="deleteButton" taborder="9" text="선택행삭제" onclick="attdApprovalTab_attdRest_deleteButton_OnClick" position2="absolute l:775 w:83 t:131 h:30" positiontype="position2"/>
+                  <Button id="saveBtn" taborder="10" text="일괄저장" onclick="attdApprovalTab_attdRest_saveBtn_OnClick" position2="absolute l:775 w:83 t:168 h:30" positiontype="position2"/>
+                  <Grid id="Grid00" taborder="12" binddataset="ds_localDailyAttdRest" useinputpanel="false" oncellclick="attdApprovalTab_outing_Grid00_oncellclick" position2="absolute l:15 w:897 t:207 h:314" positiontype="position2">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="79"/>
+                          <Column size="93"/>
+                          <Column size="111"/>
+                          <Column size="111"/>
+                          <Column size="111"/>
+                          <Column size="70"/>
+                          <Column size="89"/>
+                          <Column size="89"/>
+                          <Column size="89"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell text="사원번호"/>
+                          <Cell col="1" text="사원명"/>
+                          <Cell col="2" text="신청일"/>
+                          <Cell col="3" text="시작일"/>
+                          <Cell col="4" text="종료일"/>
+                          <Cell col="5" text="일수"/>
+                          <Cell col="6" text="금액"/>
+                          <Cell col="7" text="사유"/>
+                          <Cell col="8" text="승인여부"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell style="align:center;" text="bind:EMP_CODE"/>
+                          <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                          <Cell col="2" style="align:center;" text="bind:REQUEST_DATE" mask="####/##/##"/>
+                          <Cell col="3" style="align:center;" text="bind:START_DATE" mask="####/##/##"/>
+                          <Cell col="4" style="align:center;" text="bind:END_DATE" mask="####/##/##"/>
+                          <Cell col="5" style="align:center;" text="bind:DAYS"/>
+                          <Cell col="6" style="align:center;" text="bind:COST"/>
+                          <Cell col="7" style="align:center;" text="bind:CAUSE"/>
+                          <Cell col="8" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Combo id="approvalType" taborder="13" innerdataset="@ds_approval" codecolumn="CODE" datacolumn="VALUE" position2="absolute l:627 w:132 t:73 h:33" positiontype="position2"/>
+                  <Static id="Static01" text="신청일" position2="absolute l:311 w:85 t:75 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="requestToDate" taborder="14" position2="absolute l:394 w:133 t:74 h:34" positiontype="position2" style="border:1 solid black ;" oneditclick="attdApprovalTab_attdRest_requestDate00_oneditclick"/>
+                  <Edit id="Edit01" taborder="15" value="~" enable="false" position2="absolute l:238 w:69 t:78 h:28" positiontype="position2" style="align:center;"/>
+                  <Button id="batchBtn" taborder="16" text="일괄승인" position2="absolute l:687 w:83 t:132 h:30" positiontype="position2" onclick="attdApprovalTab_attdRest_batchBtn_OnClick"/>
+                  <Button id="cancelBtn" taborder="17" text="취소" onclick="attdApprovalTab_outing_batchSaveBtn_onclick" position2="absolute l:861 w:59 t:168 h:30" positiontype="position2" enable="false"/>
+                </Layout>
+              </Layouts>
+              <InitValue>
+                <Combo id="approvalType" innerdataset="@ds_authority" datacolumn="AUTHORITY_NAME" codecolumn="AUTHORITY_NAME"/>
+              </InitValue>
+            </Tabpage>
+            <Tabpage id="attdOver" text="연장/심야 승인관리">
+              <Layouts>
+                <Layout>
+                  <Static id="Static05" text="승인관리접속자" position2="absolute l:15 w:99 t:23 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Edit id="approvalEmpName" taborder="1" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:112 w:106 t:23 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+                  <Static id="Static11" text="신청일" position2="absolute l:16 w:85 t:77 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="requestFromDate" taborder="2" position2="absolute l:99 w:133 t:76 h:34" positiontype="position2" style="border:1 solid black ;"/>
+                  <Edit id="Edit01" taborder="3" value="~" enable="false" position2="absolute l:238 w:69 t:78 h:28" positiontype="position2" style="align:center;"/>
+                  <Static id="Static01" text="신청일" position2="absolute l:311 w:85 t:75 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="requestToDate" taborder="4" oneditclick="attdApprovalTab_attdRest_requestDate00_oneditclick" position2="absolute l:394 w:133 t:74 h:34" positiontype="position2" style="border:1 solid black ;"/>
+                  <Static id="Static04" text="부서" position2="absolute l:15 w:85 t:131 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="selDeptCode" taborder="5" innerdataset="@ds_dept" codecolumn="DEPT_CODE" datacolumn="DEPT_NAME" onitemchanged="attdApprovalTab_outing_selDeptCode_onitemchanged" position2="absolute l:100 w:132 t:131 h:33" positiontype="position2"/>
+                  <Static id="Static00" text="사원" position2="absolute l:243 w:85 t:132 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="searchEmpCode" taborder="6" innerdataset="@ds_employeeList" codecolumn="EMP_CODE" datacolumn="EMP_NAME" position2="absolute l:328 w:132 t:132 h:33" positiontype="position2"/>
+                  <Button id="searchBtn" taborder="7" text="조회" onclick="attdApprovalTab_attdOver_searchBtn_OnClick" position2="absolute l:474 w:83 t:132 h:30" positiontype="position2"/>
+                  <Static id="Static12" text="승인구분" position2="absolute l:543 w:85 t:74 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Button id="approveBtn" taborder="8" text="선택행승인및취소" onclick="attdApprovalTab_attdOver_approveBtn_OnClick" position2="absolute l:565 w:115 t:132 h:30" positiontype="position2"/>
+                  <Combo id="approvalType" taborder="9" innerdataset="@ds_approval" codecolumn="CODE" datacolumn="VALUE" position2="absolute l:627 w:132 t:73 h:33" positiontype="position2"/>
+                  <Button id="batchBtn" taborder="10" text="일괄승인" onclick="attdApprovalTab_attdOver_batchBtn_OnClick" position2="absolute l:687 w:83 t:132 h:30" positiontype="position2"/>
+                  <Button id="deleteButton" taborder="11" text="선택행삭제" onclick="attdApprovalTab_attdOver_deleteButton_OnClick" position2="absolute l:775 w:83 t:131 h:30" positiontype="position2"/>
+                  <Button id="saveBtn" taborder="12" text="일괄저장" onclick="attdApprovalTab_attdOver_saveBtn_OnClick" position2="absolute l:775 w:83 t:168 h:30" positiontype="position2"/>
+                  <Button id="cancelBtn" taborder="13" text="취소" onclick="attdApprovalTab_attdOver_cancelBtn_OnClick" enable="false" position2="absolute l:861 w:59 t:168 h:30" positiontype="position2"/>
+                  <Grid id="Grid00" taborder="14" binddataset="ds_overNight" useinputpanel="false" oncellclick="attdApprovalTab_outing_Grid00_oncellclick" position2="absolute l:15 w:897 t:207 h:314" positiontype="position2">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="79"/>
+                          <Column size="93"/>
+                          <Column size="111"/>
+                          <Column size="94"/>
+                          <Column size="89"/>
+                          <Column size="90"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell text="사원번호"/>
+                          <Cell col="1" text="사원명"/>
+                          <Cell col="2" text="신청일"/>
+                          <Cell col="3" text="신청유형"/>
+                          <Cell col="4" text="승인여부"/>
+                          <Cell col="5" text="신청여부"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell style="align:center;" text="bind:EMP_CODE"/>
+                          <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                          <Cell col="2" style="align:center;" text="bind:REQUEST_DATE" mask="####/##/##"/>
+                          <Cell col="3" style="align:center;" text="bind:TYPE"/>
+                          <Cell col="4" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                          <Cell col="5" style="align:center;" text="bind:REQUEST_STATUS"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                </Layout>
+              </Layouts>
+              <InitValue>
+                <Combo id="approvalType" innerdataset="@ds_authority" datacolumn="AUTHORITY_NAME" codecolumn="AUTHORITY_NAME"/>
+              </InitValue>
+            </Tabpage>
+            <Tabpage id="attdAnnual" text="휴가/연차 승인관리">
+              <Layouts>
+                <Layout>
+                  <Static id="Static05" text="승인관리접속자" position2="absolute l:15 w:99 t:23 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Edit id="approvalEmpName" taborder="1" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:112 w:106 t:23 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+                  <Static id="Static11" text="신청일" position2="absolute l:16 w:85 t:77 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="requestFromDate" taborder="2" position2="absolute l:99 w:133 t:76 h:34" positiontype="position2" style="border:1 solid black ;"/>
+                  <Edit id="Edit01" taborder="3" value="~" enable="false" position2="absolute l:238 w:69 t:78 h:28" positiontype="position2" style="align:center;"/>
+                  <Static id="Static01" text="신청일" position2="absolute l:311 w:85 t:75 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Calendar id="requestToDate" taborder="4" oneditclick="attdApprovalTab_attdRest_requestDate00_oneditclick" position2="absolute l:394 w:133 t:74 h:34" positiontype="position2" style="border:1 solid black ;"/>
+                  <Static id="Static12" text="승인구분" position2="absolute l:543 w:85 t:74 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="approvalType" taborder="5" innerdataset="@ds_approval" codecolumn="CODE" datacolumn="VALUE" position2="absolute l:627 w:132 t:73 h:33" positiontype="position2"/>
+                  <Static id="Static04" text="부서" position2="absolute l:15 w:85 t:131 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="selDeptCode" taborder="6" innerdataset="@ds_dept" codecolumn="DEPT_CODE" datacolumn="DEPT_NAME" onitemchanged="attdApprovalTab_outing_selDeptCode_onitemchanged" position2="absolute l:100 w:132 t:131 h:33" positiontype="position2"/>
+                  <Static id="Static00" text="사원" position2="absolute l:243 w:85 t:132 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+                  <Combo id="searchEmpCode" taborder="7" innerdataset="@ds_employeeList" codecolumn="EMP_CODE" datacolumn="EMP_NAME" position2="absolute l:328 w:132 t:132 h:33" positiontype="position2"/>
+                  <Button id="searchBtn" taborder="8" text="조회" onclick="attdApprovalTab_attdAnnual_searchBtn_OnClick" position2="absolute l:474 w:83 t:132 h:30" positiontype="position2"/>
+                  <Button id="approveBtn" taborder="9" text="선택행승인및취소" onclick="attdApprovalTab_attdAnnual_approveBtn_OnClick" position2="absolute l:565 w:115 t:132 h:30" positiontype="position2"/>
+                  <Button id="batchBtn" taborder="10" text="일괄승인" onclick="attdApprovalTab_attdAnnual_batchBtn_OnClick" position2="absolute l:687 w:83 t:132 h:30" positiontype="position2"/>
+                  <Button id="deleteButton" taborder="11" text="선택행삭제" onclick="attdApprovalTab_attdAnnual_deleteButton_OnClick" position2="absolute l:775 w:83 t:131 h:30" positiontype="position2"/>
+                  <Button id="saveBtn" taborder="12" text="일괄저장" onclick="attdApprovalTab_attdAnnual_saveBtn_OnClick" position2="absolute l:775 w:83 t:168 h:30" positiontype="position2"/>
+                  <Grid id="Grid00" taborder="13" binddataset="ds_dayAnnual" useinputpanel="false" oncellclick="attdApprovalTab_outing_Grid00_oncellclick" position2="absolute l:15 w:897 t:207 h:314" positiontype="position2">
+                    <Formats>
+                      <Format id="default">
+                        <Columns>
+                          <Column size="79"/>
+                          <Column size="93"/>
+                          <Column size="111"/>
+                          <Column size="111"/>
+                          <Column size="70"/>
+                          <Column size="89"/>
+                          <Column size="89"/>
+                          <Column size="90"/>
+                        </Columns>
+                        <Rows>
+                          <Row size="24" band="head"/>
+                          <Row size="24"/>
+                        </Rows>
+                        <Band id="head">
+                          <Cell text="사원번호"/>
+                          <Cell col="1" text="사원명"/>
+                          <Cell col="2" text="시작일"/>
+                          <Cell col="3" text="종료일"/>
+                          <Cell col="4" text="일수"/>
+                          <Cell col="5" text="사유"/>
+                          <Cell col="6" text="승인여부"/>
+                          <Cell col="7" text="상세사유"/>
+                        </Band>
+                        <Band id="body">
+                          <Cell style="align:center;" text="bind:EMP_CODE"/>
+                          <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                          <Cell col="2" style="align:center;" text="bind:START_DATE" mask="####/##/##"/>
+                          <Cell col="3" style="align:center;" text="bind:END_DATE" mask="####/##/##"/>
+                          <Cell col="4" style="align:center;" text="bind:DAYS"/>
+                          <Cell col="5" style="align:center;" text="bind:CAUSE_CODE" combodataset="ds_detailCode" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME"/>
+                          <Cell col="6" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                          <Cell col="7" text="bind:DETAIL_CAUSE"/>
+                        </Band>
+                      </Format>
+                    </Formats>
+                  </Grid>
+                  <Button id="cancelBtn" taborder="14" text="취소" onclick="attdApprovalTab_attdAnnual_cancelBtn_OnClick" enable="false" position2="absolute l:861 w:59 t:168 h:30" positiontype="position2"/>
+                </Layout>
+              </Layouts>
+              <InitValue>
+                <Combo id="approvalType" innerdataset="@ds_authority" datacolumn="AUTHORITY_NAME" codecolumn="AUTHORITY_NAME"/>
+              </InitValue>
+            </Tabpage>
+          </Tabpages>
+        </Tab>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_localDailyAttd">
+        <ColumnInfo>
+          <Column id="EMP_CODE" type="STRING" size="256"/>
+          <Column id="DAY_ATTD_SEQ" type="STRING" size="256"/>
+          <Column id="BASIC_DAY" type="STRING" size="256"/>
+          <Column id="ATTD_TYPE_CODE" type="STRING" size="256"/>
+          <Column id="TIME" type="STRING" size="256"/>
+          <Column id="APPROVAL_STATUS" type="STRING" size="256"/>
+          <Column id="COST" type="STRING" size="256"/>
+          <Column id="CAUSE" type="STRING" size="256"/>
+          <Column id="EMP_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_localDailyAttdRest">
+        <ColumnInfo>
+          <Column id="ATTD_REST_SEQ" type="STRING" size="256"/>
+          <Column id="EMP_CODE" type="STRING" size="256"/>
+          <Column id="ATTD_REST_CODE" type="STRING" size="256"/>
+          <Column id="REQUEST_DATE" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="DAYS" type="STRING" size="256"/>
+          <Column id="COST" type="STRING" size="256"/>
+          <Column id="CAUSE" type="STRING" size="256"/>
+          <Column id="APPROVAL_STATUS" type="STRING" size="256"/>
+          <Column id="EMP_NAME" type="STRING" size="256"/>
+          <Column id="OTHER_SUDANG" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_overNightCopy">
+        <ColumnInfo>
+          <Column id="EMP_CODE" type="STRING" size="256"/>
+          <Column id="BASIC_DAY" type="STRING" size="256"/>
+          <Column id="EMP_NAME" type="STRING" size="256"/>
+          <Column id="APPROVAL_STATUS" type="STRING" size="256"/>
+          <Column id="REQUEST_STATUS" type="STRING" size="256"/>
+          <Column id="TYPE" type="STRING" size="256"/>
+          <Column id="OVER_NIGHT_SEQ" type="STRING" size="256"/>
+          <Column id="REQUEST_DATE" type="STRING" size="256"/>
+          <Column id="FROM_TIME" type="STRING" size="256"/>
+          <Column id="TO_TIME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_attdType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+          <Column id="USING_STATUS" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_requestType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="CODE" type="STRING" size="256"/>
+          <Column id="VALUE" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="CODE">Y</Col>
+            <Col id="VALUE">신청</Col>
+          </Row>
+          <Row>
+            <Col id="CODE">N</Col>
+            <Col id="VALUE">미신청</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript4.0"><![CDATA[
+
+var flag=0;
+var today=new Date().toFormatString("%Y%m%d");	
+
+function attendanceApprovalManagement_onload(obj:Form, e:LoadEventInfo)
+{	
+	
+	ds_outing.clearData();
+	ds_overNight.clearData();
+	ds_overNight.clearData();
+	ds_dayAnnual.clearData();
+	//v_approvalManagerEmpName.value = g_empName;
+	attdApprovalTab.outing.approvalEmpName.value = g_empName;
+	attdApprovalTab.attdRest.approvalEmpName.value = g_empName;
+	attdApprovalTab.attdOver.approvalEmpName.value = g_empName;
+	attdApprovalTab.attdAnnual.approvalEmpName.value = g_empName;
+	transaction("findEmployeeList",
+	"svcBase::/findEmployeeList.do",
+	"",
+	"ds_employeeList=dsEmployee",
+	"",
+	"callback",
+	false
+	); 
+	
+	
+	transaction("findDeptList",
+	"svcBase::/findDeptList.do",
+	"",
+	"ds_dept=dsDept",
+	"businessPlaceCode="+ g_businessCode,
+	"callback",
+	false
+	);
+		
+	
+	//attdApprovalTab.outing.basicDate.value=today; 기준일
+	
+	//attdApprovalTab..requestDate.value=today;
+	//attdApprovalTab.tab3.requestDate.value=today;
+	//attdApprovalTab.tab4.requestDate.value=today;
+
+	//ds_overNight.Filter("EMP_CODE=00"); 
+	
+	  
+    transaction(
+	"findCodeList",
+	"svcBase::/findCodeList.do",
+	"",
+	"ds_code=dsCode ds_detailCode=dsDetailCode",
+	"",
+	"callback",
+	false
+	);
+    
+    ds_detailCode.filter("CODE=='CO-16'");
+	ds_attdType.copyData(ds_detailCode,true);
+	ds_employeeList.filter("EMP_CODE=='-1'");
+
+}
+
+
+
+var outingFlog="N"
+//외출승인관리 조회버튼
+function attdApprovalTab_outing_selectBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	if(outingFlog=="N"){
+		alert(" 부서먼저 선택해주세요 ");
+		return;
+	}
+	var v_fromDate=attdApprovalTab.outing.fromDate.value;
+	var v_toDate=attdApprovalTab.outing.toDate.value;
+	var v_empCode=attdApprovalTab.outing.searchEmpCode.value;
+	if(v_fromDate==null || v_toDate==null || v_empCode==null){
+		alert("검색날짜,사원 모두 선택해주세요.");
+		return;
+	}
+	
+
+	transaction(
+      "findDailyAttdOutingList",
+      "svcHrAttendance::/findDailyAttdOutingList.do",
+      "",
+      "ds_outing=dsOuting",
+      "empCode='"+v_empCode+"' fromDate='"+v_fromDate+"' toDate='"+v_toDate+"'",
+      "callback",
+      false
+   );
+	if(ds_outing.rowcount==0){
+			alert("조회 결과가 없습니다.");
+	}
+}
+//외출승인관리 부서 > 사원 옵션
+function attdApprovalTab_outing_selDeptCode_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+	outingFlog="Y";
+	ds_employeeList.filter("DEPT_CODE=='"+ obj.value +"'");
+}
+
+//외출승인관리 선택행승인버튼
+function attdApprovalTab_outing_approveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+
+	var rowIndex = ds_outing.rowposition;
+	var rowCnt = ds_outing.getRowCount();
+	
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		for(var i=0; i<rowCnt; i++){
+		
+		var flag = ds_outing.getSelect(i);
+		
+			if(flag){
+
+				var status = ds_outing.getColumn(i,"APPROVAL_STATUS");
+					
+				if(status == 'Y'){
+					ds_outing.setColumn(i, "APPROVAL_STATUS", "N");
+				}else if(status == 'N'){
+					ds_outing.setColumn(i, "APPROVAL_STATUS", "Y");
+				}
+				
+			}
+		}
+	} 
+}
+//외출승인관리 행 삭제
+function attdApprovalTab_outing_selDeleteBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var rowIndex = ds_outing.Currow;
+	
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		ds_outing.deleteSelectedRows();
+	}
+}
+//외출승인관리 일괄저장 버튼
+function attdApprovalTab_outing_batchSaveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	if(confirm("저장하시겠습니까?")){
+         transaction(
+            "batchDailyAttdOuting",
+            "svcHrAttendance::/batchDailyAttdOuting.do",
+            "dsOuting=ds_outing:u",
+            "",
+            "",
+            "callback",
+            false
+         );
+	}
+}
+
+
+// 취소버튼
+function attdApprovalTab_outing_cancelBtn_OnClick(obj)
+{
+	ds_outing.reset();
+}
+
+
+
+
+// 근태외 승인 관리 검색 버튼  완료
+
+function attdApprovalTab_attdRest_searchBtn_OnClick(obj)
+{
+	
+	  var v_requestFromDate=attdApprovalTab.attdRest.requestFromDate.value; 
+	  var v_requestToDate=attdApprovalTab.attdRest.requestToDate.value;
+      var v_deptCode=attdApprovalTab.attdRest.selDeptCode.value; 
+      var v_approvalStatus=attdApprovalTab.attdRest.approvalType.value; 
+      var v_empCode=attdApprovalTab.attdRest.searchEmpCode.value;
+	
+	  if(v_requestFromDate==null || v_requestToDate==null || v_deptCode==null ||v_approvalStatus==null||v_empCode==null){
+		  alert("신청날짜,사원,승인여부 모두 선택해주세요.");
+		  return;
+	  }
+      transaction(
+         "findAttdRestListByCondition",
+         "svcHrAttendance::/findAttdRestListByCondition.do",
+         "",
+         "ds_localDailyAttdRest=dsDailyAttdRest",
+         "approvalStatus='" + v_approvalStatus + "' fromDate='" + v_requestFromDate + "' toDate='" + v_requestToDate + "' deptCode='" + v_deptCode + "' empCode='" + v_empCode + "'" ,
+         "callback",
+         false
+      );
+      if(ds_localDailyAttdRest.rowcount==0){
+			alert("조회 결과가 없습니다.");
+	  }
+}
+
+
+//근태외 선택행승인및취소 버튼
+function attdApprovalTab_attdRest_approveBtn_OnClick(obj)
+{
+	var rowIndex = ds_localDailyAttdRest.rowposition;
+	var rowCnt = ds_localDailyAttdRest.getRowCount();
+	
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		for(var i=0; i<rowCnt; i++){
+		
+		var flag = ds_localDailyAttdRest.getSelect(i);
+		
+			if(flag){
+				var status = ds_localDailyAttdRest.getColumn(i,"APPROVAL_STATUS");
+				
+				if(status == 'Y'){
+					ds_localDailyAttdRest.setColumn(i, "APPROVAL_STATUS", "N");
+				}else if(status == 'N'){
+					ds_localDailyAttdRest.setColumn(i, "APPROVAL_STATUS", "Y");
+				}
+				
+			}
+		}
+	} 
+}
+
+
+
+//근태외 일괄 승인 버튼 
+function attdApprovalTab_attdRest_batchBtn_OnClick(obj)
+{
+	if(obj.text == "일괄승인"){
+   for(var index = 0; index < ds_localDailyAttdRest.rowcount; index++) {
+      ds_localDailyAttdRest.setColumn(index, "APPROVAL_STATUS", "Y");
+   }
+		obj.text = "일괄취소";
+		obj.color = "red";
+   }else{
+   
+   for(var index = 0; index < ds_localDailyAttdRest.rowcount; index++) {
+      ds_localDailyAttdRest.setColumn(index, "APPROVAL_STATUS", "N");
+   }
+		obj.text = "일괄승인";
+		obj.color = "#f24a00ff";
+   }
+      attdApprovalTab.attdRest.cancelBtn.enable=true;
+}
+
+// 근태외 삭제버튼
+function attdApprovalTab_attdRest_deleteButton_OnClick(obj)
+{
+	var rowIndex = ds_localDailyAttdRest.rowposition;
+
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		ds_localDailyAttdRest.deleteSelectedRows();
+	}
+	attdApprovalTab.attdRest.cancelBtn.enable=true;
+}
+
+// 근태외 취소 버튼
+function attdApprovalTab_attdRest_cancelBtn_OnClick(obj)
+{
+	 if(confirm("취소하시겠습니까 ?")){
+      //flag=1;
+      ds_localDailyAttdRest.reset();
+      obj.enable=false;
+   }
+}
+
+
+// 근태외 승인 저장 
+function attdApprovalTab_attdRest_saveBtn_OnClick(obj)
+{
+	if(confirm("저장하시겠습니까?")){
+         transaction(
+            "batchDailyAttdRest",
+            "svcHrAttendance::/batchDailyAttdRest.do",
+            "dsDailyAttdRest=ds_localDailyAttdRest:u",
+            "",
+            "",
+            "callback",
+            false
+         );
+	}
+}
+
+
+// 연장 심야 버튼 조회시 
+function attdApprovalTab_attdOver_searchBtn_OnClick(obj)
+{
+	  var v_requestFromDate=attdApprovalTab.attdOver.requestFromDate.value; 
+	  var v_requestToDate=attdApprovalTab.attdOver.requestToDate.value;
+      var v_deptCode=attdApprovalTab.attdOver.selDeptCode.value; 
+      var v_approvalStatus=attdApprovalTab.attdOver.approvalType.value;
+      var v_empCode=attdApprovalTab.attdOver.searchEmpCode.value;
+      
+      
+      if(v_requestFromDate==null || v_requestToDate==null || v_deptCode==null ||v_approvalStatus==null||v_empCode==null){
+		  alert("신청날짜,사원,승인여부 모두 선택해주세요.");
+		  return;
+	  }
+      transaction(
+         "findOverNightByCondition",
+         "svcHrAttendance::/findOverNightReportByCondition.do",
+         "",
+         "ds_overNight=dsOverNight",
+         "approvalStatus='" + v_approvalStatus + "' fromDate='" + v_requestFromDate + "' toDate='" + v_requestToDate + "' deptCode='" + v_deptCode + "' empCode='" + v_empCode + "'" ,
+         "callback",
+         false
+      );
+       if(ds_overNight.rowcount==0){
+			alert("조회 결과가 없습니다.");
+	  }
+}
+
+
+//연장 심야 일관 승인 
+function attdApprovalTab_attdOver_batchBtn_OnClick(obj)
+{
+	if(obj.text == "일괄승인"){
+		for(var index = 0; index < ds_overNight.rowcount; index++) {
+			ds_overNight.setColumn(index, "APPROVAL_STATUS", "Y");
+		}  
+		obj.text = "일괄취소";
+		obj.Color = "red";
+		
+	}else{
+		for(var index = 0; index < ds_overNight.rowcount; index++) {
+			ds_overNight.setColumn(index, "APPROVAL_STATUS", "N");
+		}  
+		obj.text = "일괄승인";
+		obj.Color = "#f24a00ff";
+	}
+      attdApprovalTab.attdOver.cancelBtn.enable=true;
+}
+
+
+
+
+// 연장심야 선택행승인및취소 버튼
+function attdApprovalTab_attdOver_approveBtn_OnClick(obj)
+{
+	var rowIndex = ds_overNight.rowposition;
+	var rowCnt = ds_overNight.getRowCount();
+	
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		for(var i=0; i<rowCnt; i++){
+		
+		var flag = ds_overNight.getSelect(i);
+		
+			if(flag){
+				var status = ds_overNight.getColumn(i,"APPROVAL_STATUS");
+				
+				if(status == 'Y'){
+					ds_overNight.setColumn(i, "APPROVAL_STATUS", "N");
+				}else if(status == 'N'){
+					ds_overNight.setColumn(i, "APPROVAL_STATUS", "Y");
+				}
+				
+			}
+		}
+	} 
+}
+
+// 연장심야 선택행삭제 버튼
+function attdApprovalTab_attdOver_deleteButton_OnClick(obj)
+{
+	var rowIndex = ds_overNight.rowposition;
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		ds_overNight.deleteSelectedRows();
+	}
+	attdApprovalTab.attdOver.cancelBtn.enable=true;
+}
+
+
+
+// 연장 심야 신청 취소시. 
+function attdApprovalTab_attdOver_cancelBtn_OnClick(obj)
+{
+	if(confirm("취소하시겠습니까 ?")){
+      ds_overNight.reset();
+      obj.enable=false;
+   }
+}
+
+
+// 연장 심야 저장 시.. 
+function attdApprovalTab_attdOver_saveBtn_OnClick(obj)
+{
+	if(confirm("저장하시겠습니까 ?")){
+         transaction(
+               "batchOverNight",
+               "svcHrAttendance::/batchOverNight.do",
+               "dsOverNight=ds_overNight:u",
+               "",
+               "",
+               "callback",
+               false
+            );
+      }	
+}
+
+
+
+//연차 휴가 조회 버튼 
+function attdApprovalTab_attdAnnual_searchBtn_OnClick(obj)
+{
+	  var v_requestFromDate=attdApprovalTab.attdAnnual.requestFromDate.value; 
+	  var v_requestToDate=attdApprovalTab.attdAnnual.requestToDate.value;
+      var v_deptCode=attdApprovalTab.attdAnnual.selDeptCode.value; 
+      var v_approvalStatus=attdApprovalTab.attdAnnual.approvalType.value;
+      var v_empCode=attdApprovalTab.attdAnnual.searchEmpCode.value;
+
+      
+	  if(v_requestFromDate==null || v_requestToDate==null || v_deptCode==null ||v_approvalStatus==null||v_empCode==null){
+		  alert("신청날짜,사원,승인여부 모두 선택해주세요.");
+		  return;
+	  }
+
+	transaction(
+		"findDayAnnualListByCondition",
+		"svcHrAttendance::/findDayAnnualListByCondition.do",
+		"",
+		"ds_dayAnnual=dsDayAnnual",
+		"approvalStatus='" + v_approvalStatus + "' fromDate='" + v_requestFromDate + "' toDate='" + v_requestToDate + "' deptCode='" + v_deptCode + "' empCode='" + v_empCode + "'" ,
+		"callback",
+		false
+	);
+	if(ds_dayAnnual.rowcount==0){
+			alert("조회 결과가 없습니다.");
+	  }
+	
+}
+
+// 연차 휴가 신청 일괄승인 버튼 
+function attdApprovalTab_attdAnnual_batchBtn_OnClick(obj)
+{
+	if(obj.text == "일괄승인"){
+		for(var index = 0; index < ds_dayAnnual.rowcount; index++) {
+            ds_dayAnnual.setColumn(index, "APPROVAL_STATUS", "Y");
+		}
+		obj.text = "일괄취소";
+		obj.Color = "red";
+		
+    }else{
+		for(var index = 0; index < ds_dayAnnual.rowcount; index++) {
+            ds_dayAnnual.setColumn(index, "APPROVAL_STATUS", "N");
+		}
+		obj.text = "일괄승인";
+		obj.Color = "#f24a00ff";
+    }
+    
+      attdApprovalTab.attdAnnual.cancelBtn.enable=true;
+}
+
+//////////////////////////////////////////////////완료되었음//////////////////////////////////////////
+
+// 연차 휴가 선택승인및취소 버튼
+function attdApprovalTab_attdAnnual_approveBtn_OnClick(obj)
+{
+	var rowIndex = ds_dayAnnual.rowposition;
+	var rowCnt = ds_dayAnnual.getRowCount();
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		for(var i=0; i<rowCnt; i++){
+		
+		var flag = ds_dayAnnual.getSelect(i);
+		
+			if(flag){
+				var status = ds_dayAnnual.getColumn(i,"APPROVAL_STATUS");
+				
+				if(status == 'Y'){
+					ds_dayAnnual.setColumn(i, "APPROVAL_STATUS", "N");
+				}else if(status == 'N'){
+					ds_dayAnnual.setColumn(i, "APPROVAL_STATUS", "Y");
+				}
+				
+			}
+		}
+	}
+	
+}
+
+// 연차 휴가 선택행삭제 버튼
+function attdApprovalTab_attdAnnual_deleteButton_OnClick(obj)
+{
+	
+	var rowIndex = ds_dayAnnual.rowposition;
+	
+	if(rowIndex<0){
+		alert("행을 선택해 주세요.");
+	}else{
+		ds_dayAnnual.deleteSelectedRows();
+	}
+	attdApprovalTab.attdAnnual.cancelBtn.enable=true;
+	
+}
+
+// 연차 휴가 취소 버튼 
+function attdApprovalTab_attdAnnual_cancelBtn_OnClick(obj)
+{
+	if(confirm("취소하시겠습니까 ?")){
+      ds_dayAnnual.reset();
+      obj.Enable=false;
+   }
+}
+
+
+//연차 휴가 일괄 저장 
+function attdApprovalTab_attdAnnual_saveBtn_OnClick(obj)
+{
+	if(confirm("저장하시겠습니까?")){
+	
+      transaction(
+         "batchDayAnnual",
+         "svcHrAttendance::/batchDayAnnual.do",
+         "dsDayAnnual=ds_dayAnnual:u",
+         "",
+         "",
+         "callback",
+         false
+      );      
+      attdApprovalTab.attdAnnual.cancelBtn.enable=false;
+   }
+}
+
+
+
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+
+	if(trid=='batchDayAnnual'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0:)  ");
+      }else{
+         alert(ErrorMsg);
+         Reload();
+      }   
+   }
+
+	if(trid=='deleteDailyAttdList'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0:)  ");
+      }else{
+         alert(ErrorMsg);
+         Reload();
+      }   
+   }
+
+   if(trid=='findDailyAttdListByCondition'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         if(ds_localDailyAttd.GetRowCount()==0){
+            alert("조회할 내역이 없습니다. ");
+         }else{
+			alert(ErrorMsg);
+         }
+      }   
+   }
+   
+   if(trid=='batchDailyAttd'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0:)  ");
+      }else{
+         alert(ErrorMsg);
+         Reload();
+      }   
+   }
+   
+   if(trid=='findAttdRestListByCondition'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         if(ds_localDailyAttdRest.GetRowCount()==0){
+            alert("조회할 내역이 없습니다.  ");
+         }else{
+         alert(ErrorMsg);
+         }
+      }   
+   }
+   
+   if(trid=='batchDailyAttdRest'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         alert(ErrorMsg);
+         reload();
+      }   
+   }
+   
+   if(trid=='batchOverNight'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         alert(ErrorMsg);
+         reload();
+      }   
+   }
+
+   if(trid=='findDayAnnualListByCondition'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         alert(ErrorMsg);
+      }   
+   }
+   
+   if(trid=='batchDailyAttdOuting'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+			alert(ErrorMsg);
+         
+      }   
+   }
+   
+}
+
+
+
+
+
+
+
+
+
+]]></Script>
+  </Form>
+</FDL>

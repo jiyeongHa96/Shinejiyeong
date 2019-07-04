@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="mainView" classname="mainView" inheritanceid="" position="absolute 0 0 1024 768" titletext="MainForm">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" position2="absolute l:12 w:580 t:15 h:500" positiontype="position2" style="border:1px solid #b1b5b9b3 ;"/>
+        <GroupBox id="GroupBox00" text="                                               실시간 분실 스마트폰 검색                    정보제공:경찰청" position2="absolute l:23 w:560 t:24 h:481" positiontype="position2"/>
+        <Combo id="PRDTCLCD02" taborder="2" position2="absolute l:124 w:152 t:88 h:33" positiontype="position2" innerdataset="@ds_COLCD" datacolumn="kind" codecolumn="code"/>
+        <Button id="searchBtn" taborder="3" text="검색" position2="absolute l:285 w:91 t:47 h:31" positiontype="position2" onclick="searchBtn_onclick"/>
+        <Combo id="FDLCTCD" taborder="4" position2="absolute l:124 w:152 t:46 h:33" positiontype="position2" innerdataset="@ds_FDLCTCD" datacolumn="name" codecolumn="code"/>
+        <Edit id="Edit00" taborder="5" position2="absolute l:38 w:85 t:47 h:31" positiontype="position2" value="지역" style="align:center;" enable="false"/>
+        <Edit id="Edit01" taborder="6" position2="absolute l:38 w:85 t:89 h:31" positiontype="position2" style="align:center;" enable="false" value="분류명"/>
+        <Grid id="Grid00" taborder="7" useinputpanel="false" position2="absolute l:24 w:535 t:128 h:187" positiontype="position2" binddataset="ds_openAPI" oncellclick="Grid00_oncellclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="130"/>
+                <Column size="114"/>
+                <Column size="101"/>
+                <Column size="163"/>
+                <Column size="232"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="보관장소"/>
+                <Cell col="1" text="습득일자"/>
+                <Cell col="2" text="물품명"/>
+                <Cell col="3" text="핸드폰모델코드"/>
+                <Cell col="4" text="특이사항"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:DEP_PLACE"/>
+                <Cell col="1" style="align:center;" text="bind:FD_YMD"/>
+                <Cell col="2" style="align:center;" text="bind:FD_PRDT_NM"/>
+                <Cell col="3" style="align:center;" text="bind:MDCD"/>
+                <Cell col="4" style="align:center;" text="bind:FD_SBJT"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <GroupBox id="GroupBox01" text="사진" position2="absolute l:26 w:531 t:320 h:186" positiontype="position2"/>
+        <ImageViewer id="openApiImg" taborder="8" position2="absolute l:38 w:505 t:345 h:157" positiontype="position2" stretch="fixaspectratio" onmouseenter="openApiImg_onmouseenter" onmouseleave="openApiImg_onmouseleave" style="border:0px solid white ;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_FDLCTCD" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="name" type="STRING" size="256"/>
+          <Column id="code" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="name">서울특별시</Col>
+            <Col id="code">LCA000</Col>
+          </Row>
+          <Row>
+            <Col id="name">강원도</Col>
+            <Col id="code">LCH000</Col>
+          </Row>
+          <Row>
+            <Col id="name">경기도</Col>
+            <Col id="code">LCI000</Col>
+          </Row>
+          <Row>
+            <Col id="name">경상남도</Col>
+            <Col id="code">LCJ000</Col>
+          </Row>
+          <Row>
+            <Col id="name">경상북도</Col>
+            <Col id="code">LCK000</Col>
+          </Row>
+          <Row>
+            <Col id="name">광주광역시</Col>
+            <Col id="code">LCQ000</Col>
+          </Row>
+          <Row>
+            <Col id="name">대구광역시</Col>
+            <Col id="code">LCR000</Col>
+          </Row>
+          <Row>
+            <Col id="name">대전광역시</Col>
+            <Col id="code">LCS000</Col>
+          </Row>
+          <Row>
+            <Col id="name">부산광역시</Col>
+            <Col id="code">LCT000</Col>
+          </Row>
+          <Row>
+            <Col id="name">울산광역시</Col>
+            <Col id="code">LCU000</Col>
+          </Row>
+          <Row>
+            <Col id="name">인천광역시</Col>
+            <Col id="code">LCV000</Col>
+          </Row>
+          <Row>
+            <Col id="name">전라남도</Col>
+            <Col id="code">LCL000</Col>
+          </Row>
+          <Row>
+            <Col id="name">전라북도</Col>
+            <Col id="code">LCM000</Col>
+          </Row>
+          <Row>
+            <Col id="name">충청남도</Col>
+            <Col id="code">LCN000</Col>
+          </Row>
+          <Row>
+            <Col id="name">충청북도</Col>
+            <Col id="code">LCO000</Col>
+          </Row>
+          <Row>
+            <Col id="name">제주특별자치도</Col>
+            <Col id="code">LCP000</Col>
+          </Row>
+          <Row>
+            <Col id="name">세종특별자치시</Col>
+            <Col id="code">LCW000</Col>
+          </Row>
+          <Row>
+            <Col id="name">해외</Col>
+            <Col id="code">LCF000</Col>
+          </Row>
+          <Row>
+            <Col id="code">LCE000</Col>
+            <Col id="name">기타</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="ds_COLCD" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="kind" type="STRING" size="256"/>
+          <Column id="code" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="kind">삼성휴대폰</Col>
+            <Col id="code">PRJ100</Col>
+          </Row>
+          <Row>
+            <Col id="kind">LG휴대폰</Col>
+            <Col id="code">PRJ200</Col>
+          </Row>
+          <Row>
+            <Col id="kind">스카이휴대폰</Col>
+            <Col id="code">PRJ300</Col>
+          </Row>
+          <Row>
+            <Col id="kind">아이폰</Col>
+            <Col id="code">PRJ400</Col>
+          </Row>
+          <Row>
+            <Col id="kind">기타통신기기</Col>
+            <Col id="code">PRJ500</Col>
+          </Row>
+          <Row>
+            <Col id="kind">모토로라휴대폰</Col>
+            <Col id="code">PRJ600</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+    </Objects>
+    <Script type="xscript4.0"><![CDATA[function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	//ds_openAPI.filter("FD_PRDT_NM==0");
+	var v_FDLCTCD = FDLCTCD.value;
+	var v_PRDTCLCD0 = PRDTCLCD02.value;
+	
+	if(FDLCTCD.length==0  || PRDTCLCD02.length==0){
+	alert("지역,분류명 선택해주세요.");
+	}else{
+	transaction(
+	"OpenApi",
+	"svcBase::/OpenApiList.do",
+	"",
+	"ds_openAPI=dsOpenApi",
+	"FDLCTCD='" +v_FDLCTCD+ "' PRDTCLCD02='" +v_PRDTCLCD0+ "'",
+	"callback",
+	false
+	);
+	}
+}
+
+function Grid00_oncellclick(obj:Grid, e:GridClickEventInfo)
+{
+	imgPath=ds_openAPI.getColumn(e.row,"FD_FILE_PATH_IMG");
+	unImg=imgPath.lastIndexOf("no");
+	if(unImg>0){
+		alert("등록된 사진이 없습니다.");
+	}else{
+		openApiImg.image = ds_openAPI.getColumn(e.row,"FD_FILE_PATH_IMG");
+		alert("사진에 마우스를 올리면 확대됩니다.\n자세히 보고 연락주세요.");
+	}
+	
+}
+
+function openApiImg_onmouseenter(obj:ImageViewer, e:MouseEventInfo)
+{
+	openApiImg.position2= "absolute l:18 w:700 t:300 h:270";
+}
+
+function openApiImg_onmouseleave(obj:ImageViewer, e:MouseEventInfo)
+{
+	openApiImg.position2= "absolute l:38 w:505 t:345 h:157";
+}
+]]></Script>
+  </Form>
+</FDL>

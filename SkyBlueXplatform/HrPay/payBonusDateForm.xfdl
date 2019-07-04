@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="payBonusDateForm" classname="payBonusDateForm" inheritanceid="" position="absolute 0 0 962 619" titletext="payBonusDateForm" onload="payBonusDateForm_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static01" text="귀속연월" position2="absolute l:40 w:67 t:84 h:19" positiontype="position2" onclick="Static01_onclick" style="align:center;"/>
+        <Combo id="selBaseYear" taborder="1" text="선택하세요" position2="absolute l:107 w:105 t:81 h:26" positiontype="position2" index="-1" onitemchanged="Combo00_onitemchanged" codecolumn="YEAR" datacolumn="YEAR" innerdataset="@ds_baseYear"/>
+        <Static id="Static02" text="년" position2="absolute l:214 w:26 t:84 h:18" positiontype="position2" style="align:center;"/>
+        <Combo id="selBaseMonth" taborder="2" position2="absolute l:247 w:105 t:80 h:29" positiontype="position2" onitemchanged="Combo01_onitemchanged" text="선택하세요" index="-1" codecolumn="MONTH" datacolumn="MONTH" innerdataset="@ds_baseMonth"/>
+        <Static id="Static03" text="월" position2="absolute l:363 w:26 t:83 h:18" positiontype="position2"/>
+        <Button id="searchBtn" taborder="3" text="조회" position2="absolute l:572 w:76 t:100 h:35" positiontype="position2" style="align:center;" onclick="searchBtn_onclick"/>
+        <Button id="saveBtn" taborder="4" text="저장" position2="absolute l:828 w:80 t:98 h:36" positiontype="position2" style="align:center;" onclick="saveBtn_onclick"/>
+        <Button id="removeBtn" taborder="5" text="삭제" position2="absolute l:740 w:80 t:99 h:35" positiontype="position2" style="align:center;" onclick="removeBtn_onclick"/>
+        <Button id="addBtn" taborder="6" text="추가" position2="absolute l:656 w:76 t:100 h:35" positiontype="position2" style="align:center;" onclick="addBtn_onclick"/>
+        <Static id="Static04" text="상여금은 실적에 따라 제공합니다." position2="absolute l:40 w:231 t:107 h:27" positiontype="position2" style="color:#f24a00ff;align:center;"/>
+        <Grid id="paymDateGrid" taborder="0" useinputpanel="false" position2="absolute l:40 w:866 t:147 h:413" positiontype="position2" binddataset="ds_salPaymentDate" tooltiptype="default" treeusebutton="use" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="145"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell style="align:center;" text="지급일자"/>
+                <Cell col="1" style="align:center;" text="동시발행"/>
+                <Cell col="2" style="align:center;" text="대상자선정"/>
+                <Cell col="3" style="align:center;" text="급여구분"/>
+                <Cell col="4" style="align:center;" text="급여형태"/>
+                <Cell col="5" style="align:center;" text="직종"/>
+                <Cell col="6" style="align:center;" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell edittype="normal" style="align:center;" text="bind:PAYMENT_DATE" mask="####-##-##"/>
+                <Cell col="1" displaytype="combo" edittype="combo" style="align:center;cursor:auto;" text="bind:SAME_TIME_SELECTION" displayexpdec="-1" combodataset="ds_simultaneousPublicationSelection" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME" combodisplaynulltext="동시" combodisplaynulltype="nulltext"/>
+                <Cell col="2" displaytype="normal" style="align:center;" text="bind:TARGET_CHOICE" combodisplaynulltype="none"/>
+                <Cell col="3" displaytype="combo" edittype="combo" style="align:center;" text="bind:PAY_TYPE" combodataset="ds_salBonusType" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME" combodisplaynulltext="급상여" combodisplaynulltype="nulltext"/>
+                <Cell col="4" displaytype="combo" edittype="combo" style="align:center;" text="bind:SALARY_TYPE_CODE" combodataset="ds_salaryType" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME" combodisplaynulltext="월급" combodisplaynulltype="nulltext"/>
+                <Cell col="5" displaytype="combo" edittype="combo" style="align:center;" text="bind:JIKJONG_CODE" combodataset="ds_jobFamily" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME" combodisplaynulltext="사무직" combodisplaynulltype="nulltext"/>
+                <Cell col="6" displaytype="normal" edittype="normal" style="align:center;" text="bind:NOTE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="Edit00" taborder="7" value="급여/상여 지급 일자 등록" oneditclick="Edit00_oneditclick" enable="false" position2="absolute l:15 w:931 t:17 h:28" positiontype="position2" style="align:center;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_jobFamily" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_salBonusType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_simultaneousPublicationSelection" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_salPaymentDate" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="PAYMENT_DATE" type="STRING" size="256"/>
+          <Column id="INPUTED_YEAR_MONTH" type="STRING" size="256"/>
+          <Column id="TARGET_CHOICE" type="STRING" size="256"/>
+          <Column id="SAME_TIME_SELECTION" type="STRING" size="256"/>
+          <Column id="PAY_TYPE" type="STRING" size="256"/>
+          <Column id="SALARY_TYPE_CODE" type="STRING" size="256"/>
+          <Column id="NOTE" type="STRING" size="256"/>
+          <Column id="JIKJONG_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_salaryType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript4.0"><![CDATA[
+
+
+var baseYear;
+var baseMonth;
+
+//로딩시 
+function payBonusDateForm_onload(obj:Form, e:LoadEventInfo)
+{
+   
+      //코드 목록 얻어옴 
+   transaction("findCodeList",
+            "svcBase::findCodeList.do",
+            "",
+            "ds_code=dsCode ds_detailCode=dsDetailCode",
+            "",
+            "callback",
+            false);
+            
+   ds_detailCode.filter("");
+   //동시분리
+   ds_detailCode.filter("String(DETAIL_CODE).substr(0,3) == 'STS'");
+   ds_simultaneousPublicationSelection.copyData(ds_detailCode,true);
+   //급여상여급상여
+   ds_detailCode.filter("");
+   ds_detailCode.filter("String(DETAIL_CODE).substr(0,3) == 'SGC'");
+   ds_salBonusType.copyData(ds_detailCode,true);
+   //연봉 월급 주급
+   ds_detailCode.filter("");
+   ds_detailCode.filter("String(DETAIL_CODE).substr(0,3) == 'PAC'");
+   ds_salaryType.copyData(ds_detailCode,true);
+   //사무직 생산직 일용직
+   ds_detailCode.filter("");
+   ds_detailCode.filter("String(DETAIL_CODE).substr(0,3) == 'JJC'");
+   ds_jobFamily.copyData(ds_detailCode,true);
+   
+}
+
+
+//조회시 
+function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   baseYear = selBaseYear.value;
+   baseMonth = selBaseMonth.value;
+   alert(baseYear+baseMonth);
+   if(selBaseYear.value == undefined || selBaseMonth.value == undefined){
+      alert(" 귀속년월을 입력해주세요 :( ");
+   }else{
+      ds_salPaymentDate.filter("");
+      transaction(
+         "findSalPaymentDateList",
+         "svcHrCircumstance::findSalPaymentDateList.do",
+         "",
+         "ds_salPaymentDate=dsSalPaymentDate",
+         "inputedYearMonth="+(baseYear+baseMonth),
+         "callback",
+         false
+         
+         //칼럼 INPUTED_YEAR_MONTH 이 null 로 인설트 되니깐 조회 안됨.
+      );
+   }   
+   
+   
+}
+
+
+//추 가 시 
+function addBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   baseYear = selBaseYear.value;
+   baseMonth = selBaseMonth.value;
+   ds_salPaymentDate.addRow();
+   
+   //조회버튼 안누르고 추가 누르면 baseYear,baseMonth 할당 못받아서 에러나서
+   //여기 function에서도 할당 
+   //SAL_PAYMENT_DATE 테이블의 
+   //칼럼 : , , , , NOTE, JIKJONG_CODE,
+   //null값 insert 됨. 
+   
+   v_sameTimeSelection = ds_simultaneousPublicationSelection.getColumn(e.row,"DETAIL_CODE"); //
+   v_payType = ds_salBonusType.getColumn(e.row,"DETAIL_CODE"); //
+   v_inputedYearMonth = baseYear+baseMonth;
+   v_salaryTypeCode = ds_salaryType.getColumn(e.row,"DETAIL_CODE");
+   v_jikjongCode = ds_jobFamily.getColumn(e.row,"DETAIL_CODE");
+   //alert("SAME_TIME_SELECTION:"+ds_simultaneousPublicationSelection.getColumn(e.row,"DETAIL_CODE")); //
+   //alert("PAY_TYPE:"+ds_salBonusType.getColumn(e.row,"DETAIL_CODE")) //
+   //alert("INPUTED_YEAR_MONTH:"+baseYear+baseMonth);
+   //alert("SALARY_TYPE_CODE:"+ds_salaryType.getColumn(e.row,"DETAIL_CODE"));
+   //alert("JIKJONG_CODE:"+ds_jobFamily.getColumn(e.row,"DETAIL_CODE"));
+   
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"PAYMENT_DATE",(baseYear+baseMonth)+"01");
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"INPUTED_YEAR_MONTH",v_inputedYearMonth);
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"SAME_TIME_SELECTION",v_salaryTypeCode);
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"PAY_TYPE",v_payType);
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"SALARY_TYPE_CODE",v_salaryTypeCode);
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"TARGET_CHOICE","직종및급여형태별");
+   ds_salPaymentDate.setColumn(ds_salPaymentDate.rowposition,"JIKJONG_CODE",v_jikjongCode);
+
+}
+
+//삭제시 
+function removeBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   
+   ds_salPaymentDate.deleteRow(ds_salPaymentDate.rowposition);   
+   
+}
+
+//저장시 
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   var payDate=ds_salPaymentDate.getColumn(ds_salPaymentDate.selendrow(),"PAYMENT_DATE");
+   var payType=ds_salPaymentDate.getColumn(ds_salPaymentDate.selendrow(),"PAY_TYPE");
+   ds_salPaymentDate.filter("PAYMENT_DATE=='"+payDate+"' && PAY_TYPE=='"+payType+"'");
+   if(ds_salPaymentDate.getRowCount()>1) alert("해당 날짜에 같은 급여항목이 있습니다.");
+   else if(confirm(" 저장 하시겠습니까? ")){
+      transaction(
+         "batchSalPaymentDate",
+         "svcHrCircumstance::batchSalPaymentDate.do",
+         "dsSalPaymentDate=ds_salPaymentDate:u",
+         "",
+         "",
+         "callback"
+      );
+   }
+}
+
+function callback(trid, ErrorCode, ErrorMsg) {
+
+   if(trid=='findSalPaymentDateList'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         if(ds_salPaymentDate.getRowCount() == 0 ){
+            alert(" 귀속년도에 등록된 지급일자가 없습니다.  ");
+         }else{
+            alert(ErrorMsg);
+         }
+      }
+   }
+   
+   if(trid=='batchSalPaymentDate'){
+      if(ErrorCode!=0){
+         alert(" ErrorCode!=0 :( ");
+      }else{
+         ds_salPaymentDate.deleteAll(); // 입력된 사항 모든 것을 지움 
+         alert(ErrorMsg);
+         
+      }   
+   }
+}]]></Script>
+  </Form>
+</FDL>

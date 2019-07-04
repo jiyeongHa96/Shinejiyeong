@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="applicationForGoingOutForm" classname="applicationForGoingOutForm" inheritanceid="" position="absolute 0 0 1017 768" titletext="applicationForGoingOutForm" onload="applicationForGoingOutForm_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="외출신청" position2="absolute l:8 w:1004 t:11 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <Combo id="attdType" taborder="1" innerdataset="@ds_attdTypeCopy" codecolumn="DETAIL_CODE" datacolumn="DETAIL_CODE_NAME" position2="absolute l:110 w:150 t:175 h:33" positiontype="position2" style=":focused {border:1px solid #a8a8a8ff ;}"/>
+        <Static id="Static03" text="신청구분" position2="absolute l:25 w:85 t:176 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static05" text="사원번호" position2="absolute l:24 w:85 t:120 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_empCode" taborder="2" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:107 w:131 t:120 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static04" text="부서명" position2="absolute l:274 w:85 t:120 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_deptName" taborder="3" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:357 w:132 t:120 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static06" text="사원명" position2="absolute l:530 w:85 t:120 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_empName" taborder="4" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:613 w:132 t:120 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static01" text="기타수당" position2="absolute l:275 w:85 t:177 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static02" text="추가경비" position2="absolute l:531 w:85 t:177 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="plusCost" taborder="6" oneditclick="authorityCode_oneditclick" enable="true" position2="absolute l:614 w:132 t:177 h:32" positiontype="position2" style="border:1 solid black ;color:black;bordertype:round 3 3 ;align:center; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Edit id="cause" taborder="7" position2="absolute l:27 w:301 t:276 h:116" positiontype="position2"/>
+        <Static id="Static07" text="신청사유" position2="absolute l:28 w:85 t:236 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static11" text="신청날짜" position2="absolute l:28 w:85 t:413 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="requestDate" taborder="8" position2="absolute l:111 w:133 t:412 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static08" text="신청시간" position2="absolute l:260 w:85 t:414 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <MaskEdit id="requestTime" taborder="9" type="string" mask="##:##" enable="true" position2="absolute l:343 w:131 t:414 h:32" positiontype="position2" style="border:1 solid black ;align:center; :disabled {align:center;}" canchange="requestTime_canchange"/>
+        <Combo id="etcSal" taborder="10" innerdataset="@ds_etcSalCopy" codecolumn="ETC_SAL_PRICE" datacolumn="ETC_SAL_NAME" position2="absolute l:360 w:150 t:176 h:33" positiontype="position2"/>
+        <Button id="applyBtn" taborder="11" text="신청" onclick="applyBtn_onclick" position2="absolute l:488 w:89 t:414 h:34" positiontype="position2"/>
+        <Static id="Static09" text="                                                         ★★★&#13;&#10;외출 승인했을때 승인되는 범위가 신청시간10분이전 ~ 신청시간10분이후 까지입니다.&#13;&#10;( 11시 외출 신청했다면 10시 50분 부터 11시 10분까지 외출내역이 자동승인됩니다. )&#13;&#10;&#13;&#10;사외출 또는 공외출 신청이 승인되어야 근무시간이 제대로 찍힙니다.&#13;&#10;사외출 - 일근태 마감 근무시간 계산시에 근무시간에서 제함.&#13;&#10;공외출 - 일근태 마감 근무시간 계산시에 근무시간에서 제하지 않음.&#13;&#10;&#13;&#10;승인되지 않는다면 해당 외출은 무단외출입니다.&#13;&#10;무단외출 - 일근태 마감 근무시간 계산시에 근무시간에서 제함.&#13;&#10;무단외출은 사외출과 똑같이 계산되지만, 그러한 일이 없도록 주의바랍니다." position2="absolute l:343 w:539 t:235 h:165" positiontype="position2" onclick="Static09_onclick" style="color:tomato;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_outing">
+        <ColumnInfo>
+          <Column id="GOINGOUT_SEQ" type="STRING" size="256"/>
+          <Column id="EMP_CODE" type="STRING" size="256"/>
+          <Column id="EMP_NAME" type="STRING" size="256"/>
+          <Column id="DEPT_CODE" type="STRING" size="256"/>
+          <Column id="ETC_SAL" type="STRING" size="256"/>
+          <Column id="PLUS_COST" type="STRING" size="256"/>
+          <Column id="CAUSE" type="STRING" size="256"/>
+          <Column id="BASIC_DAY" type="STRING" size="256"/>
+          <Column id="REQUEST_TIME" type="STRING" size="256"/>
+          <Column id="APPROVAL_STATUS" type="STRING" size="256"/>
+          <Column id="STATUS2" type="STRING" size="256"/>
+          <Column id="ATTD_TYPE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="v_deptName" propid="value" datasetid="ds_dept" columnid="DEPT_NAME"/>
+    </Bind>
+    <Script type="xscript4.0"><![CDATA[function applicationForGoingOutForm_onload(obj:Form, e:LoadEventInfo)
+{
+	
+	v_empCode.value=g_empCode;
+	v_empName.value=g_empName;
+	v_deptName.value=g_deptName;
+	
+	
+	// 코드정보
+	transaction("findCodeList",
+	"svcBase::/findCodeList.do",
+	"",
+	"ds_code=dsCode ds_detailCode=dsDetailCode",
+	"",
+	"callback",
+	false
+	);
+	
+	ds_detailCode.filter("DETAIL_CODE=='ADC003'||DETAIL_CODE=='ADC008'");
+	ds_attdTypeCopy.copyData(ds_detailCode,true);
+	
+	// 수당정보
+	transaction("findSalaryList",
+	"svcBase::/findSalaryList.do",
+	"",
+	"ds_etcSal=dsEtcSal ds_overtimeSal=dsOvertimeSal",
+	"",
+	"callback",
+	false
+	);
+	
+	ds_etcSal.filter("String(ETC_SAL_CODE).substr(0,3) == 'ETS'");
+	ds_etcSalCopy.copyData(ds_etcSal,true);
+	
+	
+	// 외출신청정보
+	transaction(
+      "findDailyAttdOutingList",
+      "svcHrAttendance::/findDailyAttdOutingList.do",
+      "",
+      "ds_outing=dsOuting",
+      "empCode='"+g_empCode+"' fromDate='20000000' toDate='21000000'",
+      "callback",
+      false
+   );
+	
+	
+
+}
+
+function requestTime_canchange(obj:MaskEdit,  e:ChangeEventInfo)
+{
+	var requestTime = obj.value; 
+	var hour = parseInt(requestTime.substring(0,2));
+	var minute = parseInt(requestTime.substring(2,4));
+	
+	if(minute >=60 || hour >= 24 ){
+		alert('시간을 제대로입력해주세요.');
+	}else if(requestTime < 0900 || requestTime > 1800){
+		alert('외출시간이 아닙니다.');
+	}
+}
+
+function applyBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var v_attdType=attdType.value;
+	var empCode=g_empCode;
+	var empName=g_empName;
+	var deptCode=g_deptCode;
+	var v_requestDate=requestDate.value;
+	var v_requestTime=requestTime.value;
+	//ds_etcSalCopy.UnFilter();
+	//ds_etcSalCopy.filter("ETC_SAL_CODE=='"+etcSal.value+"'");
+    var etcPrice = etcSal.value;
+    var v_plusCost=plusCost.value;
+    var v_cause=cause.value;
+    
+	
+   if(v_requestTime==null || v_requestDate==null || v_attdType==null){
+		alert(" 외출 신청시 누락된 부분이 있습니다. 확인해 주세요 .");
+	}else{
+      if(confirm(" 신청하시겠습니까?")){
+		
+		 ds_outing.addRow();  
+
+         ds_outing.setColumn(ds_outing.rowposition,"ATTD_TYPE",v_attdType);
+         ds_outing.setColumn(ds_outing.rowposition,"EMP_CODE",empCode);
+         ds_outing.setColumn(ds_outing.rowposition,"EMP_NAME",empName);
+         ds_outing.setColumn(ds_outing.rowposition,"DEPT_CODE",deptCode);
+         ds_outing.setColumn(ds_outing.rowposition,"ETC_SAL",etcPrice);
+         ds_outing.setColumn(ds_outing.rowposition,"PLUS_COST",v_plusCost);
+         ds_outing.setColumn(ds_outing.rowposition,"CAUSE",v_cause);
+         ds_outing.setColumn(ds_outing.rowposition,"BASIC_DAY",v_requestDate);
+         ds_outing.setColumn(ds_outing.rowposition,"REQUEST_TIME",v_requestTime);
+         ds_outing.setColumn(ds_outing.rowposition,"APPROVAL_STATUS","N");
+		
+         transaction(
+            "addDailyAttdOuting",
+            "svcHrAttendance::/addDailyAttdOuting.do",
+            "dsOuting=ds_outing:u",
+            "",
+            "",
+            "callback"
+         );
+      }
+    }
+}
+
+function callback(trid, ErrorCode, ErrorMsg) {
+	if(trid=='addDailyAttdOuting'){
+		if(ErrorCode<0){
+			alert(ErrorCode + ErrorMsg);
+		}else{
+			alert(ErrorMsg);
+			reload();
+		}
+	}
+}
+]]></Script>
+  </Form>
+</FDL>

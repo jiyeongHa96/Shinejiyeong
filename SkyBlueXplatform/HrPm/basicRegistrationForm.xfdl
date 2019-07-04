@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="basicRegistrationForm" classname="basicRegistrationForm" inheritanceid="" position="absolute 0 0 962 650" titletext="basicRegistrationForm" style="color:black;" onload="basicRegistrationForm_onload">
+    <Layouts>
+      <Layout>
+        <GroupBox id="GroupBox00" text="사원 기본 정보 등록" position2="absolute l:227 w:508 t:65 h:559" positiontype="position2" style="background:#c8c8c870;color:tomato;font:malgun gothic,14,bold antialias;"/>
+        <Static id="Static07" text="※사원등록 후 상세정보입력 하세요※" position2="absolute l:347 w:285 t:520 h:35" positiontype="position2" style="color:red;align:center middle;font:arial,11,bold antialias;"/>
+        <Button id="registrationBtn" taborder="1" text="등  록" position2="absolute l:319 w:141 t:565 h:40" positiontype="position2" onclick="registrationBtn_onclick" style="color:tomato;font:Verdana,12,bold;"/>
+        <Button id="cancelBtn" taborder="1" text="취  소" position2="absolute l:520 w:141 t:565 h:40" positiontype="position2" onclick="cancelBtn_onclick" style="color:tomato;font:Verdana,12,bold;"/>
+        <Static id="Static00" text="인사 정보 등록" onclick="Static00_onclick" position2="absolute l:4 w:956 t:7 h:45" positiontype="position2" style="border:3px solid #b1b5b9b3 ;align:center middle;font:Verdana,18,bold;"/>
+        <Static id="Static09" text="사 원 코 드" position2="absolute l:313 w:111 t:112 h:38" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Edit id="empCode" taborder="4" position2="absolute l:442 w:220 t:112 h:33" positiontype="position2" style="align:center middle;" enable="false"/>
+        <Static id="Static01" text="사 원 이 름" position2="absolute l:313 w:111 t:155 h:38" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Static id="Static02" text="비 밀 번 호" position2="absolute l:313 w:111 t:197 h:38" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Edit id="empName" taborder="5" enable="true" position2="absolute l:444 w:220 t:158 h:33" positiontype="position2" style="align:center middle;"/>
+        <Edit id="password" taborder="6" position2="absolute l:444 w:220 t:200 h:33" positiontype="position2" style="align:center middle;"/>
+        <Static id="Static03" text="사업장코드 / 사업장명" position2="absolute l:306 w:208 t:257 h:26" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Static id="Static08" text="직급코드 / 직급명" position2="absolute l:306 w:208 t:323 h:26" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Static id="Static04" text="권한코드 / 권한명" position2="absolute l:306 w:208 t:384 h:26" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Static id="Static05" text="부서코드 / 부서명" position2="absolute l:306 w:208 t:448 h:26" positiontype="position2" style="border:1px solid white navy;align:center middle;"/>
+        <Edit id="businessCode" taborder="7" position2="absolute l:304 w:143 t:288 h:25" positiontype="position2" style="align:center middle;" enable="false"/>
+        <Combo id="businessCombo" taborder="8" position2="absolute l:472 w:181 t:288 h:25" positiontype="position2" innerdataset="@ds_businessCopy" codecolumn="BUSINESS_PLACE_CODE" datacolumn="BUSINESS_PLACE_NAME" index="-1" onitemchanged="businessCombo_onitemchanged"/>
+        <Edit id="positionCode" taborder="9" enable="false" position2="absolute l:304 w:143 t:352 h:25" positiontype="position2" style="align:center middle;" oneditclick="businessCode00_oneditclick"/>
+        <Combo id="positionName" taborder="10" innerdataset="@ds_positionCopy" codecolumn="POSITION_CODE" datacolumn="POSITION_NAME" position2="absolute l:472 w:181 t:352 h:25" positiontype="position2" onitemchanged="positionName_onitemchanged"/>
+        <Edit id="authorityCode" taborder="11" oneditclick="businessCode00_oneditclick" enable="false" position2="absolute l:306 w:143 t:414 h:25" positiontype="position2" style="align:center middle;"/>
+        <Combo id="authorityName" taborder="12" innerdataset="@ds_authorityCopy" codecolumn="AUTHORITY_CODE" datacolumn="AUTHORITY_NAME" position2="absolute l:472 w:181 t:414 h:25" positiontype="position2" onitemchanged="authorityName_onitemchanged"/>
+        <Edit id="deptCode" taborder="13" oneditclick="businessCode00_oneditclick" enable="false" position2="absolute l:306 w:143 t:479 h:25" positiontype="position2" style="align:center middle;"/>
+        <Combo id="deptName" taborder="14" innerdataset="@ds_departmentCopy" codecolumn="DEPT_CODE" datacolumn="DEPT_NAME" position2="absolute l:472 w:181 t:479 h:25" positiontype="position2" onitemchanged="deptName_onitemchanged"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_departmentCopy">
+        <ColumnInfo>
+          <Column id="DEPT_CODE" type="STRING" size="256"/>
+          <Column id="DEPT_NAME" type="STRING" size="256"/>
+          <Column id="DEPT_TEL" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_authorityCopy">
+        <ColumnInfo>
+          <Column id="AUTHORITY_CODE" type="STRING" size="256"/>
+          <Column id="AUTHORITY_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_positionCopy">
+        <ColumnInfo>
+          <Column id="POSITION_CODE" type="STRING" size="256"/>
+          <Column id="POSITION_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_businessCopy" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="BUSINESS_PLACE_CODE" type="STRING" size="256"/>
+          <Column id="BUSINESS_PLACE_NAME" type="STRING" size="256"/>
+          <Column id="BUSINESS_PLACE_TEL" type="STRING" size="256"/>
+          <Column id="COMPANY_CODE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind/>
+    <Script type="xscript4.0"><![CDATA[var n;
+// 로딩시
+function basicRegistrationForm_onload(obj:Form, e:LoadEventInfo)
+{  
+    transaction("findEmployeeList",
+            "svcBase::findEmployeeList.do",
+            "",
+            "ds_employeeList=dsEmployee",
+            "",
+            "callback",
+            false);
+            
+
+  ds_employeeList.filter("");
+    var createEmpID=1060+ds_employeeList.getRowCount()+1;
+    //이걸 보시는분은 시퀀스로 바꾸셈!~!@~!
+    
+   empCode.value = createEmpID;
+   
+         
+            
+   transaction("findDeptList",
+            "svcBase::findDeptList.do",
+            "",
+            "ds_dept=dsDepartment",
+            "businessPlaceCode="+ g_businessCode,
+            "callback",
+            false);
+   transaction("findPositionList",
+            "svcBase::findPositionList.do",
+            "",
+            "ds_position=dsPosition",
+            "",
+            "callback",
+            false);
+   transaction("findAuthorityList",
+            "svcBase::findAuthorityList.do",
+            "",
+            "ds_authority=dsAuthority",
+            "",
+            "callback",
+            false);
+   
+   transaction("findBusinessPlaceList",
+               "svcBase::findBusinessPlaceList.do",
+               "",
+               "ds_businessPlace=dsBusinessPlace",
+               "",
+               "callback",
+               false);
+
+      
+   ds_positionCopy.copyData(ds_position);
+   ds_authorityCopy.copyData(ds_authority);
+   ds_departmentCopy.copyData(ds_dept);   
+   ds_businessCopy.copyData(ds_business_place,true);   
+   
+}
+
+//사업장명 변경시 
+function businessCombo_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+
+   businessCode.value=obj.value;
+}
+
+//직급명 변경시 
+function positionName_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+   positionCode.value=obj.value;
+   
+}
+
+//권한명 변경시 
+function authorityName_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+   authorityCode.value = obj.value;
+}
+
+//부서명 변경시 
+function deptName_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+   deptCode.value = obj.value;
+}
+
+//취소시 
+function cancelBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   reload();
+}
+
+
+//등록시 
+function registrationBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   var empCode_input=empCode.value;
+   var empName_input=empName.value;
+   var empPassword_input=password.value;
+   var businessCode_input=businessCode.value;
+   var deptCode_input=deptCode.value;
+   var positionCode_input=positionCode.value;
+   var authorityCode_input=authorityCode.value;
+   
+   
+   
+   
+   
+   if(empName_input==""){
+      alert(" 사원명을 입력해주세요. ");
+   }else if(empPassword_input==""){
+      alert(" 비밀번호를 입력해주세요. ");
+   }else if(businessCode_input==""){
+      alert(" 사업장을 입력해주세요. ");
+   }else if(deptCode_input==""){
+      alert(" 부서를 선택해주세요. ");
+   }else if(positionCode_input==""){
+      alert(" 직급을 선택해주세요. ");
+   }else if(authorityCode_input==""){
+      alert(" 권한을 선택해주세요. ");
+   }else{
+      ds_employeeList.addRow();
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"EMP_CODE",empCode_input);      
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"EMP_NAME",empName_input);
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"PASSWORD",empPassword_input);
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"BUSINESS_CODE",businessCode_input);
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"POSITION_CODE",positionCode_input);
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"AUTHORITY_CODE",authorityCode_input);
+      ds_employeeList.setColumn(ds_employeeList.rowposition,"DEPT_CODE",deptCode_input);
+      
+      transaction("batchEmployee",
+               "svcBase::batchEmployee.do",
+               "dsEmployee=ds_employeeList:u",
+               "ds_employeeList=dsEmployee",
+               "",
+               "callback",
+               false);      
+   }   
+}
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   if(trid=='batchEmployee'){
+      if(ErrorCode!=0){
+         alert(ErrorMsg+" :( ");
+      }else{
+         alert(ErrorMsg+" :) ");
+         reload();
+      }      
+   }
+}
+
+]]></Script>
+  </Form>
+</FDL>

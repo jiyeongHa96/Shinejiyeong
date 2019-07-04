@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="deptCodeDialog" classname="deptCodeDialog" inheritanceid="" position="absolute 0 0 337 424" titletext="departmentList" onload="deptCodeDialog_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="Edit00" taborder="0" value="부서조회" enable="false" position2="absolute l:15 w:308 t:17 h:44" positiontype="position2" style="align:center;" oneditclick="Edit00_oneditclick"/>
+        <Grid id="deptGrid" taborder="1" binddataset="ds_dept" useinputpanel="false" oncelldblclick="deptGrid_oncelldblclick" position2="absolute l:15 w:308 t:70 h:305" positiontype="position2">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="151"/>
+                <Column size="150"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="부서코드"/>
+                <Cell col="1" text="부서명"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:DEPT_CODE"/>
+                <Cell col="1" style="align:center;" text="bind:DEPT_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript4.0"><![CDATA[function deptCodeDialog_onload(obj:Form, e:LoadEventInfo)
+{
+
+	transaction("findDeptList",
+	"svcBase::/findDeptList.do",
+	"",
+	"ds_dept=dsDept",
+	"businessPlaceCode="+g_businessCode,
+	"callback",
+	false);
+	
+	
+}
+
+function deptGrid_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{
+	g_deptCode = ds_dept.getColumn(e.row, "DEPT_CODE");
+	g_deptName = ds_dept.getColumn(e.row, "DEPT_NAME");
+	
+	this.opener.deptCodeDialogBtn.value=g_deptName;
+	close();
+}]]></Script>
+  </Form>
+</FDL>

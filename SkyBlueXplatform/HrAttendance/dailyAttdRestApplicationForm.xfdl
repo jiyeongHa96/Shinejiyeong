@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="dailyAttdRestApplicationForm" classname="dailyAttdRestApplicationForm" inheritanceid="" position="absolute 0 0 1229 750" titletext="dailyAttdRestApplicationForm" onload="dailyAttdRestApplicationForm_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="일근태 외 신청" position2="absolute l:8 w:278 t:11 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <Static id="Static05" text="사원번호" position2="absolute l:16 w:85 t:90 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_empCode" taborder="1" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:99 w:131 t:90 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Edit id="v_empName" taborder="2" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:99 w:132 t:125 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static06" text="사원명" position2="absolute l:16 w:85 t:125 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static04" text="부서명" position2="absolute l:16 w:85 t:160 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_deptName" taborder="3" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:99 w:132 t:160 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static11" text="신청날짜" position2="absolute l:17 w:85 t:266 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="requestDate" taborder="4" position2="absolute l:100 w:133 t:265 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static03" text="신청구분" position2="absolute l:16 w:85 t:195 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Combo id="attdType" taborder="8" innerdataset="@ds_attdRestType" codecolumn="DETAIL_CODE" datacolumn="DETAIL_CODE_NAME" position2="absolute l:101 w:150 t:194 h:33" positiontype="position2" style=":focused {border:1px solid #a8a8a8ff ;}"/>
+        <Static id="Static07" text="기타수당" position2="absolute l:16 w:85 t:230 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Combo id="etcSal" taborder="9" innerdataset="@ds_etcSal" codecolumn="ETC_SAL_CODE" datacolumn="ETC_SAL_NAME" position2="absolute l:101 w:150 t:229 h:33" positiontype="position2" onitemchanged="etcSal_onitemchanged"/>
+        <Button id="applyBtn" taborder="10" text="신청" onclick="applyBtn_onclick" position2="absolute l:17 w:89 t:590 h:34" positiontype="position2"/>
+        <Static id="Static08" text="신청사유" position2="absolute l:19 w:85 t:421 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="cause" taborder="11" position2="absolute l:18 w:234 t:461 h:116" positiontype="position2"/>
+        <Button id="applyBtn00" taborder="12" text="신청" onclick="applyBtn_onclick" position2="absolute l:114 w:89 t:590 h:34" positiontype="position2"/>
+        <Button id="searchBtn" taborder="14" text="조회" onclick="searchBtn_onclick" position2="absolute l:907 w:70 t:68 h:32" positiontype="position2"/>
+        <Grid id="Grid00" taborder="15" binddataset="ds_dailyAttdRest" useinputpanel="false" oncellclick="attdApprovalTab_outing_Grid00_oncellclick" position2="absolute l:258 w:897 t:120 h:338" positiontype="position2">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="79"/>
+                <Column size="93"/>
+                <Column size="87"/>
+                <Column size="111"/>
+                <Column size="111"/>
+                <Column size="111"/>
+                <Column size="98"/>
+                <Column size="89"/>
+                <Column size="89"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사원번호"/>
+                <Cell col="1" text="사원명"/>
+                <Cell col="2" text="근태외타입"/>
+                <Cell col="3" text="신청일"/>
+                <Cell col="4" text="시작일"/>
+                <Cell col="5" text="종료일"/>
+                <Cell col="6" text="일수"/>
+                <Cell col="7" text="비용"/>
+                <Cell col="8" text="승인여부"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:EMP_CODE"/>
+                <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                <Cell col="2" displaytype="combo" edittype="none" style="align:center;" text="bind:ATTD_REST_CODE" combodataset="ds_detailCode" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME"/>
+                <Cell col="3" style="align:center;" text="bind:REQUEST_DATE" mask="####/##/##"/>
+                <Cell col="4" style="align:center;" text="bind:START_DATE" mask="####/##/##"/>
+                <Cell col="5" style="align:center;" text="bind:END_DATE" mask="####/##/##"/>
+                <Cell col="6" style="align:center;" text="bind:DAYS"/>
+                <Cell col="7" style="align:center;" text="bind:COST"/>
+                <Cell col="8" style="align:center;" text="bind:APPROVAL_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static02" text="시작일" position2="absolute l:366 w:85 t:69 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="fromDate" taborder="16" position2="absolute l:449 w:133 t:68 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Edit id="Edit01" taborder="17" value="~" enable="false" position2="absolute l:593 w:69 t:72 h:28" positiontype="position2" style="align:center;"/>
+        <Static id="Static12" text="종료일" position2="absolute l:670 w:85 t:69 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="toDate" taborder="18" position2="absolute l:753 w:146 t:68 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static01" text="일 근태 외 현황조회" position2="absolute l:372 w:604 t:12 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <Static id="Static09" text="시작일" position2="absolute l:17 w:85 t:341 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="requestFromDate" taborder="19" position2="absolute l:100 w:148 t:340 h:34" positiontype="position2" style="border:1 solid black ;" canchange="requestFromDate_canchange"/>
+        <Calendar id="requestToDate" taborder="21" position2="absolute l:101 w:146 t:380 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static10" text="종료일" position2="absolute l:18 w:85 t:381 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static13" text="신청기간" position2="absolute l:17 w:85 t:304 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_attdRestType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_etcSalCopy" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="ETC_SAL_CODE" type="STRING" size="256"/>
+          <Column id="ETC_SAL_NAME" type="STRING" size="256"/>
+          <Column id="ETC_SAL_PRICE" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="ds_tempRest" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="EMP_CODE" type="STRING" size="256"/>
+          <Column id="EMP_NAME" type="STRING" size="256"/>
+          <Column id="APPROVAL_STATUS" type="STRING" size="256"/>
+          <Column id="CAUSE" type="STRING" size="256"/>
+          <Column id="COST" type="STRING" size="256"/>
+          <Column id="DAYS" type="STRING" size="256"/>
+          <Column id="START_DATE" type="STRING" size="256"/>
+          <Column id="END_DATE" type="STRING" size="256"/>
+          <Column id="REQUEST_DATE" type="STRING" size="256"/>
+          <Column id="ATTD_REST_CODE" type="STRING" size="256"/>
+          <Column id="ATTD_REST_SEQ" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="v_deptName" propid="value" datasetid="ds_dept" columnid="DEPT_NAME"/>
+    </Bind>
+    <Script type="xscript4.0"><![CDATA[
+
+var today=new Date().toFormatString("%Y%m%d");	
+function dailyAttdRestApplicationForm_onload(obj:Form, e:LoadEventInfo)
+{
+
+   v_deptName.value=g_deptName;
+   v_empCode.value=g_empCode;
+   v_empName.value=g_empName;
+   requestDate.value=today;
+   ds_etcSal.clearData();
+   ds_dailyAttdRest.clearData();
+   
+	transaction("findCodeList",
+	"svcBase::/findCodeList.do",
+	"",
+	"ds_code=dsCode ds_detailCode=dsDetailCode",
+	"",
+	"callback",
+	false
+	);
+	
+
+    ds_detailCode.filter("DETAIL_CODE=='ASC002' || DETAIL_CODE=='ASC003'");
+	ds_attdRestType.copyData(ds_detailCode,true);
+   
+	transaction("findSalaryList",
+	"svcBase::/findSalaryList.do",
+	"",
+	"ds_etcSal=dsEtcSal ds_overtimeSal=dsOvertimeSal",
+	"",
+	"callback",
+	false
+	);
+
+	
+   
+   
+   
+   // 일근태정보 가져오기
+
+   
+	// 일근태정보 가져오기
+	transaction(
+     "findDailyAttdList",
+      "svcHrAttendance::/findDailyAttdList.do",
+      "",
+      "ds_dailyAttd=dsDailyAttd",
+      "empCode='"+g_empCode + "' fromDate=20000000 toDate=21000000",
+      "dayAttdCallback",
+      false
+     );
+	
+	// 연차정보 가져오기 
+	transaction(
+      "findAnnualMgt",
+      "svcHrAttendance::/findAnnualMgt.do",
+      "",
+      "ds_dayAnnual=dsDayAnnual",
+      "empCode='" + g_empCode + "' standardYear='" + today.substring(0,4) + "'",
+      "callback"
+   );
+   
+
+
+}
+//조회버튼
+function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var v_fromDate=fromDate.value;
+	var v_toDate=toDate.value;
+	
+	if(v_fromDate==null || v_toDate==null){
+		alert("기간을 선택해 주세요.  ");
+   }else if(v_fromDate>v_toDate){
+      alert(" 조회 기간을 확인해 주세요.");
+      reload();
+   }else if(v_fromDate!=null || v_toDate!=null){
+      
+    transaction(
+      "findAttdRestList",
+      "svcHrAttendance::/findAttdRestList.do",
+      "",
+      "ds_dailyAttdRest=dsDailyAttdRest",
+      "empCode='"+g_empCode+"'",
+      "callback",
+      false
+   );
+      ds_dailyAttdRest.filter("START_DATE >= '"+v_fromDate+"' && END_DATE <= '"+v_toDate+"' ");
+   }
+}
+
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   if(trid=="addDailyAttdRest"){
+      if(ErrorCode<0){
+         alert(ErrorMsg);   
+      }else{      
+         alert(ErrorMsg);
+         Reload();
+      }
+   }
+}
+
+//신청
+function applyBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+  
+	var v_empCode=g_empCode;
+	var v_empName=g_empName
+	var v_attdType=attdType.value;
+	var v_requestDate=today;
+	var v_fromDate=requestFromDate.value;
+	var v_toDate=requestToDate.value;
+	var v_days=(v_toDate-v_fromDate)+1;
+	var v_etcsalCode=etcSal.value;
+	ds_etcSalCopy.copyData(ds_etcSal,true);
+	ds_etcSalCopy.filter("ETC_SAL_CODE=='"+v_etcsalCode+"'");
+    var v_etcPrice = ds_etcSalCopy.getColumn(e.row,"ETC_SAL_PRICE");
+    var v_cause=cause.value;
+
+    ds_dailyAttd.filter("BASIC_DAY=='"+v_fromDate+"'");
+    ds_dailyAttdRest.filter("START_DATE<="+v_fromDate+" &&"+v_fromDate+"<=END_DATE"); //근태외 신청일 안에 존재 한다면 안된다.!!
+    ds_dayAnnual.filter("START_DATE<="+v_fromDate+" &&"+v_fromDate+"<=END_DATE"); //이미 연차 신청일과 겹쳐도 안된다. 
+	
+	
+	// 현재날짜보다 신청하는 날짜가 이전일때
+	if(v_fromDate < today){
+		alert("금일 전으로는 근태외신청이 불가능합니다."); 
+		return true;
+   }
+   // 값이있지만 fromDate값이 toDate값보다 클때
+   if(v_toDate!=null && v_fromDate > v_toDate){
+		alert("신청기간이 잘못되었습니다."); 
+		return true;
+   }
+   // 해당일자에 일근태기록이 존재하면
+   else if(ds_dailyAttd.rowcount!=0){
+		alert("일근태 기록이 존재하면 근태외신청이 불가합니다.");
+		return true;
+   }
+   // 해당일자에 근태외기록이 존재하면
+   else if(ds_dailyAttdRest.rowcount!=0){
+		alert("근태 외 신청(출장,교육)기간에는 근태외신청이 불가합니다.");
+		return true;
+   }
+   // 해당일자에 연차기록이 존재하면
+   else if(ds_dayAnnual.rowcount!=0){
+		alert("이미 동일기간 내 근태외신청이 존재합니다.");
+		return true;
+   }
+    
+    
+    
+    
+    
+   if(v_fromDate==null || v_toDate==null || v_attdType==null){
+		alert(" 근태외 신청시 누락된 부분이 있습니다. 확인해 주세요 .");
+	}else if(v_requestDate > v_fromDate){
+		alert("신청기간의 시작일은 날짜보다 빠를수 없습니다.");
+	}else{
+      if(confirm(" 신청하시겠습니까?")){
+      
+		 ds_dailyAttdRest.addRow(); 
+
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"EMP_CODE",v_empCode);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"EMP_NAME",v_empName);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"ATTD_REST_CODE",v_attdType);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"REQUEST_DATE",v_requestDate);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"START_DATE",v_fromDate);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"END_DATE",v_toDate);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"DAYS",v_days);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"COST",v_etcPrice);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"CAUSE",v_cause);
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"APPROVAL_STATUS","N");
+         ds_dailyAttdRest.setColumn(ds_dailyAttdRest.rowposition,"OTHER_SUDANG",v_etcsalCode);
+         
+         transaction(
+            "addDailyAttdRest",
+            "svcHrAttendance::/addDailyAttdRest.do",
+            "dsDailyAttdRest=ds_dailyAttdRest:u",
+            "ds_dailyAttdRest=dsDailyAttdRest",
+            "",
+            "callback",
+            false
+         );
+      }
+   }	
+}
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   if(trid=="addDailyAttdRest"){
+      if(ErrorCode!=0){
+        alert(" 추가실패 ");
+      }else{
+        alert(ErrorMsg);
+		trace(ErrorMsg);
+		reload();
+      }
+   }
+}]]></Script>
+  </Form>
+</FDL>

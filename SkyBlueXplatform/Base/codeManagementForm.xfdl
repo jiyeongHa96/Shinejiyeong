@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="codeManagementForm" classname="codeManagementForm" inheritanceid="" position="absolute 0 0 1024 768" titletext="codeManagementForm" onload="codeManagementForm_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="코드구분관리" position2="absolute l:0 w:1023 t:0 h:65" positiontype="position2" style="align:middle;"/>
+        <Static id="Static03" text="코드구분리스트" position2="absolute l:33 w:373 t:111 h:41" positiontype="position2" style="align:middle;"/>
+        <Static id="Static01" text="코드상세리스트" position2="absolute l:449 w:542 t:112 h:41" positiontype="position2" style="align:middle;"/>
+        <Button id="Button00" taborder="8" text="일괄저장" position2="absolute l:831 w:146 t:64 h:40" positiontype="position2" onclick="batchSaveBtn_onclick"/>
+        <Grid id="codeGrid" taborder="9" useinputpanel="false" position2="absolute l:40 w:370 t:164 h:408" positiontype="position2" oncellclick="codeGrid_oncellclick" oncelldblclick="codeGrid_oncelldblclick" binddataset="ds_code" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" displaytype="normal" text="CODE"/>
+                <Cell col="1" displaytype="normal" text="CODE_NAME"/>
+                <Cell col="2" displaytype="normal" text="USING_STATUS"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" displaytype="normal" text="bind:CODE"/>
+                <Cell col="1" displaytype="normal" text="bind:CODE_NAME"/>
+                <Cell col="2" displaytype="normal" text="bind:USING_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid01" taborder="10" useinputpanel="false" position2="absolute l:469 w:496 t:165 h:407" positiontype="position2" binddataset="ds_detailCode" autofittype="col" oncelldblclick="detailCodeGrid_oncelldblclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" displaytype="normal" text="CODE"/>
+                <Cell col="1" displaytype="normal" text="DETAIL_CODE"/>
+                <Cell col="2" displaytype="normal" text="DETAIL_CODE_NAME"/>
+                <Cell col="3" displaytype="normal" text="USING_STATUS"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" displaytype="normal" text="bind:CODE"/>
+                <Cell col="1" displaytype="normal" text="bind:DETAIL_CODE"/>
+                <Cell col="2" displaytype="normal" text="bind:DETAIL_CODE_NAME"/>
+                <Cell col="3" displaytype="normal" text="bind:USING_STATUS"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="Button01" taborder="11" text="+" position2="absolute l:311 w:40 t:587 h:39" positiontype="position2" onclick="codeAddBtn_onclick"/>
+        <Button id="Button02codeDeleteBtn" taborder="12" text="-" onclick="codeDeleteBtn_onclick" position2="absolute l:364 w:40 t:587 h:39" positiontype="position2"/>
+        <Button id="Button02" taborder="13" text="+" onclick="detailCodeAddBtn_onclick" position2="absolute l:872 w:40 t:587 h:39" positiontype="position2"/>
+        <Button id="Button03" taborder="14" text="-" onclick="detailCodeDeleteBtn_onclick" position2="absolute l:924 w:40 t:587 h:39" positiontype="position2"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript4.0"><![CDATA[
+function codeManagementForm_onload(obj:Form, e:LoadEventInfo)
+{
+      transaction("findCodeList","svcBase::/findCodeList.do","","ds_code=dsCode ds_detailCode=dsDetailCode","","callback",false);
+       ds_detailCode.filter("CODE==0");
+   
+}
+
+function codeGrid_oncellclick(obj:Grid, e:GridClickEventInfo)
+{
+   ds_detailCode.filter("CODE=='"+ds_code.getColumn(e.row,"CODE")+"'");
+    
+    if(ds_code.getColumn(e.row,"USING_STATUS")=="N")
+      {
+        //e.row.Cell.edittype="none";
+        //codeGrid.enable=false;
+     obj.showEditor(false);
+     }
+   else{
+    return;
+   }
+    
+   
+}
+
+function codeGrid_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{
+    if(ds_code.getColumn(e.row,"USING_STATUS")=="N")
+      {
+        alert("변경 불가능 코드 입니다");
+         codeGrid.setCellProperty("body",0,"edittype","none");
+        codeGrid.setCellProperty("body",1,"edittype","none");
+        codeGrid.setCellProperty("body",2,"edittype","none");
+     }
+     else{
+
+        codeGrid.setCellProperty("body",2,"edittype","text");
+     }
+}
+
+function codeAddBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_code.addRow();
+   if(ds_code.getColumn(ds_code.rowposition,"USING_STATUS")=='Y'){
+    codeGrid.setCellProperty("body",2,"edittype","text");
+   }
+   else if(ds_code.getColumn(ds_code.rowposition,"USING_STATUS")=='N'){
+          codeGrid.setCellProperty("body",0,"edittype","none");
+        codeGrid.setCellProperty("body",1,"edittype","none");
+        codeGrid.setCellProperty("body",2,"edittype","none");
+   }
+   else if(ds_code.getRowType(ds_code.rowposition)>=2){
+      codeGrid.setCellProperty("body",0,"edittype","text");
+     codeGrid.setCellProperty("body",1,"edittype","text");
+     codeGrid.setCellProperty("body",2,"edittype","text");
+   }
+}
+
+
+
+
+function codeDeleteBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(ds_code.getColumn(ds_code.rowposition,"USING_STATUS")=="N")
+    {
+    alert("삭제 불가능합니다.");
+   }
+   else
+   {
+   ds_code.deleteRow(ds_code.rowposition);
+   }
+}
+
+
+
+function detailCodeAddBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(ds_code.getColumn(ds_code.rowposition,"USING_STATUS")=="N")
+         {  alert("추가불가능합니다");
+          }
+       else
+        {   
+              ds_detailCode.addRow();           
+        }
+}
+
+
+
+
+function detailCodeDeleteBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+    if(ds_code.getColumn(ds_code.rowposition,"USING_STATUS")=="N")
+         {  alert("삭제불가능합니다");
+          }
+       else
+        {
+        ds_detailCode.deleteRow(ds_detailCode.rowposition);
+          }
+}
+
+
+
+function detailCodeGrid_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{
+      if(ds_code.getColumn(ds_code.rowposition,"USING_STATUS")=="N")
+         { 
+           alert("변경불가능한 코드입니다.");
+           //detailCodeGrid.showEditor(false);
+           //detailCodeGrid.setCellProperty("body",0,"edittype","text");
+           //detailCodeGrid.enable=false;
+                    detailCodeGrid.setCellProperty("body",0,"edittype","none");
+                    detailCodeGrid.setCellProperty("body",1,"edittype","none");
+                    detailCodeGrid.setCellProperty("body",2,"edittype","none");
+                    detailCodeGrid.setCellProperty("body",3,"edittype","none");
+          }
+       else{
+         //detailCodeGrid.showEditor(true);
+                    detailCodeGrid.setCellProperty("body",0,"edittype","text");
+                    detailCodeGrid.setCellProperty("body",1,"edittype","text");
+                    detailCodeGrid.setCellProperty("body",2,"edittype","text");
+                    detailCodeGrid.setCellProperty("body",3,"edittype","text");
+      }
+}
+
+
+function batchSaveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+    if(confirm("변경사항을 저장하시겠습니까?"))
+   {
+       transaction("batchCode",
+       "svcBase::batchCode.do",
+       "dsCode=ds_code:u dsDetailCode=ds_detailCode:u",
+       "ds_code=dsCode ds_detailCode=dsDetailCode",
+       "",
+       "callback",
+       false);
+      
+    }
+}
+
+
+function callback(trid, ErrorCode, ErrorMsg){
+if(trid=='batchEmployee'){
+      if(ErrorCode<0){
+         alert("코드일괄저장 중 오류 발생");
+      }else{
+         alert("코드내역 저장 완료");
+         reload();
+      }   
+   }
+
+}
+]]></Script>
+  </Form>
+</FDL>

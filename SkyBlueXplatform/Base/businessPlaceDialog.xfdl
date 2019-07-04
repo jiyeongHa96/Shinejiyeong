@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="businessPlaceDialog" classname="businessPlaceDialog" inheritanceid="" position="absolute 0 0 343 419" titletext="businessPlaceList" onload="businessPlaceDialog_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="Edit00" taborder="0" position2="absolute l:15 w:308 t:17 h:44" positiontype="position2" value="사업장조회" style="align:center;" enable="false"/>
+        <Grid id="businessPlaceGrid" taborder="1" useinputpanel="false" position2="absolute l:15 w:308 t:70 h:305" positiontype="position2" binddataset="ds_business_place" oncelldblclick="businessPlaceGrid_oncelldblclick">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="133"/>
+                <Column size="175"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사업장코드"/>
+                <Cell col="1" text="사업장명"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:BUSINESS_PLACE_CODE" combodataset="ds_business_place" combocodecol="BUSINESS_PLACE_CODE" combodatacol="BUSINESS_PLACE_NAME"/>
+                <Cell col="1" text="bind:BUSINESS_PLACE_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Script type="xscript4.0"><![CDATA[function businessPlaceDialog_onload(obj:Form, e:LoadEventInfo)
+{      
+     transaction("findBusinessPlaceList","svcBase::/findBusinessPlaceList.do","","ds_business_place=dsBusinessPlace","","callback",false);
+}
+
+function businessPlaceGrid_oncelldblclick(obj:Grid, e:GridClickEventInfo)
+{
+	g_businessCode = ds_business_place.getColumn(e.row, "BUSINESS_PLACE_CODE");
+	g_businessName = ds_business_place.getColumn(e.row, "BUSINESS_PLACE_NAME");
+	this.opener.bisinessPlaceCodeDialogBtn.value=g_businessName;
+	close();
+}]]></Script>
+  </Form>
+</FDL>

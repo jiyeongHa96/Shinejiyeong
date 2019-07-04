@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="unApprovedDailyAttdDialog" classname="unApprovedDailyAttdDialog" inheritanceid="" position="absolute 0 0 962 684" titletext="unApprovedDailyAttdDialog" onload="unApprovedDailyAttdDialog_onload">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" position2="absolute l:7 w:953 t:11 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;" text="일근태/일근태 외 미승인목록"/>
+        <GroupBox id="GroupBox00" text="일근태 미승인목록" position2="absolute l:14 w:930 t:111 h:281" positiontype="position2"/>
+        <Grid id="Grid00" taborder="2" binddataset="ds_dailyAttdManage" useinputpanel="false" position2="absolute l:21 w:916 t:139 h:236" positiontype="position2" style="background:black;color:white;">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="120"/>
+                <Column size="110"/>
+                <Column size="120"/>
+                <Column size="120"/>
+                <Column size="110"/>
+                <Column size="120"/>
+                <Column size="80"/>
+                <Column size="250"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사원번호"/>
+                <Cell col="1" text="사원명"/>
+                <Cell col="2" text="기준일"/>
+                <Cell col="3" text="근태타입"/>
+                <Cell col="4" text="시간"/>
+                <Cell col="5" text="금액"/>
+                <Cell col="6" text="승인상태"/>
+                <Cell col="7" text="사유"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:EMP_CODE"/>
+                <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                <Cell col="2" style="align:center;" text="bind:BASIC_DAY" mask="####-##-##"/>
+                <Cell col="3" displaytype="combo" style="align:center;" text="bind:ATTD_TYPE_CODE" combodataset="ds_detailCode" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME"/>
+                <Cell col="4" style="align:center;" text="bind:TIME" mask="##:##"/>
+                <Cell col="5" style="align:center;" text="bind:COST"/>
+                <Cell col="6" displaytype="normal" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                <Cell col="7" text="bind:CAUSE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <GroupBox id="GroupBox01" text="일근태 미승인목록" position2="absolute l:15 w:930 t:406 h:259" positiontype="position2"/>
+        <Grid id="Grid01" taborder="3" binddataset="ds_dailyAttdRestManage" useinputpanel="false" position2="absolute l:22 w:916 t:433 h:212" positiontype="position2" style="background:black;color:white;">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="110"/>
+                <Column size="250"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사원번호"/>
+                <Cell col="1" text="사원명"/>
+                <Cell col="2" text="근태외타입"/>
+                <Cell col="3" text="신청일자"/>
+                <Cell col="4" text="시작일"/>
+                <Cell col="5" text="종료일"/>
+                <Cell col="6" text="일수"/>
+                <Cell col="7" text="금액"/>
+                <Cell col="8" text="승인상태"/>
+                <Cell col="9" text="사유"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:EMP_CODE"/>
+                <Cell col="1" style="align:center;" text="bind:EMP_NAME"/>
+                <Cell col="2" displaytype="combo" style="align:center;" text="bind:ATTD_REST_CODE" combodataset="ds_detailCode" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME"/>
+                <Cell col="3" style="align:center;" text="bind:REQUEST_DATE" mask="####-##-##"/>
+                <Cell col="4" style="align:center;" text="bind:START_DATE" mask="####-##-##"/>
+                <Cell col="5" style="align:center;" text="bind:END_DATE" mask="####-##-##"/>
+                <Cell col="6" style="align:center;" text="bind:DAYS"/>
+                <Cell col="7" style="align:center;" text="bind:COST"/>
+                <Cell col="8" displaytype="normal" style="align:center;" text="bind:APPROVAL_STATUS"/>
+                <Cell col="9" style="align:center;" text="bind:CAUSE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static05" text="기준년원일" position2="absolute l:16 w:99 t:64 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <MaskEdit id="unApprovalDate" taborder="4" type="string" mask="####/##/##" enable="false" position2="absolute l:113 w:131 t:64 h:32" positiontype="position2" style="border:1 solid black ; :disabled {align:center;}"/>
+        <Button id="batchBtn" taborder="5" text="일괄승인" onclick="approvalBtn_onclick" position2="absolute l:682 w:83 t:66 h:30" positiontype="position2"/>
+        <Button id="saveBtn" taborder="6" text="일괄저장" onclick="saveBtn_onclick" position2="absolute l:781 w:83 t:66 h:30" positiontype="position2"/>
+        <Button id="cancelBtn" taborder="7" text="취소" onclick="cancelBtn_onclick" enable="false" position2="absolute l:878 w:59 t:66 h:30" positiontype="position2"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_dailyAttdRestType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript4.0"><![CDATA[
+
+//로딩시 
+function unApprovedDailyAttdDialog_onload(obj:Form, e:LoadEventInfo)
+{
+	unApprovalDate.value=opener.v_basicDate;
+	
+	//코드 목록 받아옴 
+	transaction("findCodeList",
+				"svcBase::findCodeList.do",
+				"",
+				"ds_code=dsCode ds_detailCode=dsDetailCode",
+				"",
+				"callback",
+				false);
+	//경조사,출장,교육,예비군,휴가,오전반차,오후반차,초과근무			
+	ds_detailCode.filter("String(DETAIL_CODE).substr(0,3) == 'ASC'");
+
+	//출근,퇴근,외출,귀사,조퇴,결근,휴무
+	ds_detailCode.filter("String(DETAIL_CODE).substr(0,3) == 'ADC'");
+				
+	
+}
+
+//일괄 승인 
+function approvalBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	if(obj.text=="일괄승인"){
+		if(confirm(unApprovalDate.text+"일자 근태/근태외 데이터를 일괄승인하시겠습니까? ")){
+		for(var index = 0; index < ds_dailyAttdManage.rowcount; index++) {
+			ds_dailyAttdManage.setColumn(index, "APPROVAL_STATUS", "Y");
+		}
+		for(var index = 0; index < ds_dailyAttdRestManage.rowcount; index++) {
+			ds_dailyAttdRestManage.setColumn(index, "APPROVAL_STATUS", "Y");
+		}
+		obj.text="승인해제";
+		obj.color="red";
+	}	
+		
+	}else if(obj.text=="승인해제"){
+		for(var index = 0; index < ds_dailyAttdManage.rowcount; index++) {
+			ds_dailyAttdManage.setColumn(index, "APPROVAL_STATUS", "N");
+		}
+		for(var index = 0; index < ds_dailyAttdRestManage.rowcount; index++) {
+			ds_dailyAttdRestManage.setColumn(index, "APPROVAL_STATUS", "N");
+		}
+		obj.text="일괄승인";
+		obj.color="#f24a00ff";
+	}
+	cancelBtn.enable=true;
+}
+
+//취소시 
+function cancelBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+		if(confirm(" 취소하시겠습니까? ")){
+			if(ds_dailyAttdManage.getRowCount()>0 || ds_dailyAttdRestManage.getRowCount()>0){
+				close();
+			}
+	}	
+	
+	
+}
+
+//저장 버튼 누를 경우 
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	alert(" 저장버튼");
+	transaction(
+		"batchDailyAttd",
+		"svcHrAttendance::/batchDailyAttd.do",
+		"dsDailyAttd=ds_dailyAttdManage:u",
+		"",
+		"",
+		"callback",
+		false
+	);
+	transaction(
+		"batchDailyAttdRest",
+		"svcHrAttendance::/batchDailyAttdRest.do",
+		"dsDailyAttdRest=ds_dailyAttdRestManage:u",
+		"",
+		"" ,
+		"callback",
+		false
+	);	
+
+	opener.findDailyAttdReport();
+	close();
+	
+}
+]]></Script>
+  </Form>
+</FDL>

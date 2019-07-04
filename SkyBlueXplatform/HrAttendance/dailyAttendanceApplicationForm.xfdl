@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="dailyAttendanceApplicationForm" classname="dailyAttendanceApplicationForm" inheritanceid="" position="absolute 0 0 1145 768" titletext="dailyAttendanceApplicationForm" style=":focused {border:2 dashed #ccccccff white;}" onload="dailyAttendanceApplicationForm_onload" ontimer="setTime">
+    <Layouts>
+      <Layout>
+        <Static id="Static00" text="일근태신청" position2="absolute l:8 w:1004 t:11 h:41" positiontype="position2" style="background:#ffffffb3;color:black;align:center middle;font:Verdana,14,bold;"/>
+        <GroupBox id="GroupBox01" text="신청" position2="absolute l:20 w:331 t:66 h:254" positiontype="position2"/>
+        <Static id="Static02" text="근태구분" position2="absolute l:28 w:85 t:480 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Combo id="Combo00" taborder="10" text="Combo00" positiontype="position2" innerdataset="@ds_attdTypeCode" datacolumn="DETAIL_CODE_NAME" codecolumn="DETAIL_CODE" displayrowcount="6" autoselect="true"/>
+        <Static id="Static01" position2="absolute l:15 w:351 t:60 h:677" positiontype="position2" style="border:1px solid #b1b5b9b3 ;"/>
+        <Static id="Static09" text="                    ★★ 필수 참고사항 ★★&#13;&#10;1) 출근시간 09:00, 퇴근시간 18:00 입니다.&#13;&#10;2) 심야근무 후 퇴근시 당일 새벽에 퇴근찍어야합니다.&#13;&#10;★★ EX) 23일 09시 출근후 심야근무로 인해 &#13;&#10;24일 02시에 퇴근해도 23일 새벽2시에 퇴근등록.&#13;&#10;3) 연장근무 적용시간은 19:00 부터 22:00 까지입니다.&#13;&#10;4) 심야근무 적용시간은 22:00 부터 09:00 까지입니다.&#13;&#10;5) 점심시간에는 외출신청및 귀사가 불가능합니다." onclick="Static01_onclick" position2="absolute l:21 w:342 t:327 h:129" positiontype="position2" style="color:tomato;"/>
+        <Static id="Static04" text="부서명" position2="absolute l:92 w:85 t:152 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_deptName" taborder="11" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:175 w:132 t:152 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Edit id="v_empCode" taborder="12" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:175 w:131 t:82 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Static id="Static05" text="사원번호" position2="absolute l:92 w:85 t:82 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static06" text="사원명" position2="absolute l:92 w:85 t:117 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_empName" taborder="13" oneditclick="authorityCode_oneditclick" enable="false" position2="absolute l:175 w:132 t:117 h:32" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Calendar id="basicDate" taborder="14" position2="absolute l:175 w:158 t:187 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static07" text="기준일" position2="absolute l:92 w:85 t:188 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Static id="Static08" text="시간" position2="absolute l:92 w:85 t:224 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="clock1" taborder="15" oneditclick="authorityCode_oneditclick" enable="false" positiontype="position2" style="background:black;border:2 solid white white;color:white;bordertype:round 3 3 ; :disabled {background:#ffffffb3;border:1 solid black ;color:black;align:center middle;}"/>
+        <Button id="clockInsertBtn" taborder="17" text="시간입력하기" position2="absolute l:91 w:85 t:261 h:33" positiontype="position2" onclick="clockInsertBtn_onclick"/>
+        <Static id="Static03" text="신청사유" position2="absolute l:27 w:85 t:528 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="v_cause" taborder="18" position2="absolute l:26 w:301 t:568 h:116" positiontype="position2"/>
+        <Button id="applicationBtn" taborder="19" text="신청" position2="absolute l:237 w:89 t:693 h:34" positiontype="position2" onclick="applicationBtn_onclick"/>
+        <Static id="Static10" position2="absolute l:372 w:763 t:63 h:673" positiontype="position2" style="border:1px solid #b1b5b9b3 ;"/>
+        <GroupBox id="GroupBox00" position2="absolute l:388 w:731 t:76 h:644" positiontype="position2" text="근태 현황 조회" onlbuttondown="GroupBox00_onlbuttondown" style="background:white;"/>
+        <Static id="Static11" text="기준일" position2="absolute l:408 w:85 t:103 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Calendar id="fromDate" taborder="20" position2="absolute l:491 w:133 t:102 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Calendar id="toDate" taborder="21" position2="absolute l:795 w:133 t:102 h:34" positiontype="position2" style="border:1 solid black ;"/>
+        <Static id="Static12" text="기준일" position2="absolute l:712 w:85 t:103 h:32" positiontype="position2" style="border:1px solid #b1b5b9b3 ;color:darkslategray;align:center;"/>
+        <Edit id="Edit01" taborder="22" position2="absolute l:635 w:69 t:106 h:28" positiontype="position2" value="~" style="align:center;" enable="false"/>
+        <Button id="deleteBtn" taborder="23" text="일괄삭제" position2="absolute l:1021 w:70 t:102 h:32" positiontype="position2" onclick="deleteBtn_onclick"/>
+        <Button id="searchBtn" taborder="24" text="조회" position2="absolute l:938 w:70 t:102 h:32" positiontype="position2" onclick="searchBtn_onclick"/>
+        <Grid id="Grid00" taborder="25" useinputpanel="false" position2="absolute l:410 w:693 t:158 h:557" positiontype="position2" binddataset="ds_dailyAttd">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="78"/>
+                <Column size="83"/>
+                <Column size="82"/>
+                <Column size="83"/>
+                <Column size="73"/>
+                <Column size="81"/>
+                <Column size="210"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="사원번호"/>
+                <Cell col="1" text="기준일"/>
+                <Cell col="2" text="근태구분"/>
+                <Cell col="3" text="시간"/>
+                <Cell col="4" text="승인상태"/>
+                <Cell col="5" text="금액"/>
+                <Cell col="6" text="사유"/>
+              </Band>
+              <Band id="body">
+                <Cell style="align:center;" text="bind:EMP_CODE"/>
+                <Cell col="1" style="align:center;" text="bind:BASIC_DAY" mask="####/##/##"/>
+                <Cell col="2" displaytype="combo" style="align:center;" text="bind:ATTD_TYPE_CODE" combodataset="ds_detailCode" combocodecol="DETAIL_CODE" combodatacol="DETAIL_CODE_NAME"/>
+                <Cell col="3" style="align:center;" text="bind:TIME" mask="@@:@@"/>
+                <Cell col="4" style="align:center;" text="미결"/>
+                <Cell col="5" style="align:center;" text="bind:COST"/>
+                <Cell col="6" style="align:center;" text="bind:CAUSE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <MaskEdit id="currentTime" taborder="26" position2="absolute l:175 w:130 t:261 h:33" positiontype="position2" mask="##:##" style="border:1 solid black ; :disabled {align:center;}" enable="false" type="string"/>
+        <Combo id="attendanceType" taborder="27" position2="absolute l:110 w:150 t:480 h:33" positiontype="position2" index="-1" innerdataset="@ds_attdTypeCode" datacolumn="DETAIL_CODE_NAME" codecolumn="DETAIL_CODE"/>
+        <MaskEdit id="clock" taborder="28" type="string" mask="##:##:##" enable="false" position2="absolute l:175 w:131 t:224 h:32" positiontype="position2" style="border:1 solid black ; :disabled {align:center;}"/>
+      </Layout>
+    </Layouts>
+    <Objects/>
+    <Bind>
+      <BindItem id="item0" compid="v_deptName" propid="value" datasetid="ds_dept" columnid="DEPT_NAME"/>
+    </Bind>
+    <InitValue>
+      <Combo id="Combo00" innerdataset="@ds_attdTypeCode" datacolumn="DETAIL_CODE" codecolumn="DETAIL_CODE_NAME"/>
+      <Grid id="Grid00" binddataset="ds_dailyAttd"/>
+    </InitValue>
+    <Script type="xscript4.0"><![CDATA[var today=new Date().toFormatString("%Y%m%d");	
+var sendTime;
+var registerAttdFlag='Y';
+
+//마플에서 Value에서 엑플에서는 value 소대문자를 구별한다.
+//마플에서 엑플로 바뀐점
+//GetRowCount > getRowCount
+//CopyF > copyData 
+//GetDate > toFormatString 으로 바뀜
+//Dataset.keystring = "S:column0+column0"; DataSet 내림차순 칼럼 앞에 - 하면 내림 + 오름
+//마플에서의 Sort : Dataset의 Record들을 내림차순이나 오름차순으로 정렬하는 Method 입니다. 
+
+//온로드 완료
+function dailyAttendanceApplicationForm_onload(obj:Form, e:LoadEventInfo)
+{	
+
+	ds_dailyAttd.clearData();	
+	ds_outing.clearData();
+	
+	setTimer(setTime(),1000);
+	
+	v_empCode.value=g_empCode;
+	v_empName.value=g_empName;
+	v_deptName.value=g_deptName;
+	basicDate.value=today;
+	
+
+   
+	 transaction(
+     "findDailyAttdList",
+      "svcHrAttendance::/findDailyAttdList.do",
+      "",
+      "ds_dailyAttd=dsDailyAttd",
+      "empCode='"+g_empCode + "' fromDate='"+today+"' toDate='"+today+"'",
+      "dayAttdCallback",
+      false
+      );
+      
+      
+	transaction(
+	"findCodeList",
+	"svcBase::/findCodeList.do",
+	"",
+	"ds_code=dsCode ds_detailCode=dsDetailCode",
+	"",
+	"callback",
+	false
+	);
+	//ds_detailCode.Filter("DETAIL_CODE='ADC001'||DETAIL_CODE='ADC002'||DETAIL_CODE='ADC100'||DETAIL_CODE='ADC004'" );
+	//ds_dailyAttdType.copyData(ds_detailCode,true);
+	
+	//ds_dailyAttdType.Sort("DETAIL_CODE",true);
+	
+	ds_detailCode.filter("DETAIL_CODE=='ADC001'||DETAIL_CODE=='ADC002'||DETAIL_CODE=='ADC004'||DETAIL_CODE=='ADC100'" );
+	ds_attdTypeCode.copyData(ds_detailCode,true);
+    ds_attdTypeCode.keystring = "S:+DETAIL_CODE-DETAIL_CODE=='ADC100'";
+
+
+    
+	
+
+   
+   
+	transaction("findSalaryList",
+	"svcBase::/findSalaryList.do",
+	"",
+	"ds_etcSal=dsEtcSal",
+	"",
+	"callback",
+	false);
+	ds_etcSal.filter("SubStr(ETC_SAL_CODE,0,3) == 'ETS'");
+   
+
+}
+
+//조회버튼 
+function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var v_fromDate=fromDate.value;
+	var v_toDate=toDate.value;
+	
+	if(fromDate=="" || toDate==""){
+		alert("날짜가 입력되지 않았습니다 .");
+	}else if(fromDate>toDate){
+		alert("조회기간이 제대로 설정되지 않았습니다.");
+	}else{   
+	   transaction(
+      "findDailyAttdList",
+      "svcHrAttendance::/findDailyAttdList.do?method=findDailyAttdList",
+      "",
+      "ds_dailyAttd=dsDailyAttd",
+      "empCode='"+g_empCode + "' fromDate='"+v_fromDate+"' toDate='"+v_toDate+"'",
+      "dayAttdCallback",
+      false
+      );
+      
+	  if(ds_dailyAttd.getRowCount()==0)
+			alert("조회된 결과가 없습니다. ");
+	}	
+}
+
+//기준시간 
+function setTime(){  
+var time=new Date().toFormatString("%H%M%S");	
+clock.value=time;
+}
+
+//완료
+var directAttdTime;
+function clockInsertBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	currentTime.align="center";
+	currentTime.enable=true;
+	clock.enable=false;
+}
+
+//신청버튼
+function applicationBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   var empCode=g_empCode;
+   var empName=g_empName;
+   var v_basicDate=basicDate.value;
+   var clockText= clock.value.replace(":","");
+   var baseClock = clockText.substring(0,2)+clockText.substring(2,4);
+   var directAttdTime=currentTime.value;
+   var attdTime="";
+   var attdType=attendanceType.value;   
+   var cause=v_cause.value;
+   var approvalStatus='Y';
+       registerAttdFlag='Y';
+
+   
+
+      // 데이터 가져와서 유효성검사하고 바인딩시키기 
+      transaction(
+      "findDailyAttdList",
+      "svcHrAttendance::/findDailyAttdList.do",
+      "",
+      "ds_dailyAttd=dsDailyAttd",
+      "empCode='"+g_empCode + "' fromDate='"+v_basicDate+"' toDate='"+v_basicDate+"'",
+      "dayAttdCallback",
+      false
+      );
+     
+      // 유효성 검사하기위한 데이터 가져오기
+      // 근태외데이터 가져오기
+      transaction(
+      "findAttdRestList",
+      "svcHrAttendance::/findAttdRestList.do",
+      "",
+      "ds_dailyAttdRest=dsDailyAttdRest",
+      "empCode='"+g_empCode+"'",
+      "callback",
+      false
+      );
+      
+	  // 연차데이터 가져오기
+	  transaction(
+      "findAnnualMgt",
+      "svcHrAttendance::/findAnnualMgt.do",
+      "",
+      "ds_dayAnnual=dsDayAnnual",
+      "empCode='" + g_empCode + "' standardYear='" + today.substring(0,4) + "'",
+      "callback",
+      false
+      );	
+      
+      //여기까지 완료
+	
+	  // 근태외내역 있는지 조사
+	  ds_dailyAttdRest.filter("START_DATE <= "+v_basicDate+" &&"+v_basicDate+"<= END_DATE"); 
+	  // 연차내역 있는지 조사
+	  ds_dayAnnual.filter("START_DATE<="+v_basicDate+" &&"+v_basicDate+"<=END_DATE");
+	
+	  // 근태외 데이터가 존재하면
+	  if(ds_dailyAttdRest.getRowCount() !=0){
+		alert("근태 외 신청(출장,교육)기간에는 일근태 신청이 불가합니다.");
+		return;
+      }
+  
+	  // 연차 데이터가 존재하면
+	  if(ds_dayAnnual.getRowCount()!=0){
+		alert("연차,휴가기간에는 일근태 신청이 불가합니다.");
+		return;
+	  }
+   
+ /*  if(etcSal != ""){
+		ds_etcSal.filter("ETC_SAL_NAME='"+etcSal+"'");
+		price=ds_etcSal.getColumn(ds_etcSal.row,"ETC_SAL_PRICE");
+		etcSal=price;
+   }else{
+		etcSal=price;
+   }
+*/
+   
+   if(cause == ""){
+      cause="cause";
+   }
+   
+   if(typeof(directAttdTime)!="undefined"){
+       attdTime=directAttdTime;
+   }
+   else if(typeof(directAttdTime)=="undefined"){
+       attdTime=baseClock;  
+   }    
+   
+   var parsedAttdTime = parseInt(attdTime);
+
+   
+   // 첫기록은 무조건 출근
+   if(ds_dailyAttd.getRowCount() == 0 && attdType != "ADC001"){
+		alert("출근부터 등록해주세요.");
+		return;
+   }
+   
+   // 시간유효성검사
+   if(attdTime.length != 4 || parsedAttdTime >= 2400 || parseInt(attdTime.substring(2)) >= 60 ){
+		alert("시간을 제대로 입력해주세요.");
+		return;
+   }
+   
+   //  8시에 회사문 엽니다. 8시이전 18시 이후 출근 등록시 빠꾸 
+   if(attdType=="ADC001" && ( parsedAttdTime > 1800 || parsedAttdTime < 0800 ) ){
+		alert("현재는 출근시간 아닙니다. \r\n 08:00 ~ 18:00 까지입니다. ");
+		return;
+   }
+   
+   // 퇴근은 출근 이후이거나 심야근무했을때 9시 이전 까지.
+   var index = ds_dailyAttd.findRow("ATTD_TYPE_CODE","ADC001");
+   var attendanceTime = ds_dailyAttd.getColumn(index,"TIME");
+   if( parseInt(attendanceTime) > parsedAttdTime && parsedAttdTime > 0900 && attdType=="ADC002" ){
+		alert("퇴근시간은 출근시간 이후이거나 심야근무시 9시 이전 까지입니다.");
+		return;
+   }
+   
+   // 출근기록이 이미존재하면 출근재등록 불가.
+   if(attdType=="ADC001" && ds_dailyAttd.findRow("ATTD_TYPE_CODE","ADC001")!=-1)
+     {   
+       alert("출근기록이 이미 존재합니다. ");
+       return;
+    }
+    
+    // 퇴근기록이 이미존재하면 퇴근재등록 불가, 외출하고 귀사하지 않으면 퇴근재등록 불가.
+      else if(attdType=="ADC002" && ds_dailyAttd.findRow("ATTD_TYPE_CODE","ADC002")!=-1)
+    { 
+       alert("퇴근기록이 이미 존재합니다. ");
+       return;
+    }
+    
+    // 퇴근시 외출 불가
+    else if(attdType=="ADC100" && ds_dailyAttd.findRow("ATTD_TYPE_CODE","ADC002")!=-1)
+    {
+       alert("퇴근기록이 이미 존재하여 외출처리가 불가합니다. ");
+       return;
+    }
+    
+    else if( attdType=="ADC100" && 1200 <= parsedAttdTime && parsedAttdTime < 1300 ){
+		alert("점심시간입니다, 외출신청은 12시이전 ~ 13시이후로 해주세요.");
+		return;
+    }
+    else if( attdType=="ADC004" && 1200 <= parsedAttdTime && parsedAttdTime < 1300 ){
+		alert("점심시간입니다, 귀사등록은 12시이전 ~ 13시이후로 해주세요.");
+		return;
+    }
+    // 공외출 사외출 시 외출-귀사가 0일때만 외출처리가 다시 되도록
+    if( attdType != "ADC001" ){
+		var goingOutRowCount = 0;
+		var returnToCompanyRowCount = 0;
+		
+		// 기록중 외출 몇갠지, 귀사기록 몇갠지 검사해서 증감
+		for(var i=0; i<ds_dailyAttd.getRowCount(); i++){
+		
+			if(ds_dailyAttd.getColumn(i,"ATTD_TYPE_CODE") == 'ADC003' || ds_dailyAttd.getColumn(i,"ATTD_TYPE_CODE") == 'ADC008' || ds_dailyAttd.getColumn(i,"ATTD_TYPE_CODE") == 'ADC111'){
+				goingOutRowCount++;
+			}else if(ds_dailyAttd.getColumn(i,"ATTD_TYPE_CODE") == 'ADC004'){
+				returnToCompanyRowCount++;
+			}
+		}
+		
+		// 외출내역과 귀사내역의 갯수가 맞아떨어지지 않으면
+		if( attdType == "ADC100"  && ( goingOutRowCount - returnToCompanyRowCount ) != 0){
+			alert("외출기록중 귀사처리되지 않은 기록이 있어 외출신청이 불가합니다.");
+			return;
+		}
+		
+		// 외출하고 귀사안했을때 퇴근찍는경우 방지
+		if(attdType == "ADC002" && ( goingOutRowCount - returnToCompanyRowCount ) != 0){
+			alert("외출기록중 귀사처리되지 않은 기록이 있어 퇴근기록이 불가합니다.");
+			return;
+		}
+		
+		// 외출기록이 귀사기록보다 하나 많을때만 귀사기록이 가능하도록
+		if(attdType == "ADC004" && ( goingOutRowCount - returnToCompanyRowCount ) != 1){
+			alert("귀사처리할 외출기록이 없습니다.");
+			return;
+		}
+
+		var lastRowIndex = ds_dailyAttd.getRowCount()-1;
+		var lastRowTime = ds_dailyAttd.getColumn(lastRowIndex,"TIME");
+		if( ( attdType == "ADC100" || attdType == "ADC004"  ) && ( parseInt(lastRowTime) >= parsedAttdTime || parsedAttdTime >= 1800 || parsedAttdTime <= 0900 ) ){
+			alert("외출 및 귀사 시간이 제대로 되었는지 확인바랍니다.");
+			return;
+		}
+		
+		if( attdType == "ADC002" &&  ( parseInt(lastRowTime) >= parsedAttdTime && parsedAttdTime > 0700 ) ){
+			alert("퇴근 시간이 제대로 되었는지 확인바랍니다. \r\n 정상퇴근시간은 18:00시 \r\n"
+			+ " 심야근무시 아침 07:00 시 까지입니다.");
+			return;
+		}
+		
+    }
+
+	if(v_basicDate==null || attdType==null || attdTime==""){
+    alert("날짜 , 일근태유형, 시간 확인바랍니다.");
+    
+	}else{
+	
+      if(confirm(" 실행 하시겠습니까? ")){
+		if(attdType=="ADC100"){
+		  
+			transaction(
+			"ds_outing",
+			"svcHrAttendance::/findDailyAttdOutingList.do",
+			"",
+			"ds_outing=dsOuting",
+			"empCode='"+g_empCode+"' fromDate='20000000' toDate='21000000",
+			"callback",
+			false
+			);
+			
+	ds_outing.filter("BASIC_DAY=='"+today+"'&&APPROVAL_STATUS=='Y'");
+   
+   
+			var outingCount=ds_outing.rowcount;
+			sendTime=attdTime;
+			if(outingCount>0){
+						
+			dialog("modal", "HrAttendance::GoingoutApprovalDialog.xfdl", MainFrame, null, "", 100, 120);			
+
+			}else if(outingCount==0){
+				if(!confirm("지금외출하면 무단외출입니다 \n정말로 외출하시겠습니까?")){
+					alert(" 외출신청취소 ");
+					return;
+				}
+			}
+		}
+		
+		if(registerAttdFlag=="Y"){
+		ds_dailyAttd.addRow();  
+		 
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"EMP_CODE",empCode);
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"BASIC_DAY",v_basicDate);
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"ATTD_TYPE_CODE",attdType);
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"TIME",attdTime);
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"CAUSE",cause);   
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"APPROVAL_STATUS",approvalStatus);
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"DAY_ATTD_SEQ",approvalStatus);
+         ds_dailyAttd.setColumn(ds_dailyAttd.rowposition,"EMP_NAME",empName);
+        
+
+         transaction(
+            "addDailyAttd",
+            "svcHrAttendance::/addDailyAttd.do", 
+            "dsDailyAttd=ds_dailyAttd:u", 
+            "ds_dailyAttd=dsDailyAttd", 
+            "",
+            "callback",
+            false
+         );   
+	   }else if(registerAttdFlag=='N'){
+	   alert(" 외출신청취소 ");
+	   return;
+	   }
+      }
+   }
+}
+
+function deleteBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	var v_basicDate=basicDate.value;
+	
+	if(v_basicDate==null){
+		alert("기준일이 입력되지 않았습니다 .");
+	}else if(confirm("기준일 : [ "+v_basicDate+" ] 의 일근태기록을 일괄삭제 하시겠습니까?")){
+	   
+	 transaction(
+      "deleteDailyAttdList",
+      "svcHrAttendance::/deleteDailyAttdList.do",
+      "",
+      "",
+      "empCode='"+g_empCode +"' basicDay='"+v_basicDate+"'",
+      "callback"
+     );
+	}	
+}
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   if(trid=="addDailyAttd"){
+      if(ErrorCode!=0){
+        alert(" 추가실패 ");
+      }else{
+        alert(ErrorMsg);
+		trace(ErrorMsg);
+		reload();
+      }
+   }
+   
+   if(trid=="deleteDailyAttdList"){
+      if(ErrorCode!=0){
+        alert(" 삭제실패 ");
+      }else{
+        alert(ErrorMsg);
+        reload();
+      }
+   }
+}
+]]></Script>
+  </Form>
+</FDL>

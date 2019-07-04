@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="authorityManagementForm" classname="authorityManagementForm" inheritanceid="" position="absolute 0 0 1024 768" titletext="authorityManagementForm" onload="authorityManagementForm_onload" style="background:transparent;border:0 double #ccccccff white;">
+    <Layouts>
+      <Layout>
+        <Static id="Static08" text="사용자 권한관리" position2="absolute l:8 w:975 t:8 h:41" positiontype="position2" style="align:middle;"/>
+        <Static id="Static04" text="부서별 전체사원 검색" position2="absolute l:29 w:331 t:56 h:128" positiontype="position2" style="align:top;"/>
+        <Edit id="bisinessPlaceCodeDialogBtn" taborder="23" position2="absolute l:48 w:129 t:93 h:40" positiontype="position2"/>
+        <Button id="Button00" taborder="24" text="부서별사원조회" position2="absolute l:192 w:105 t:95 h:32" positiontype="position2" onclick="empListSearchByDeptBtn_onclick"/>
+        <Edit id="deptCodeDialogBtn" taborder="26" position2="absolute l:48 w:129 t:144 h:40" positiontype="position2"/>
+        <Button id="Button01" taborder="27" text="부서선택" position2="absolute l:191 w:66 t:148 h:32" positiontype="position2" onclick="deptCodeSearchBtn_onclick"/>
+        <Button id="Button02" taborder="28" text="사업장선택" position2="absolute l:270 w:66 t:148 h:32" positiontype="position2" onclick="businessPlaceCodeSearchBtn_onclick"/>
+        <Static id="Static05" text="사원명으로 검색" position2="absolute l:371 w:211 t:56 h:67" positiontype="position2" style="align:top;"/>
+        <Edit id="empName" taborder="29" position2="absolute l:379 w:109 t:88 h:32" positiontype="position2" oneditclick="Edit02_oneditclick"/>
+        <Button id="Button03" taborder="30" text="사원명조회" position2="absolute l:496 w:80 t:93 h:23" positiontype="position2" onclick="empNameSearchBtn_onclick"/>
+        <Static id="Static06" position2="absolute l:372 w:204 t:139 h:32" positiontype="position2"/>
+        <Button id="Button04" taborder="31" text="전체사원보기" position2="absolute l:428 w:100 t:144 h:21" positiontype="position2" onclick="totalEmpListSearchBtn_onclick"/>
+        <Combo id="authorityCombo" taborder="32" position2="absolute l:617 w:104 t:103 h:23" positiontype="position2" index="-1" codecolumn="AUTHORITY_CODE" datacolumn="AUTHORITY_NAME" innerdataset="@ds_authorityCombo"/>
+        <Button id="wholeUpdateAuthorityCancleBtn" taborder="33" text="취소" position2="absolute l:869 w:102 t:98 h:24" positiontype="position2" onclick="wholeUpdateAuthorityCancleBtn_onclick"/>
+        <Button id="wholeUpdateAuthorityBtn" taborder="34" text="사원권한 일괄변경" position2="absolute l:739 w:122 t:98 h:23" positiontype="position2" onclick="wholeUpdateAuthorityBtn_onclick"/>
+        <Button id="Button05" taborder="35" text="사원권한 일괄저장" position2="absolute l:739 w:125 t:133 h:22" positiontype="position2" onclick="empBatchSaveBtn_onclick"/>
+        <Grid id="empGrid" taborder="36" useinputpanel="false" position2="absolute l:8 w:1009 t:192 h:144" positiontype="position2" binddataset="ds_employeeList" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" displaytype="normal" text="EMP_CODE"/>
+                <Cell col="1" displaytype="normal" text="EMP_NAME"/>
+                <Cell col="2" displaytype="normal" text="PASSWORD"/>
+                <Cell col="3" displaytype="normal" text="POSITION_CODE"/>
+                <Cell col="4" displaytype="normal" text="AUTHORITY_CODE"/>
+                <Cell col="5" displaytype="normal" text="DEPT_CODE"/>
+                <Cell col="6" displaytype="normal" text="BUSINESS_CODE"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" displaytype="normal" text="bind:EMP_CODE"/>
+                <Cell col="1" displaytype="normal" text="bind:EMP_NAME"/>
+                <Cell col="2" displaytype="normal" text="bind:PASSWORD"/>
+                <Cell col="3" displaytype="normal" text="bind:POSITION_CODE"/>
+                <Cell col="4" displaytype="normal" text="bind:AUTHORITY_CODE"/>
+                <Cell col="5" displaytype="normal" text="bind:DEPT_CODE"/>
+                <Cell col="6" displaytype="normal" text="bind:BUSINESS_CODE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static07" text="권한코드에 따른 접근가능 메뉴설정" position2="absolute l:4 w:1012 t:341 h:42" positiontype="position2" style="align:middle;"/>
+        <Static id="Static03" text="권한" position2="absolute l:40 w:245 t:392 h:30" positiontype="position2" style="align:middle;"/>
+        <Static id="Static00" text="권한별 접근가능 메뉴" position2="absolute l:352 w:245 t:392 h:30" positiontype="position2" style="align:middle;"/>
+        <Static id="Static01" text="전체메뉴" position2="absolute l:696 w:245 t:392 h:30" positiontype="position2" style="align:middle;"/>
+        <Grid id="Grid00" taborder="37" useinputpanel="false" position2="absolute l:48 w:252 t:432 h:161" positiontype="position2" oncellclick="authorityGrid_oncellclick" binddataset="ds_authority" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" displaytype="normal" text="AUTHORITY_CODE"/>
+                <Cell col="1" displaytype="normal" text="AUTHORITY_NAME"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" displaytype="normal" text="bind:AUTHORITY_CODE"/>
+                <Cell col="1" displaytype="normal" text="bind:AUTHORITY_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="accessMenuByAuthorityGrid" taborder="38" useinputpanel="false" position2="absolute l:348 w:257 t:432 h:235" positiontype="position2" binddataset="ds_menuAuthority">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" displaytype="normal" text="MENU_CODE"/>
+                <Cell col="1" displaytype="normal" text="AUTHORITY_CODE"/>
+                <Cell col="2" displaytype="normal" text="MENU_NAME"/>
+                <Cell col="3" displaytype="normal" text="AUTHORITY_NAME"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" displaytype="normal" text="bind:MENU_CODE"/>
+                <Cell col="1" displaytype="normal" text="bind:AUTHORITY_CODE"/>
+                <Cell col="2" displaytype="normal" text="bind:MENU_NAME"/>
+                <Cell col="3" displaytype="normal" text="bind:AUTHORITY_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Grid id="Grid01" taborder="39" useinputpanel="false" position2="absolute l:690 w:276 t:430 h:290" positiontype="position2" binddataset="ds_menu" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Col size="80"/>
+                <Col size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row band="body" size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell col="0" displaytype="normal" text="MENU_CODE"/>
+                <Cell col="1" displaytype="normal" text="MENU_NAME"/>
+              </Band>
+              <Band id="body">
+                <Cell col="0" displaytype="normal" text="bind:MENU_CODE"/>
+                <Cell col="1" displaytype="normal" text="bind:MENU_NAME"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Button id="authorityAddBtn" taborder="40" text="권한추가" position2="absolute l:51 w:56 t:610 h:23" positiontype="position2" onclick="authorityAddBtn_onclick"/>
+        <Button id="authorityRemoveBtn" taborder="41" text="권한삭제" position2="absolute l:119 w:56 t:610 h:23" positiontype="position2" onclick="authorityRemoveBtn_onclick"/>
+        <Button id="authorityCancleBtn" taborder="42" text="취소" position2="absolute l:184 w:56 t:610 h:23" positiontype="position2" onclick="authorityCancleBtn_onclick"/>
+        <Button id="Button09" taborder="43" text="일괄저장" position2="absolute l:247 w:56 t:610 h:23" positiontype="position2" onclick="saveBtn_onclick"/>
+        <Button id="menuAddBtn" taborder="44" text="+" position2="absolute l:625 w:39 t:485 h:36" positiontype="position2" onclick="menuAddBtn_onclick"/>
+        <Button id="menuAddBtn00" taborder="45" text="-" onclick="menuRemoveBtn_onclick" position2="absolute l:625 w:39 t:540 h:36" positiontype="position2"/>
+      </Layout>
+    </Layouts>
+    <Bind/>
+    <Script type="xscript4.0"><![CDATA[
+function authorityManagementForm_onload(obj:Form, e:LoadEventInfo)
+{   
+   transaction("findEmployeeList","svcBase::findEmployeeList.do","","ds_employeeList=dsEmployee","","callback",false);
+    transaction("findAuthorityList","svcBase::findAuthorityList.do","","ds_authority=dsAuthority","","callback",false);
+    //transaction("findMenuAuthorityListAll","svcBase::findMenuAuthorityListAll.do","","ds_menu=dsMenuAuthority","","callback",false);
+    ds_authorityCombo.copyData(ds_authority);
+   authorityCombo.index=0;
+}
+
+function businessPlaceCodeSearchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   dialog("modal", "Base::businessPlaceDialog.xfdl", MainFrame, null, "", 565, 260);
+}
+
+function deptCodeSearchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{   
+ 
+     if(bisinessPlaceCodeDialogBtn.text==""){
+        alert("사업장코드를 검색해주세요");
+     }
+     else{
+         dialog("modal", "Base::deptCodeDialog.xfdl", MainFrame, null, "", 565, 260);
+   }
+}
+
+function empListSearchByDeptBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_dept.filter("DEPT_NAME=='"+deptCodeDialogBtn.value+"'");
+   ds_business_place.filter("BUSINESS_PLACE_NAME=='"+bisinessPlaceCodeDialogBtn.value+"'");
+   var deptcode=ds_dept.getColumn(0,"DEPT_CODE");
+   var businessPlaceCode=ds_business_place.getColumn(0,"BUSINESS_PLACE_CODE");
+   ds_employeeList.filter("BUSINESS_CODE=='"+businessPlaceCode+"' && DEPT_CODE=='"+deptcode+"'");
+   ds_dept.filter("");
+   ds_business_place.filter("");
+}
+
+function empNameSearchBtn_onclick(obj:Button,  e:ClickEventInfo) //사원명 조회
+{
+   if(empName.text==""){
+        alert("사원명이 입력되지 않았습니다");
+   }
+   else{
+      ds_employeeList.filter("EMP_NAME=='"+empName.value+"'");
+    }
+
+}
+
+function authorityGrid_oncellclick(obj:Grid, e:GridClickEventInfo)
+{      
+      var authorityCode=ds_authority.getColumn(e.row,"AUTHORITY_CODE");
+      alert(ds_authority.getColumn(e.row,"AUTHORITY_CODE"));
+      //ds_menuAuthority.filter("");
+      transaction("findMenuAuthorityList",
+      "svcBase::findMenuAuthorityList.do",
+      "",
+      "ds_menuAuthority=dsMenuAuthority",
+      "authorityCode="+authorityCode,
+      "callback"
+      ,false);
+      //ds_menuAuthority.filter("AUTHORITY_CODE=='"+ds_authority.getColumn(e.row,"AUTHORITY_CODE")+"'");
+       
+}
+
+
+
+function menuAddBtn_onclick(obj:Button,  e:ClickEventInfo) // + 버튼
+{
+ var selAuthorityCode = ds_authority.getColumn(ds_authority.rowposition,"AUTHORITY_CODE");   //권한데이터셋에서 선택한 코드 가져옴
+   var selAuthorityName = ds_authority.getColumn(ds_authority.rowposition,"AUTHORITY_NAME");
+   
+    
+   var selMenuCode = ds_menu.getColumn(ds_menu.rowposition,"MENU_CODE");  //전체메뉴에서 선택한 메뉴 가져옴
+   var selMenuName = ds_menu.getColumn(ds_menu.rowposition,"MENU_NAME");
+   
+   //위에서 구한것들 다 넣을 것임
+   
+   var rowNum=ds_menuAuthority.getRowCount();
+
+   for(var i=0; i<rowNum; i++){
+          if( ds_menuAuthority.getColumn(i,"MENU_CODE")==selMenuCode) 
+          {  
+            alert("해당메뉴는 이미 존재합니다."); 
+            break;
+          }
+          if(i==rowNum-1){
+            ds_menuAuthority.addRow();
+            ds_menuAuthority.setColumn(ds_menuAuthority.rowposition,"AUTHORITY_CODE",selAuthorityCode);
+            ds_menuAuthority.setColumn(ds_menuAuthority.rowposition,"AUTHORITY_NAME",selAuthorityName);
+            ds_menuAuthority.setColumn(ds_menuAuthority.rowposition,"MENU_CODE",selMenuCode);
+            ds_menuAuthority.setColumn(ds_menuAuthority.rowposition,"MENU_NAME",selMenuName);
+          }
+    }
+   
+}
+
+
+//-버튼
+function menuRemoveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_menuAuthority.deleteRow(ds_menuAuthority.rowposition);
+}
+
+
+
+
+function authorityAddBtn_onclick(obj:Button,  e:ClickEventInfo) //권한추가버튼
+{
+      ds_authority.addRow();
+}
+
+
+
+function authorityCancleBtn_onclick(obj:Button,  e:ClickEventInfo) //취소버튼
+{
+ds_menuAuthority.reset();
+reload();
+
+}
+
+
+
+function authorityRemoveBtn_onclick(obj:Button,  e:ClickEventInfo) //권한삭제버튼
+{
+   ds_authority.deleteRow(ds_authority.rowposition);
+
+}
+
+
+//일괄저장
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(confirm("변경된 사항을 저장하시겠습니까?")){
+    transaction("batchAuthority"
+                ,"svcBase::/batchAuthority.do"
+                ,"dsMenuAuthority=ds_menuAuthority:u"
+                ,"ds_menuAuthority=dsMenuAuthority"
+                ,""
+                ,"callback"
+                ,false);       
+    }
+    
+}
+
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   
+   
+   if(trid=='batchAuthority'){
+      if(ErrorCode<0){
+         alert("권한 수정 중 오류 발생");
+      }else{
+         alert("권한 저장 완료");
+         reload();
+      }   
+   }
+   
+   if(trid=='batchEmployee'){
+      if(ErrorCode<0){
+         alert("권한 수정 중 오류 발생");
+      }else{
+         alert("권한 저장 완료");
+         reload();
+      }   
+   }
+
+}
+
+//전체사원조회
+function totalEmpListSearchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+      ds_employeeList.filter("");
+}
+
+//사원권한 일괄변경
+function wholeUpdateAuthorityBtn_onclick(obj:Button,  e:ClickEventInfo)
+{     
+      var rowNum= ds_employeeList.getRowCount();
+         for(var j=0; j<rowNum; j++){
+             ds_employeeList.setColumn(j,"AUTHORITY_CODE",authorityCombo.value);
+             
+            }
+   
+}
+
+
+//사원권한 일괄저장
+function empBatchSaveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{  
+    if(confirm("변경내용을 저장하시겠습니까?"))
+   {
+      transaction("batcEditEmployee"
+                ,"svcBase::/batcEditEmployee.do?"
+                ,"dsEmployee=ds_employeeList:u"
+                ,"ds_employeeList=dsEmployee"
+                ,""
+                ,"callback"
+                ,false);
+   
+   }
+   
+}
+
+//취소
+function wholeUpdateAuthorityCancleBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   ds_employeeList.reset();
+
+}
+]]></Script>
+  </Form>
+</FDL>

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="loginForm" classname="loginForm" inheritanceid="" position="absolute 0 0 429 393" titletext="Welcome !" onload="loginForm_onload">
+    <Layouts>
+      <Layout>
+        <Button id="loginBtn" taborder="0" text="로그인" position2="absolute l:94 w:116 t:323 h:37" positiontype="position2" onclick="loginBtn_onclick"/>
+        <Button id="exitBtn" taborder="1" text="나가기" position2="absolute l:220 w:118 t:322 h:38" positiontype="position2" onclick="exitBtn_onclick"/>
+        <Edit id="empCode" taborder="3" position2="absolute l:172 w:177 t:208 h:40" positiontype="position2" style="align:center;"/>
+        <Edit id="Edit02" taborder="4" position2="absolute l:85 w:87 t:208 h:40" positiontype="position2" value="사원코드" style="align:center;"/>
+        <Edit id="password" taborder="5" position2="absolute l:171 w:177 t:264 h:42" positiontype="position2" style="align:center;" password="false"/>
+        <Edit id="Edit03" taborder="6" position2="absolute l:84 w:87 t:264 h:42" positiontype="position2" value="비밀번호" style="align:center;"/>
+        <Edit id="Edit04" taborder="7" value="부서명" position2="absolute l:85 w:87 t:155 h:40" positiontype="position2" style="align:center;"/>
+        <Edit id="Edit00" taborder="16" value="사업장명" position2="absolute l:85 w:87 t:99 h:42" positiontype="position2" style="align:center;"/>
+        <Edit id="bisinessPlaceCodeDialogBtn" taborder="17" position2="absolute l:172 w:179 t:99 h:42" positiontype="position2" oneditclick="bisinessPlaceCodeDialogBtn_oneditclick" visible="true" style="align:center middle;" enable="true" tooltiptype="default" enableevent="true" tabstop="false" readonly="true"/>
+        <Edit id="deptCodeDialogBtn" taborder="18" tabstop="false" readonly="true" oneditclick="deptCodeDialogBtn_oneditclick" position2="absolute l:172 w:179 t:155 h:39" positiontype="position2" style="align:center middle;"/>
+        <Static id="DKmanagement" position2="absolute l:94 w:254 t:11 h:58" positiontype="position2" onclick="Static00_onclick" style="align:center;font:Verdana,20;" text="DKmanagement"/>
+      </Layout>
+    </Layouts>
+    <Script type="xscript4.0"><![CDATA[function bisinessPlaceCodeDialogBtn_oneditclick(obj:Edit,  e:EditClickEventInfo)
+{
+	dialog("modal", "Base::businessPlaceDialog.xfdl", MainFrame, null, "", 565, 260);
+}
+
+function deptCodeDialogBtn_oneditclick(obj:Edit,  e:EditClickEventInfo)
+{
+	if(bisinessPlaceCodeDialogBtn.text.length==0){
+		alert("사업장먼저 선택해주세요.");
+		return;
+	}
+	dialog("modal", "Base::deptCodeDialog.xfdl", MainFrame, null, "", 565, 260);
+}
+
+function loginBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	if(bisinessPlaceCodeDialogBtn.text.length==0||deptCodeDialogBtn.text.length==0){
+		alert("사업장,부서 모두 선택해주세요");
+		return;
+	}
+	if(empCode.text==""||password.text==""){
+		alert("사원코드 비밀번호 모두 입력해주세요");
+		return;
+	}
+	transaction( "checkLogin"
+               ,"svcBase::/checkLogin.do?method=checkLogin"
+               ,""
+               ,"ds_employee=dsEmployee"
+               ,"businessPlaceCode='"+g_businessCode+ "' deptCode='"+g_deptCode+"' empCode='"+empCode.text+"' password='"+password.text+"'"
+               ,"callback"
+               ,false)
+	
+}
+
+function callback(trid, ErrorCode, ErrorMsg) {
+   if(trid=="checkLogin"){
+      if(ErrorCode<0){
+         alert(ErrorMsg);   
+         // 로그인성공시
+      }else{
+			g_empCode = empCode.text;
+			g_positionCode = ds_employee.getColumn(0,"POSITION_CODE");
+			g_empName = ds_employee.getColumn(0,"EMP_NAME");
+			g_authorityCode = ds_employee.getColumn(0,"AUTHORITY_CODE");
+			
+          alert(ErrorMsg);
+          //objFrameSet.form.all
+          //프레임셋이 포함하고 있는 프레임의 정보를 갖는 속성.
+          var objFrameSet=application.mainframe.VFrameSet0.HFrameSet0.ChildFrame0;
+         
+          objFrameSet.form.all["authorityCode"].value=g_authorityCode;
+          objFrameSet.form.all["businessCode"].value=g_businessName;
+          objFrameSet.form.all["deptCode"].value=g_deptName;
+          objFrameSet.form.all["empCode"].value=g_empCode;
+          objFrameSet.form.all["empName"].value=g_empName;
+          
+   
+          application.mainframe.visible = true;
+          close();
+         //go("Base::mainView.xfdl");
+          //현재창 닫고 initialurl에 따른 mainform띄워주기.
+      }
+   }
+}
+
+function exitBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+	close();
+}]]></Script>
+  </Form>
+</FDL>

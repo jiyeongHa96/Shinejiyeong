@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="1.5">
+  <TypeDefinition url="..\default_typedef.xml"/>
+  <Form id="holidayManagementForm" classname="holidayManagementForm" inheritanceid="" position="absolute 0 0 962 650" titletext="holidayManagementForm" onload="holidayManagementForm_onload">
+    <Layouts>
+      <Layout>
+        <Edit id="Edit00" taborder="0" value="휴일 관리" oneditclick="Edit00_oneditclick" enable="false" position2="absolute l:16 w:931 t:14 h:28" positiontype="position2" style="align:center;"/>
+        <GroupBox id="GroupBox00" text="휴일 조회" position2="absolute l:16 w:382 t:53 h:131" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox01" text="휴일 등록" position2="absolute l:16 w:382 t:192 h:405" positiontype="position2" style="titlealign:topleft;"/>
+        <GroupBox id="GroupBox02" text="휴일 목록" position2="absolute l:412 w:532 t:53 h:544" positiontype="position2" style="titlealign:topleft;"/>
+        <Grid id="holidayManagementGrid" taborder="1" useinputpanel="false" position2="absolute l:436 w:488 t:88 h:486" positiontype="position2" binddataset="ds_holiday">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="38"/>
+                <Column size="74"/>
+                <Column size="109"/>
+                <Column size="87"/>
+                <Column size="146"/>
+              </Columns>
+              <Rows>
+                <Row size="24" band="head"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="NO"/>
+                <Cell col="1" text="기준일"/>
+                <Cell col="2" text="휴일명"/>
+                <Cell col="3" text="휴일근태구분"/>
+                <Cell col="4" text="비고"/>
+              </Band>
+              <Band id="body">
+                <Cell expr="currow+1"/>
+                <Cell col="1" text="bind:BASIC_DAY"/>
+                <Cell col="2" text="bind:HOLIDAY_NAME"/>
+                <Cell col="3" text="bind:HOLIDAY_TYPE"/>
+                <Cell col="4" text="bind:NOTE"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Edit id="Edit01" taborder="2" value="조회기간" enable="false" position2="absolute l:48 w:60 t:92 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Button id="searchBtn" taborder="6" text="조회" position2="absolute l:290 w:71 t:136 h:28" positiontype="position2" onclick="searchBtn_onclick"/>
+        <Edit id="Edit03" taborder="7" value="비   고" enable="false" position2="absolute l:64 w:116 t:378 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit04" taborder="8" value="휴일근태구분" enable="false" position2="absolute l:64 w:116 t:328 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit05" taborder="9" value="휴일명" enable="false" position2="absolute l:64 w:116 t:276 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Edit id="Edit06" taborder="10" value="기준일" enable="false" position2="absolute l:64 w:116 t:228 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Combo id="holidayType" taborder="12" position2="absolute l:208 w:141 t:328 h:28" positiontype="position2" innerdataset="@ds_holidayType" datacolumn="DETAIL_CODE_NAME" codecolumn="DETAIL_CODE" enable="false" onitemchanged="holidayType_onitemchanged"/>
+        <Edit id="holidayName" taborder="13" position2="absolute l:208 w:141 t:276 h:28" positiontype="position2"/>
+        <Edit id="note" taborder="14" position2="absolute l:64 w:285 t:428 h:107" positiontype="position2"/>
+        <Button id="addBtn" taborder="15" text="추가" position2="absolute l:152 w:71 t:548 h:28" positiontype="position2" onclick="addBtn_onclick"/>
+        <Button id="saveBtn" taborder="16" text="일괄저장" position2="absolute l:302 w:71 t:548 h:28" positiontype="position2" onclick="saveBtn_onclick" enable="false"/>
+        <Button id="removeBtn" taborder="17" text="삭제" position2="absolute l:227 w:71 t:548 h:28" positiontype="position2" onclick="removeBtn_onclick"/>
+        <Calendar id="fromDate" taborder="18" position2="absolute l:111 w:109 t:92 h:28" positiontype="position2" style="font:Verdana,8,bold antialias;"/>
+        <Edit id="Edit02" taborder="19" value="~" enable="false" position2="absolute l:223 w:25 t:92 h:28" positiontype="position2" style=":disabled {align:center middle;}"/>
+        <Calendar id="toDate" taborder="20" position2="absolute l:252 w:109 t:92 h:28" positiontype="position2" style="font:Verdana,8,bold antialias;"/>
+        <Calendar id="basicDate" taborder="21" position2="absolute l:208 w:141 t:228 h:28" positiontype="position2" style="font:Verdana,8,bold antialias;" onchanged="basicDate_onchanged"/>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="ds_holidayType" firefirstcount="0" firenextcount="0" useclientlayout="false" updatecontrol="true" enableevent="true" loadkeymode="keep" loadfiltermode="keep" reversesubsum="false">
+        <ColumnInfo>
+          <Column id="DETAIL_CODE" type="STRING" size="256"/>
+          <Column id="DETAIL_CODE_NAME" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript4.0"><![CDATA[function gfn_today()
+{
+   var objDate = new Date();
+   var sDate = objDate.toFormatString("%Y%m%d");
+   return sDate;
+}
+
+function holidayManagementForm_onload(obj:Form, e:LoadEventInfo)
+{   
+   ds_holiday.filter("DETAIL_CODE==0");
+   transaction("findCodeList","svcBase::findCodeList.do","","ds_code=dsCode ds_detailCode=dsDetailCode","","callback",false);
+   ds_detailCode.filter("DETAIL_CODE == 'HGC001' || DETAIL_CODE == 'HGC002'");
+   ds_holidayType.copyData(ds_detailCode,true);
+   saveBtn.enable=false;
+}
+
+function searchBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(fromDate.value.length!=0 && toDate.value.length!=0){
+      transaction("findHolidayList","svcHrCircumstance::findHolidayList.do","","ds_holiday=dsHoliday","fromDate='"+fromDate.value+"' toDate='"+toDate.value+"'","callback");
+      ds_holiday.filter("BASIC_DAY >= '"+fromDate.value+"' && BASIC_DAY <= '"+toDate.value+"'");
+   }else{
+      alert(" 조회 기간을 선택해 주세요  ");
+   }
+}
+
+
+//기본 날짜 변경시 
+function basicDate_onchanged(obj:Calendar, e:ChangeEventInfo)
+{
+   ds_holiday.filter("");
+   ds_holiday.filter("BASIC_DAY='"+basicDate.value+"'"); 
+   
+   if(ds_holiday.getRowCount()!=0){
+      ds_holiday.filter("BASIC_DAY='"+ds_holiday.getColumn(0,'BASIC_DAY')+"'");
+      alert("해당일자에 이미 등록된 내용이 있습니다. ");
+   }else{
+      alert("해당일자에 내용을 등록해 주세요 ");
+      holidayType.enable=true;
+      holidayName.enable=true;
+      note.enable=true;   
+   }
+}
+
+
+//추가버튼 
+function addBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(ds_holiday.getRowCount()!=0){
+      ds_holiday.filter("BASIC_DAY='"+ds_holiday.getColumn(0,'BASIC_DAY')+"'");
+      alert("해당일자에 이미등록된 내용이 있습니다. ");
+   }
+   else if(holidayName.value==null){
+      alert("휴일명을 입력하세요 ");
+   }
+   else if(holidayType.value==null){
+      alert("휴일 근태구분을 선택하세요 "+basicDate.value);
+   }
+   else if(basicDate.value.length!=0 && holidayName.value.length!=0 && holidayType.value.length !=0){
+      ds_holiday.filter("");
+      var rowNum=ds_holiday.getRowCount();
+      ds_holiday.addRow();
+      ds_holiday.setColumn(ds_holiday.rowposition,"BASIC_DAY",basicDate.value);
+      ds_holiday.setColumn(ds_holiday.rowposition,"HOLIDAY_NAME",holidayName.value);
+      ds_holiday.setColumn(ds_holiday.rowposition,"HOLIDAY_TYPE",holidayType.value);
+      ds_holiday.setColumn(ds_holiday.rowposition,"NOTE",note.value);
+      ds_holiday.filter("BASIC_DAY=='"+basicDate.value+"'");
+      saveBtn.enable=true;
+   }
+}
+
+// 휴일삭제 
+function removeBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   toDay=gfn_today();
+   var deletDate = ds_holiday.getColumn(ds_holiday.row,"BASIC_DAY");
+   if(toDay < deletDate){
+      ds_holiday.deleteRow(ds_holiday.row);
+      saveBtn.enable=true;
+   }
+   else if(deletDate==null){
+      alert("삭제할 행이 없습니다.");
+   }
+   else{
+      alert("현재 기준일 또는 지난 날짜의 휴일은 삭제할 수 없습니다.");
+   }
+}
+
+
+//변경 사항 저장 하기 
+function saveBtn_onclick(obj:Button,  e:ClickEventInfo)
+{
+   if(confirm("변경 내용을 저장하시겠습니까? ")){
+
+      transaction(   
+         "batchHoliday", "svcHrCircumstance::batchHoliday.do",
+         "dsHoliday=ds_holiday:u",
+         "ds_holiday=dsHoliday",
+         "",
+         "callback"
+      );
+      alert("변경 내용이 저장되었습니다");
+      reload();
+   }   
+}
+function holidayType_onitemchanged(obj:Combo, e:ItemChangeEventInfo)
+{
+   
+}]]></Script>
+  </Form>
+</FDL>
